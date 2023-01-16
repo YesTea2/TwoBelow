@@ -91,10 +91,15 @@ position = Vector2( -119, 82 )
 [node name="Building4" parent="Building" instance=ExtResource( 5 )]
 position = Vector2( 113, -144 )
 
+[connection signal="clear_of_storm" from="." to="HUD" method="_on_Outside_clear_of_storm"]
+[connection signal="current_temp_below_freezing" from="." to="HUD" method="_on_Outside_current_temp_below_freezing"]
+[connection signal="current_temp_freezing" from="." to="HUD" method="_on_Outside_current_temp_freezing"]
+[connection signal="current_temp_normal" from="." to="HUD" method="_on_Outside_current_temp_normal"]
 [connection signal="lower_temp_fast" from="." to="HUD" method="_on_Outside_lower_temp_fast"]
 [connection signal="lower_temp_slow" from="." to="HUD" method="_on_Outside_lower_temp_slow"]
 [connection signal="raise_temp_fast" from="." to="HUD" method="_on_Outside_raise_temp_fast"]
 [connection signal="raise_temp_slow" from="." to="HUD" method="_on_Outside_raise_temp_slow"]
+[connection signal="warn_of_weather" from="." to="HUD" method="_on_Outside_warn_of_weather"]
 [connection signal="doorway_entered" from="Player" to="HUD" method="_on_Player_doorway_entered"]
 [connection signal="doorway_exited" from="Player" to="HUD" method="_on_Player_doorway_exited"]
 

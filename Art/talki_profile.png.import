@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/talking_graphic2.png-4775057167282da3f5f7850088cbbe9c.stex"
+path="res://.import/talki_profile.png-37e3da69327b8a26a9990a97bf1d83cb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/talking_graphic2.png"
-dest_files=[ "res://.import/talking_graphic2.png-4775057167282da3f5f7850088cbbe9c.stex" ]
+source_file="res://Art/talki_profile.png"
+dest_files=[ "res://.import/talki_profile.png-37e3da69327b8a26a9990a97bf1d83cb.stex" ]
 
 [params]
 

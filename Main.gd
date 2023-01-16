@@ -7,7 +7,7 @@ export var snow_amount_level_three = 4500
 export var snow_speed_level_one = 0.3
 export var snow_speed_level_two = 0.4
 export var snow_speed_level_three = 0.5
-
+export var delay_for_level_three_storm = 6
 
 onready var snow_system : Particles2D = $Snow
 
@@ -16,11 +16,18 @@ var is_changing_system = false;
 var is_level_one_storm = false
 var is_level_two_storm = false
 var is_level_three_storm = false
-
+var is_ready_for_level_three_storm = false
+var is_ready_for_level_one_storm = false
+var is_ready_for_level_two_storm = false
 signal lower_temp_slow
 signal lower_temp_fast
 signal raise_temp_slow
 signal raise_temp_fast
+signal warn_of_weather
+signal clear_of_storm
+signal current_temp_normal
+signal current_temp_freezing
+signal current_temp_below_freezing
 
 var rand_generate_time = RandomNumberGenerator.new()
 
@@ -37,7 +44,7 @@ func _process(delta):
 		emit_signal("raise_temp_slow")
 	if is_level_two_storm == true:
 		emit_signal("lower_temp_slow")
-	if is_level_three_storm == true:
+	if is_level_three_storm == true && is_ready_for_level_three_storm == true:
 		emit_signal("lower_temp_fast")
 
 func start_weather():
@@ -58,14 +65,18 @@ func change_weather():
 	if number == 3:
 		change_storm_level_three()
 	
-	var time = get_random_time(5,15)
+	var time = get_random_time(10,20)
 	yield(get_tree().create_timer(time), "timeout")
 	is_changing_system = false
 	
 
 func change_storm_level_one():
 	print("level one storm approaching")
-	
+	if is_level_three_storm == true:
+		emit_signal("clear_of_storm")
+		is_ready_for_level_three_storm = false
+	if is_level_one_storm == false:
+		emit_signal("current_temp_normal")
 	is_level_one_storm = true
 	is_level_two_storm = false
 	is_level_three_storm = false
@@ -74,7 +85,11 @@ func change_storm_level_one():
 
 func change_storm_level_two():
 	print("level two storm approaching")
-	
+	if is_level_three_storm == true:
+		emit_signal("clear_of_storm")
+		is_ready_for_level_three_storm = false
+	if is_level_two_storm == false:
+		emit_signal("current_temp_freezing")
 	is_level_two_storm = true
 	is_level_one_storm = false
 	is_level_three_storm = false
@@ -83,7 +98,11 @@ func change_storm_level_two():
 
 func change_storm_level_three():
 	print("level three storm approaching")
-	
+	if is_level_three_storm == false:
+		emit_signal("warn_of_weather")
+		emit_signal("current_temp_below_freezing")
+		yield(get_tree().create_timer(delay_for_level_three_storm), "timeout")
+	is_ready_for_level_three_storm = true
 	is_level_three_storm = true
 	is_level_two_storm = false
 	is_level_one_storm = false
