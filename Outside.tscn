@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/snow_tile.png" type="Texture" id=2]
+[ext_resource path="res://Snow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Building.tscn" type="PackedScene" id=5]
+[ext_resource path="res://FootStep_Side.tscn" type="PackedScene" id=7]
+[ext_resource path="res://FootStep.tscn" type="PackedScene" id=8]
+[ext_resource path="res://FootStep_Idle.tscn" type="PackedScene" id=9]
+
+[node name="Outside" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -3.0
+margin_top = 3.0
+margin_right = 429.0
+margin_bottom = 514.0
+rect_scale = Vector2( 3.21725, 2.72856 )
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 2
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 669, 1246 )
+z_index = 3
+speed = 60.0
+foot_step = ExtResource( 8 )
+foot_step_side = ExtResource( 7 )
+foot_step_idle = ExtResource( 9 )
+outdoor_scene = "res://Outside.tscn"
+indoor_scene = "res://Inside_Building.tscn"
+
+[node name="AnimatedSprite" parent="Player" index="0"]
+z_index = 1
+
+[node name="RemoteTransform2D" parent="Player" index="2"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="Area2D" parent="Player" index="3"]
+position = Vector2( 0, -2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 669, 1246 )
+current = true
+zoom = Vector2( 0.3, 0.3 )
+limit_left = 40
+limit_top = 40
+limit_right = 1350
+limit_bottom = 1350
+smoothing_speed = 10.0
+editor_draw_limits = true
+
+[node name="Snow" parent="." instance=ExtResource( 3 )]
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Building" parent="." instance=ExtResource( 5 )]
+position = Vector2( 539, 1195 )
+z_index = 2
+
+[node name="DoorPos" parent="Building" index="2"]
+position = Vector2( 0, 18 )
+z_index = 2
+
+[node name="Building" parent="Building" instance=ExtResource( 5 )]
+position = Vector2( 231, -37 )
+
+[node name="Building2" parent="Building" instance=ExtResource( 5 )]
+position = Vector2( 355, 108 )
+
+[node name="Building3" parent="Building" instance=ExtResource( 5 )]
+position = Vector2( -119, 82 )
+
+[node name="Building4" parent="Building" instance=ExtResource( 5 )]
+position = Vector2( 113, -144 )
+
+[connection signal="doorway_entered" from="Player" to="HUD" method="_on_Player_doorway_entered"]
+[connection signal="doorway_exited" from="Player" to="HUD" method="_on_Player_doorway_exited"]
+
+[editable path="Player"]
+[editable path="HUD"]
+[editable path="Building"]

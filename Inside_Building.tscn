@@ -1,0 +1,174 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Art/Inside_Building_01.png" type="Texture" id=2]
+[ext_resource path="res://Inside Hud.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Snow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Art/walkie_talkie2.png" type="Texture" id=5]
+[ext_resource path="res://Snow_FootStep.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Snow_FootStep_Side.tscn" type="PackedScene" id=7]
+[ext_resource path="res://FootStep.tscn" type="PackedScene" id=8]
+[ext_resource path="res://FootStep_Side.tscn" type="PackedScene" id=9]
+[ext_resource path="res://FootStep_Idle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Doorway.tscn" type="PackedScene" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 60, 1.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1, 60 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 1, 27.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5, 1 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 8, 9.5 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 13, 13 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 4, 18 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 3, 9 )
+
+[node name="Inside_Building" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -151.0
+margin_top = -92.0
+margin_right = -101.0
+margin_bottom = -43.0
+rect_scale = Vector2( 6.13636, 3.92 )
+color = Color( 0.145098, 0.188235, 0.34902, 1 )
+
+[node name="SnowParts" parent="." instance=ExtResource( 4 )]
+position = Vector2( -79, -186 )
+
+[node name="InsideArea" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1, 39 )
+z_index = 2
+time_foot_indoor = 0.4
+speed = 50.0
+is_inside = true
+foot_step = ExtResource( 8 )
+foot_step_side = ExtResource( 9 )
+foot_step_idle = ExtResource( 10 )
+snow_footstep_side = ExtResource( 6 )
+snow_footstep = ExtResource( 7 )
+outdoor_scene = "res://Outside.tscn"
+indoor_scene = "res://Inside_Building.tscn"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2( 0.995519, 1 )
+current = true
+zoom = Vector2( 0.3, 0.3 )
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 0, -68 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
+position = Vector2( 0, 8.5 )
+shape = SubResource( 1 )
+
+[node name="Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2( 0, 51 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
+position = Vector2( 0, 8.5 )
+shape = SubResource( 1 )
+
+[node name="Side Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2( -50, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall"]
+position = Vector2( -9, -1 )
+shape = SubResource( 2 )
+
+[node name="Side Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2( 68, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall2"]
+position = Vector2( -9, -1 )
+shape = SubResource( 2 )
+
+[node name="Half Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 27, -10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Half Wall"]
+position = Vector2( -8, -20.5 )
+shape = SubResource( 3 )
+
+[node name="Tiny Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2( 22, -10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall"]
+position = Vector2( 1, 9 )
+shape = SubResource( 4 )
+
+[node name="Tiny Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2( 50, -10 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall2"]
+position = Vector2( 1, 9 )
+shape = SubResource( 4 )
+
+[node name="Fridge" type="StaticBody2D" parent="."]
+position = Vector2( 8, -19 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fridge"]
+position = Vector2( 2, -3.5 )
+shape = SubResource( 5 )
+
+[node name="Bed" type="StaticBody2D" parent="."]
+position = Vector2( 41, -36 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+position = Vector2( 0, -7 )
+shape = SubResource( 6 )
+
+[node name="Fireplace" type="StaticBody2D" parent="."]
+position = Vector2( -48, 28 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fireplace"]
+position = Vector2( -6, 0 )
+shape = SubResource( 7 )
+
+[node name="Cabnit" type="StaticBody2D" parent="."]
+position = Vector2( 48, -14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cabnit"]
+position = Vector2( 7, 1 )
+shape = SubResource( 8 )
+
+[node name="Inside Hud" parent="." instance=ExtResource( 3 )]
+follow_viewport_enable = true
+
+[node name="ColorRect" parent="Inside Hud" index="0"]
+visible = false
+margin_left = 77.0
+margin_top = 31.0
+margin_right = 117.0
+margin_bottom = 71.0
+rect_scale = Vector2( 0.462787, 0.738476 )
+
+[node name="Sprite" parent="Inside Hud" index="1"]
+position = Vector2( 104, 43 )
+texture = ExtResource( 5 )
+
+[node name="Doorway" parent="." instance=ExtResource( 11 )]
+position = Vector2( 0, 67 )
+
+[editable path="SnowParts"]
+[editable path="Player"]
+[editable path="Inside Hud"]

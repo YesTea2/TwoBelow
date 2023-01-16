@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Art/snow_flake.png" type="Texture" id=1]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 1, 0 )
+flag_disable_z = true
+direction = Vector3( 1, 20, 0 )
+gravity = Vector3( 0, 80, 0 )
+initial_velocity = 121.21
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
+[node name="Snow" type="Particles2D"]
+position = Vector2( 660, -44 )
+z_as_relative = false
+amount = 2500
+lifetime = 124.86
+preprocess = 244.76
+speed_scale = 0.3
+explosiveness = 0.17
+visibility_rect = Rect2( -11190.6, -0.84095, 23526.8, 583715 )
+process_material = SubResource( 1 )
+texture = ExtResource( 1 )
