@@ -6,13 +6,14 @@ export var villager_profile : Texture
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
+onready var bar : TextureProgress = $TextureProgress
 var rand_generate = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Text_Container.hide()
 	$Text_Container/Container_Text.hide()
 	$Text_Container/Character_Photo.hide()
+	set_percent_value_int(100)
 	
 
 func _display_center_message(message_to_display, profile):
@@ -36,6 +37,35 @@ func _display_center_message(message_to_display, profile):
 #	pass
 
 
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+
+
+
+func set_percent_value_int(values):
+	bar.value = values
+
+
+func _on_Outside_lower_temp_fast():
+	bar.value -= .05
+	print("lowering")
+	pass
+
+func _on_Outside_lower_temp_slow():
+	bar.value -= .005
+	print("lowering")
+	pass
+
+func _on_Outside_raise_temp_fast():
+	bar.value += .5
+	pass
+
+func _on_Outside_raise_temp_slow():
+	bar.value += .05
+	pass
+
 func _on_Player_doorway_entered():
 	rand_generate.randomize()
 	var rand_int = rand_generate.randi_range(1,4)
@@ -54,3 +84,5 @@ func _on_Player_doorway_exited():
 	$Text_Container/Character_Photo.hide()
 	$Text_Container/Container_Text.hide()
 	pass
+	
+
