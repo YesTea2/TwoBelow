@@ -9,6 +9,12 @@ export var snow_speed_level_two = 0.4
 export var snow_speed_level_three = 0.5
 export var delay_for_level_three_storm = 6
 
+var level_parameters := {
+	
+}
+
+export (Resource) var player_var
+
 onready var snow_system : Particles2D = $Snow
 
 var is_changing_system = false;
@@ -29,10 +35,16 @@ signal current_temp_normal
 signal current_temp_freezing
 signal current_temp_below_freezing
 
+signal level_changed(level_name)
+
+export (String) var level_name = "level"
+
+var can_load_again = true
 var rand_generate_time = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player_var.connect("using_door", self, "_on_Player_using_door")
 	is_changing_system = true
 	start_weather()
 
@@ -46,6 +58,10 @@ func _process(delta):
 		emit_signal("lower_temp_slow")
 	if is_level_three_storm == true && is_ready_for_level_three_storm == true:
 		emit_signal("lower_temp_fast")
+
+func load_level_paramters(new_level_paramters: Dictionary):
+	level_parameters = new_level_paramters
+	
 
 func start_weather():
 	is_level_one_storm = true
@@ -114,4 +130,21 @@ func get_random_time(min_range, max_range):
 	var rand_int = rand_generate_time.randi_range(min_range,max_range)
 	return rand_int
 
+func _on_changeScene_requested() -> void:
+	emit_signal("level_changed", level_name)
 
+func play_loaded_sound() -> void:
+	$Door_Close_Sound.play()
+
+func cleanup():
+	if $Door_Open_Sound.playing:
+		yield($Door_Open_Sound, "finished")
+		can_load_again = true
+	queue_free()
+
+func _on_Player_using_door():
+	print("door open")
+	if can_load_again == true:
+		can_load_again = false
+		$Door_Open_Sound.play()
+		_on_changeScene_requested()

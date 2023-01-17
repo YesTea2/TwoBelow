@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=7 format=2]
+
+[ext_resource path="res://player_info.gd" type="Script" id=1]
+[ext_resource path="res://Snow_FootStep.tscn" type="PackedScene" id=2]
+[ext_resource path="res://FootStep_Idle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://FootStep.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Snow_FootStep_Side.tscn" type="PackedScene" id=5]
+[ext_resource path="res://FootStep_Side.tscn" type="PackedScene" id=6]
+
+[resource]
+script = ExtResource( 1 )
+foot_step = ExtResource( 4 )
+foot_step_side = ExtResource( 6 )
+foot_step_idle = ExtResource( 3 )
+snow_footstep_side = ExtResource( 2 )
+snow_footstep = ExtResource( 5 )
+time_foot_outdoor = 0.5
+time_foot_indoor = 1.0
+speed = 75.0
+is_inside = false

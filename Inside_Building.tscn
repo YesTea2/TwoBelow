@@ -1,15 +1,14 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/Inside_Building_01.png" type="Texture" id=2]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Snow.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Snow_FootStep.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Snow_FootStep_Side.tscn" type="PackedScene" id=7]
-[ext_resource path="res://FootStep.tscn" type="PackedScene" id=8]
-[ext_resource path="res://FootStep_Side.tscn" type="PackedScene" id=9]
-[ext_resource path="res://FootStep_Idle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Main.gd" type="Script" id=5]
+[ext_resource path="res://player_var.tres" type="Resource" id=6]
 [ext_resource path="res://Doorway.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Sounds/th.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sounds/Break_Wood_01.wav" type="AudioStream" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 60, 1.5 )
@@ -35,7 +34,11 @@ extents = Vector2( 4, 18 )
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 3, 9 )
 
-[node name="Inside_Building" type="Node2D"]
+[node name="Inside_Building" type="CanvasLayer"]
+follow_viewport_enable = true
+script = ExtResource( 5 )
+player_var = ExtResource( 6 )
+level_name = "Inside_Building"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -151.0
@@ -45,29 +48,12 @@ margin_bottom = -43.0
 rect_scale = Vector2( 6.13636, 3.92 )
 color = Color( 0.145098, 0.188235, 0.34902, 1 )
 
-[node name="SnowParts" parent="." instance=ExtResource( 4 )]
-position = Vector2( -79, -186 )
-
 [node name="InsideArea" type="Sprite" parent="."]
 scale = Vector2( 2, 2 )
+z_index = 1
 texture = ExtResource( 2 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1, 39 )
-z_index = 2
-time_foot_indoor = 0.4
-speed = 50.0
-is_inside = true
-foot_step = ExtResource( 8 )
-foot_step_side = ExtResource( 9 )
-foot_step_idle = ExtResource( 10 )
-snow_footstep_side = ExtResource( 6 )
-snow_footstep = ExtResource( 7 )
-outdoor_scene = "res://Outside.tscn"
-indoor_scene = "res://Inside_Building.tscn"
-
 [node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2( 0.995519, 1 )
 current = true
 zoom = Vector2( 0.3, 0.3 )
 
@@ -75,6 +61,7 @@ zoom = Vector2( 0.3, 0.3 )
 
 [node name="Wall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 0, -68 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
 position = Vector2( 0, 8.5 )
@@ -82,6 +69,7 @@ shape = SubResource( 1 )
 
 [node name="Wall2" type="StaticBody2D" parent="Walls"]
 position = Vector2( 0, 51 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
 position = Vector2( 0, 8.5 )
@@ -89,6 +77,7 @@ shape = SubResource( 1 )
 
 [node name="Side Wall" type="StaticBody2D" parent="Walls"]
 position = Vector2( -50, 0 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall"]
 position = Vector2( -9, -1 )
@@ -96,6 +85,7 @@ shape = SubResource( 2 )
 
 [node name="Side Wall2" type="StaticBody2D" parent="Walls"]
 position = Vector2( 68, 0 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall2"]
 position = Vector2( -9, -1 )
@@ -103,6 +93,7 @@ shape = SubResource( 2 )
 
 [node name="Half Wall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 27, -10 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Half Wall"]
 position = Vector2( -8, -20.5 )
@@ -110,6 +101,7 @@ shape = SubResource( 3 )
 
 [node name="Tiny Wall" type="StaticBody2D" parent="Walls"]
 position = Vector2( 22, -10 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall"]
 position = Vector2( 1, 9 )
@@ -117,6 +109,7 @@ shape = SubResource( 4 )
 
 [node name="Tiny Wall2" type="StaticBody2D" parent="Walls"]
 position = Vector2( 50, -10 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall2"]
 position = Vector2( 1, 9 )
@@ -124,6 +117,7 @@ shape = SubResource( 4 )
 
 [node name="Fridge" type="StaticBody2D" parent="."]
 position = Vector2( 8, -19 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fridge"]
 position = Vector2( 2, -3.5 )
@@ -131,6 +125,7 @@ shape = SubResource( 5 )
 
 [node name="Bed" type="StaticBody2D" parent="."]
 position = Vector2( 41, -36 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
 position = Vector2( 0, -7 )
@@ -138,6 +133,7 @@ shape = SubResource( 6 )
 
 [node name="Fireplace" type="StaticBody2D" parent="."]
 position = Vector2( -48, 28 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fireplace"]
 position = Vector2( -6, 0 )
@@ -145,6 +141,7 @@ shape = SubResource( 7 )
 
 [node name="Cabnit" type="StaticBody2D" parent="."]
 position = Vector2( 48, -14 )
+z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cabnit"]
 position = Vector2( 7, 1 )
@@ -155,5 +152,26 @@ position = Vector2( 0, 67 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
-[editable path="SnowParts"]
-[editable path="Player"]
+[node name="Snow" parent="." instance=ExtResource( 4 )]
+
+[node name="Door_Open_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[node name="Door_Close_Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="SpawnPosTest" type="Position2D" parent="."]
+position = Vector2( 0, 29 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1, 30 )
+
+[connection signal="clear_of_storm" from="." to="HUD" method="_on_Inside_Building_clear_of_storm"]
+[connection signal="current_temp_below_freezing" from="." to="HUD" method="_on_Inside_Building_current_temp_below_freezing"]
+[connection signal="current_temp_freezing" from="." to="HUD" method="_on_Inside_Building_current_temp_freezing"]
+[connection signal="current_temp_normal" from="." to="HUD" method="_on_Inside_Building_current_temp_normal"]
+[connection signal="lower_temp_fast" from="." to="HUD" method="_on_Inside_Building_lower_temp_fast"]
+[connection signal="lower_temp_slow" from="." to="HUD" method="_on_Inside_Building_lower_temp_slow"]
+[connection signal="raise_temp_fast" from="." to="HUD" method="_on_Inside_Building_raise_temp_fast"]
+[connection signal="raise_temp_slow" from="." to="HUD" method="_on_Inside_Building_raise_temp_slow"]
+[connection signal="warn_of_weather" from="." to="HUD" method="_on_Inside_Building_warn_of_weather"]

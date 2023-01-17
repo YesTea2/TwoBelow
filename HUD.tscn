@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Art/talking_graphic2.png" type="Texture" id=9]
 [ext_resource path="res://Art/talki_profile.png" type="Texture" id=10]
 [ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://player_var.tres" type="Resource" id=12]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://bitpap/BitPap.ttf"
@@ -36,6 +37,7 @@ font_data = ExtResource( 11 )
 script = ExtResource( 2 )
 player_profile = ExtResource( 5 )
 walki_profile = ExtResource( 10 )
+player_var = ExtResource( 12 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 804, 452 )

@@ -3,6 +3,7 @@ extends CanvasLayer
 export var player_profile : Texture
 export var villager_profile : Texture
 export var walki_profile : Texture
+export (Resource) var player_var
 #export var villager_profile : T
 # Declare member variables here. Examples:
 # var a = 2
@@ -14,6 +15,9 @@ var rand_generate = RandomNumberGenerator.new()
 var giving_weather_alert = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player_var.connect("doorway_entered", self, "_on_Player_doorway_entered")
+	player_var.connect("doorway_exited", self, "_on_Player_doorway_exited")
+	
 	$Text_Container.hide()
 	$Text_Container/Container_Text.hide()
 	$Text_Container/Character_Photo.hide()
@@ -166,3 +170,56 @@ func _on_Outside_current_temp_normal():
 	$Alert.stop()
 	$Alert.hide()
 
+
+
+func _on_Inside_Building_clear_of_storm():
+	weather_clear()
+
+
+func _on_Inside_Building_current_temp_below_freezing():
+	yield(get_tree().create_timer(6), "timeout")
+	temprature_text.text = "Below Zero"
+
+
+func _on_Inside_Building_current_temp_freezing():
+	$Alert.show()
+	$Alert.speed_scale = .5
+	$Alert.play()
+	yield(get_tree().create_timer(2), "timeout")
+	temprature_text.text = "Freezing"
+	$Alert.stop()
+	$Alert.hide()
+
+
+func _on_Inside_Building_current_temp_normal():
+	$Alert.show()
+	$Alert.speed_scale = .5
+	$Alert.play()
+	yield(get_tree().create_timer(2), "timeout")
+	temprature_text.text = "Cold"
+	$Alert.stop()
+	$Alert.hide()
+
+
+func _on_Inside_Building_lower_temp_fast():
+	bar.value -= .02
+	print("lowering")
+	pass
+
+func _on_Inside_Building_lower_temp_slow():
+	bar.value -= .007
+	print("lowering")
+	pass
+
+
+func _on_Inside_Building_raise_temp_fast():
+	bar.value += .15
+	pass
+
+func _on_Inside_Building_raise_temp_slow():
+	bar.value += .02
+	pass
+
+
+func _on_Inside_Building_warn_of_weather():
+	weather_warning()
