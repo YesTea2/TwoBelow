@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Inventory_Items.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+current_log_amount = 0
+current_ice_amount = 0
+current_wire_amount = 0
+current_pipe_amount = 0
+current_crafted_wall_amount = 0
+current_crafted_fire_amount = 0
+current_crafted_repair_amount = 0

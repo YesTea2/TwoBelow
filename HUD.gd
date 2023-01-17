@@ -5,6 +5,7 @@ export var villager_profile : Texture
 export var walki_profile : Texture
 export (Resource) var player_var
 export (Resource) var weather_var
+export (Resource) var inventory_var
 #export var villager_profile : T
 # Declare member variables here. Examples:
 # var a = 2
@@ -16,6 +17,24 @@ onready var message_time : Timer = $center_message_time
 onready var temp_freeze_time : Timer = $temp_freezing_timer
 onready var temp_normal_time : Timer = $temp_normal_timer
 onready var temp_below_freeze_time : Timer = $temp_below_freeze_timer
+
+onready var ice_amount_text : Label = $Inventory/Ice_Block_Amount
+onready var log_amount_text : Label = $Inventory/Log_Amount
+onready var pipe_amount_text : Label = $Inventory/Pipe_Amount
+onready var wire_amount_text : Label = $Inventory/Wire_Amount
+
+onready var buy_ice_button : Button = $Inventory/Ice_Button
+onready var buy_fire_button : Button = $Inventory/Fire_Button
+onready var buy_repair_button : Button = $Inventory/Repair_Button
+
+onready var inventory_container : ReferenceRect = $Inventory
+onready var crafting_prompt : ReferenceRect = $Cratft_Prompt
+onready var bottom_inventory : ReferenceRect = $Bottom_Bar
+
+onready var crafting_prompt_Text : Label = $Cratft_Prompt/Label
+onready var yes_craft_button : Button = $Cratft_Prompt/Yes_Craft
+onready var no_craft_button : Button = $Cratft_Prompt/No_Craft
+
 
 var rand_generate = RandomNumberGenerator.new()
 var giving_weather_alert = false

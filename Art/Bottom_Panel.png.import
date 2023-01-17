@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/craft_prompt.png-8d698165e93ddb9e477c132a6b9a3b83.stex"
+path="res://.import/Bottom_Panel.png-4cc6c930bf4e89ece28bd3e6afc86665.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/craft_prompt.png"
-dest_files=[ "res://.import/craft_prompt.png-8d698165e93ddb9e477c132a6b9a3b83.stex" ]
+source_file="res://Art/Bottom_Panel.png"
+dest_files=[ "res://.import/Bottom_Panel.png-4cc6c930bf4e89ece28bd3e6afc86665.stex" ]
 
 [params]
 

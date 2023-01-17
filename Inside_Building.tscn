@@ -54,7 +54,7 @@ rect_scale = Vector2( 6.13636, 3.92 )
 color = Color( 0.145098, 0.188235, 0.34902, 1 )
 
 [node name="InsideArea" type="Sprite" parent="."]
-position = Vector2( 0, 2 )
+position = Vector2( 0, -22 )
 scale = Vector2( 2, 2 )
 z_index = 1
 texture = ExtResource( 2 )
@@ -62,7 +62,7 @@ texture = ExtResource( 2 )
 [node name="Walls" type="Node" parent="."]
 
 [node name="Wall" type="StaticBody2D" parent="Walls"]
-position = Vector2( 0, -66 )
+position = Vector2( 0, -90 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
@@ -70,7 +70,7 @@ position = Vector2( 0, 8.5 )
 shape = SubResource( 1 )
 
 [node name="Wall2" type="StaticBody2D" parent="Walls"]
-position = Vector2( 0, 53 )
+position = Vector2( 0, 29 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
@@ -78,7 +78,7 @@ position = Vector2( 0, 8.5 )
 shape = SubResource( 1 )
 
 [node name="Side Wall" type="StaticBody2D" parent="Walls"]
-position = Vector2( -50, 2 )
+position = Vector2( -50, -22 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall"]
@@ -86,7 +86,7 @@ position = Vector2( -9, -1 )
 shape = SubResource( 2 )
 
 [node name="Side Wall2" type="StaticBody2D" parent="Walls"]
-position = Vector2( 68, 2 )
+position = Vector2( 68, -22 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Side Wall2"]
@@ -94,7 +94,7 @@ position = Vector2( -9, -1 )
 shape = SubResource( 2 )
 
 [node name="Half Wall" type="StaticBody2D" parent="Walls"]
-position = Vector2( 27, -8 )
+position = Vector2( 27, -32 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Half Wall"]
@@ -102,7 +102,7 @@ position = Vector2( -8, -20.5 )
 shape = SubResource( 3 )
 
 [node name="Tiny Wall" type="StaticBody2D" parent="Walls"]
-position = Vector2( 22, -8 )
+position = Vector2( 22, -32 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall"]
@@ -110,7 +110,7 @@ position = Vector2( 1, 9 )
 shape = SubResource( 4 )
 
 [node name="Tiny Wall2" type="StaticBody2D" parent="Walls"]
-position = Vector2( 50, -8 )
+position = Vector2( 50, -32 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Tiny Wall2"]
@@ -118,7 +118,7 @@ position = Vector2( 1, 9 )
 shape = SubResource( 4 )
 
 [node name="Fridge" type="StaticBody2D" parent="."]
-position = Vector2( 8, -17 )
+position = Vector2( 8, -41 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fridge"]
@@ -126,7 +126,7 @@ position = Vector2( 2, -3.5 )
 shape = SubResource( 5 )
 
 [node name="Bed" type="StaticBody2D" parent="."]
-position = Vector2( 41, -34 )
+position = Vector2( 41, -58 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
@@ -134,7 +134,7 @@ position = Vector2( 0, -7 )
 shape = SubResource( 6 )
 
 [node name="Fireplace" type="StaticBody2D" parent="."]
-position = Vector2( -48, 30 )
+position = Vector2( -48, 6 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fireplace"]
@@ -142,7 +142,7 @@ position = Vector2( -6, 0 )
 shape = SubResource( 7 )
 
 [node name="Cabnit" type="StaticBody2D" parent="."]
-position = Vector2( 48, -12 )
+position = Vector2( 48, -36 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cabnit"]
@@ -150,7 +150,7 @@ position = Vector2( 7, 1 )
 shape = SubResource( 8 )
 
 [node name="Doorway" parent="." instance=ExtResource( 11 )]
-position = Vector2( 0, 69 )
+position = Vector2( 0, 45 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
@@ -163,11 +163,11 @@ stream = ExtResource( 12 )
 stream = ExtResource( 13 )
 
 [node name="SpawnPosTest" type="Position2D" parent="."]
-position = Vector2( 0, 31 )
+position = Vector2( 0, 18 )
 z_index = 1
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1, 34 )
+position = Vector2( 1, 10 )
 
 [node name="global_weather_timer" parent="." instance=ExtResource( 8 )]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -15,6 +15,9 @@
 [ext_resource path="res://weather_information.tres" type="Resource" id=13]
 [ext_resource path="res://Art/craft_panel.png" type="Texture" id=14]
 [ext_resource path="res://Art/Inventory_Panel.png" type="Texture" id=15]
+[ext_resource path="res://Art/craft_prompt.png" type="Texture" id=16]
+[ext_resource path="res://Art/Bottom_Panel.png" type="Texture" id=17]
+[ext_resource path="res://Inventory_Info.tres" type="Resource" id=18]
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -32,17 +35,26 @@ outline_size = 2
 outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://bitpap/BitPap.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
-
 [sub_resource type="DynamicFont" id=4]
 size = 23
 outline_size = 2
 outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
 font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://bitpap/BitPap.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -50,6 +62,7 @@ player_profile = ExtResource( 5 )
 walki_profile = ExtResource( 10 )
 player_var = ExtResource( 12 )
 weather_var = ExtResource( 13 )
+inventory_var = ExtResource( 18 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 804, 452 )
@@ -63,6 +76,7 @@ frames = SubResource( 3 )
 animation = "alert"
 
 [node name="Inventory" type="ReferenceRect" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -71,7 +85,7 @@ margin_left = -20.0
 margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
-rect_scale = Vector2( 4, 4 )
+rect_scale = Vector2( 3, 3 )
 rect_pivot_offset = Vector2( 20.5, 21 )
 
 [node name="TextureRect" type="TextureRect" parent="Inventory"]
@@ -193,46 +207,29 @@ custom_fonts/font = SubResource( 6 )
 text = "Inventory"
 align = 1
 
-[node name="Text_Container" type="TextureRect" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -64.0
-margin_top = 67.0
-margin_right = 64.0
-margin_bottom = 99.0
-rect_scale = Vector2( 4, 4 )
-rect_pivot_offset = Vector2( 64.0531, 15.1094 )
-texture = ExtResource( 4 )
+[node name="Ice_Button" type="Button" parent="Inventory"]
+margin_left = -53.0
+margin_top = -29.0
+margin_right = 21.0
+margin_bottom = 116.0
+rect_scale = Vector2( 0.5, 0.2 )
+flat = true
 
-[node name="Container_Text" type="Label" parent="Text_Container"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -43.9602
-margin_top = -14.668
-margin_right = 223.04
-margin_bottom = 54.332
-rect_scale = Vector2( 0.3, 0.3 )
-rect_pivot_offset = Vector2( 25.6001, 6.39996 )
-size_flags_stretch_ratio = 0.0
-custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
-custom_fonts/font = SubResource( 2 )
-text = "Press E"
-align = 1
-valign = 1
-autowrap = true
+[node name="Fire_Button" type="Button" parent="Inventory"]
+margin_left = -53.0
+margin_top = 5.0
+margin_right = 22.0
+margin_bottom = 151.0
+rect_scale = Vector2( 0.5, 0.2 )
+flat = true
 
-[node name="Character_Photo" type="TextureRect" parent="Text_Container"]
-margin_left = 8.0
-margin_top = 4.0
-margin_right = 34.0
-margin_bottom = 28.0
-rect_pivot_offset = Vector2( 13.12, 11.5999 )
-texture = ExtResource( 5 )
+[node name="Repair_Button" type="Button" parent="Inventory"]
+margin_left = -53.0
+margin_top = 40.0
+margin_right = 21.0
+margin_bottom = 185.0
+rect_scale = Vector2( 0.5, 0.2 )
+flat = true
 
 [node name="TextureProgress" type="TextureProgress" parent="."]
 anchor_top = 1.0
@@ -270,6 +267,160 @@ one_shot = true
 
 [node name="temp_below_freeze_timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Cratft_Prompt" type="ReferenceRect" parent="."]
+visible = false
+margin_left = 456.0
+margin_top = 242.0
+margin_right = 496.0
+margin_bottom = 282.0
+rect_scale = Vector2( 8, 7 )
+rect_pivot_offset = Vector2( 19.2315, 20.0756 )
+
+[node name="TextureRect" type="TextureRect" parent="Cratft_Prompt"]
+margin_left = 0.35957
+margin_top = 3.56302
+margin_right = 40.3596
+margin_bottom = 43.563
+rect_pivot_offset = Vector2( 19.3333, 18.5 )
+texture = ExtResource( 16 )
+
+[node name="Label" type="Label" parent="Cratft_Prompt"]
+margin_left = 6.0
+margin_top = 12.0
+margin_right = 164.0
+margin_bottom = 115.0
+rect_scale = Vector2( 0.17, 0.17 )
+custom_fonts/font = SubResource( 7 )
+text = "Craft temp item?
+ The cost is temp item x 0 and temp item x 0"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Yes_Craft" type="Button" parent="Cratft_Prompt"]
+margin_left = 10.9526
+margin_top = 27.7791
+margin_right = 41.9526
+margin_bottom = 49.7791
+rect_scale = Vector2( 0.2, 0.2 )
+custom_fonts/font = SubResource( 8 )
+text = "YES"
+
+[node name="No_Craft" type="Button" parent="Cratft_Prompt"]
+margin_left = 22.2025
+margin_top = 27.7791
+margin_right = 53.2025
+margin_bottom = 49.7791
+rect_scale = Vector2( 0.2, 0.2 )
+custom_fonts/font = SubResource( 8 )
+text = "NO"
+
+[node name="Bottom_Bar" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -72.0
+margin_top = -49.0
+margin_right = 72.0
+margin_bottom = -18.0
+rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 71.6836, 31.4307 )
+
+[node name="TextureRect" type="TextureRect" parent="Bottom_Bar"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -73.0
+margin_top = -31.0
+margin_right = 75.0
+margin_bottom = 1.0
+rect_pivot_offset = Vector2( 73.5, 21.1875 )
+texture = ExtResource( 17 )
+
+[node name="Wall_Use_Text" type="Label" parent="Bottom_Bar"]
+margin_left = 12.2627
+margin_top = 4.823
+margin_right = 103.263
+margin_bottom = 77.823
+rect_scale = Vector2( 0.33, 0.33 )
+custom_fonts/font = SubResource( 9 )
+text = "
+Build Ice Wall
+0 available
+"
+align = 1
+autowrap = true
+
+[node name="Fire_Use_Text" type="Label" parent="Bottom_Bar"]
+margin_left = 56.2627
+margin_top = 4.823
+margin_right = 147.263
+margin_bottom = 77.823
+rect_scale = Vector2( 0.33, 0.33 )
+custom_fonts/font = SubResource( 9 )
+text = "
+Create Fire
+0 available
+"
+align = 1
+autowrap = true
+
+[node name="Repair_Use_Text" type="Label" parent="Bottom_Bar"]
+margin_left = 100.596
+margin_top = 4.823
+margin_right = 191.596
+margin_bottom = 77.823
+rect_scale = Vector2( 0.33, 0.33 )
+custom_fonts/font = SubResource( 9 )
+text = "
+Use Repair Kit
+0 available
+"
+align = 1
+autowrap = true
+
+[node name="Text_Container" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = 41.0
+margin_right = 64.0
+margin_bottom = 73.0
+rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 64.0531, 15.1094 )
+texture = ExtResource( 4 )
+
+[node name="Container_Text" type="Label" parent="Text_Container"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -43.9602
+margin_top = -14.668
+margin_right = 223.04
+margin_bottom = 54.332
+rect_scale = Vector2( 0.3, 0.3 )
+rect_pivot_offset = Vector2( 25.6001, 6.39996 )
+size_flags_stretch_ratio = 0.0
+custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Press E"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Character_Photo" type="TextureRect" parent="Text_Container"]
+margin_left = 8.0
+margin_top = 4.0
+margin_right = 34.0
+margin_bottom = 28.0
+rect_pivot_offset = Vector2( 13.12, 11.5999 )
+texture = ExtResource( 5 )
 
 [connection signal="timeout" from="center_message_time" to="." method="_on_center_message_time_timeout"]
 [connection signal="timeout" from="temp_freezing_timer" to="." method="_on_temp_freezing_timer_timeout"]

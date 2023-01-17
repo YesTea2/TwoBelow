@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Resource",
+"class": "Inventory_Info",
+"language": "GDScript",
+"path": "res://Inventory_Items.gd"
+}, {
+"base": "Resource",
 "class": "player_variables",
 "language": "GDScript",
 "path": "res://player_info.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://weather_info.gd"
 } ]
 _global_script_class_icons={
+"Inventory_Info": "",
 "player_variables": "",
 "weather_information": ""
 }
