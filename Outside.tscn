@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/snow_tile.png" type="Texture" id=2]
@@ -7,17 +7,24 @@
 [ext_resource path="res://Building.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Main.gd" type="Script" id=6]
 [ext_resource path="res://player_var.tres" type="Resource" id=7]
+[ext_resource path="res://weather_information.tres" type="Resource" id=8]
+[ext_resource path="res://global_weather_timer.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Sounds/th.wav" type="AudioStream" id=10]
 [ext_resource path="res://Sounds/Break_Wood_01.wav" type="AudioStream" id=11]
+[ext_resource path="res://Storm_Timer.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Start_Weather_Timer.tscn" type="PackedScene" id=13]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 704, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24.5, 654.5 )
 
 [node name="Outside" type="CanvasLayer"]
 follow_viewport_enable = true
 script = ExtResource( 6 )
-snow_amount_level_two = 6000
-snow_amount_level_three = 10000
-snow_speed_level_two = 0.7
-snow_speed_level_three = 1.3
 player_var = ExtResource( 7 )
+weather_var = ExtResource( 8 )
 level_name = "Outside"
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -29,17 +36,6 @@ rect_scale = Vector2( 3.21725, 2.72856 )
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 669, 1246 )
-current = true
-zoom = Vector2( 0.3, 0.3 )
-limit_left = 40
-limit_top = 40
-limit_right = 1350
-limit_bottom = 1350
-smoothing_speed = 10.0
-editor_draw_limits = true
 
 [node name="Snow" parent="." instance=ExtResource( 3 )]
 position = Vector2( 419, -97 )
@@ -91,15 +87,45 @@ position = Vector2( 668, 1257 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 670, 1295 )
 
-[connection signal="clear_of_storm" from="." to="HUD" method="_on_Outside_clear_of_storm"]
-[connection signal="current_temp_below_freezing" from="." to="HUD" method="_on_Outside_current_temp_below_freezing"]
-[connection signal="current_temp_freezing" from="." to="HUD" method="_on_Outside_current_temp_freezing"]
-[connection signal="current_temp_normal" from="." to="HUD" method="_on_Outside_current_temp_normal"]
-[connection signal="lower_temp_fast" from="." to="HUD" method="_on_Outside_lower_temp_fast"]
-[connection signal="lower_temp_slow" from="." to="HUD" method="_on_Outside_lower_temp_slow"]
-[connection signal="raise_temp_fast" from="." to="HUD" method="_on_Outside_raise_temp_fast"]
-[connection signal="raise_temp_slow" from="." to="HUD" method="_on_Outside_raise_temp_slow"]
-[connection signal="warn_of_weather" from="." to="HUD" method="_on_Outside_warn_of_weather"]
+[node name="RemoteTransform2D" parent="Player" index="2"]
+remote_path = NodePath("../../FollowCam")
+
+[node name="global_weather_timer" parent="." instance=ExtResource( 9 )]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 670, 1295 )
+z_index = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 49, -1259 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 49, 61 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 698.5, -601.5 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -650, -601 )
+shape = SubResource( 2 )
+
+[node name="FollowCam" type="Camera2D" parent="."]
+position = Vector2( 670, 1295 )
+current = true
+zoom = Vector2( 0.35, 0.35 )
+limit_left = 40
+limit_top = 40
+limit_right = 1350
+limit_bottom = 1350
+editor_draw_limits = true
+
+[node name="Storm_Timer" parent="." instance=ExtResource( 12 )]
+
+[node name="Start_Weather_Timer" parent="." instance=ExtResource( 13 )]
 
 [editable path="HUD"]
 [editable path="Building"]
+[editable path="Player"]

@@ -1,77 +1,61 @@
 extends Node
 
-export var snow_amount_level_one = 2500
-export var snow_amount_level_two = 3500
-export var snow_amount_level_three = 4500
 
-export var snow_speed_level_one = 0.3
-export var snow_speed_level_two = 0.4
-export var snow_speed_level_three = 0.5
-export var delay_for_level_three_storm = 6
 
 var level_parameters := {
 	
 }
 
 export (Resource) var player_var
+export (Resource) var weather_var
 
 onready var snow_system : Particles2D = $Snow
-
-var is_changing_system = false;
-
-var is_level_one_storm = false
-var is_level_two_storm = false
-var is_level_three_storm = false
-var is_ready_for_level_three_storm = false
-var is_ready_for_level_one_storm = false
-var is_ready_for_level_two_storm = false
-signal lower_temp_slow
-signal lower_temp_fast
-signal raise_temp_slow
-signal raise_temp_fast
-signal warn_of_weather
-signal clear_of_storm
-signal current_temp_normal
-signal current_temp_freezing
-signal current_temp_below_freezing
-
+onready var global_weather_time : Timer = $global_weather_timer
+onready var storm_time : Timer = $Storm_Timer
+onready var start_weather_time : Timer = $Start_Weather_Timer
 signal level_changed(level_name)
 
 export (String) var level_name = "level"
 
-var can_load_again = true
-var rand_generate_time = RandomNumberGenerator.new()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_var.connect("using_door", self, "_on_Player_using_door")
-	is_changing_system = true
+	global_weather_time.connect("timeout", self, "_on_finished_changing_weather")
+	storm_time.connect("timeout", self, "finish_changing_level_three_storm")
+	start_weather_time.connect("timeout", self, "finish_starting_weather")
+	weather_var.is_changing_system = true
 	start_weather()
 
 func _process(delta):
-	if is_changing_system == false:
+	if weather_var.is_changing_system == false:
 		change_weather()
 		
-	if is_level_one_storm == true:
-		emit_signal("raise_temp_slow")
-	if is_level_two_storm == true:
-		emit_signal("lower_temp_slow")
-	if is_level_three_storm == true && is_ready_for_level_three_storm == true:
-		emit_signal("lower_temp_fast")
+	if weather_var.is_level_one_storm == true:
+		weather_var.emit_signal("raise_temp_slow")
+	if weather_var.is_level_two_storm == true:
+		weather_var.emit_signal("lower_temp_slow")
+	if weather_var.is_level_three_storm == true && weather_var.is_ready_for_level_three_storm == true:
+		weather_var.emit_signal("lower_temp_fast")
 
 func load_level_paramters(new_level_paramters: Dictionary):
 	level_parameters = new_level_paramters
 	
 
 func start_weather():
-	is_level_one_storm = true
+	weather_var.is_level_one_storm = true
 	change_storm_level_one()
 	var time = get_random_time(5,15)
-	yield(get_tree().create_timer(time), "timeout")
-	is_changing_system = false
+	start_weather_time.wait_time = time
+	start_weather_time.start()
+	
 
+func finish_starting_weather():
+	weather_var.is_changing_system = false
+	
 func change_weather():
-	is_changing_system = true
+	weather_var.is_changing_system = true
 	var number = get_random_time(1,3)
 
 	if number == 1:
@@ -82,52 +66,62 @@ func change_weather():
 		change_storm_level_three()
 	
 	var time = get_random_time(10,20)
-	yield(get_tree().create_timer(time), "timeout")
-	is_changing_system = false
+	global_weather_time.wait_time = time
+	global_weather_time.start()
 	
-
+	
+func _on_finished_changing_weather():
+	weather_var.is_changing_system = false
+	
 func change_storm_level_one():
 	print("level one storm approaching")
-	if is_level_three_storm == true:
-		emit_signal("clear_of_storm")
-		is_ready_for_level_three_storm = false
-	if is_level_one_storm == false:
-		emit_signal("current_temp_normal")
-	is_level_one_storm = true
-	is_level_two_storm = false
-	is_level_three_storm = false
-	snow_system.amount = snow_amount_level_one
-	snow_system.speed_scale = snow_speed_level_one
+	if weather_var.is_level_three_storm == true:
+		weather_var.emit_signal("clear_of_storm")
+		weather_var.is_ready_for_level_three_storm = false
+	if weather_var.is_level_one_storm == false:
+		weather_var.emit_signal("current_temp_normal")
+	weather_var.is_level_one_storm = true
+	weather_var.is_level_two_storm = false
+	weather_var.is_level_three_storm = false
+	snow_system.amount = weather_var.snow_amount_level_one
+	snow_system.speed_scale = weather_var.snow_speed_level_one
 
 func change_storm_level_two():
 	print("level two storm approaching")
-	if is_level_three_storm == true:
-		emit_signal("clear_of_storm")
-		is_ready_for_level_three_storm = false
-	if is_level_two_storm == false:
-		emit_signal("current_temp_freezing")
-	is_level_two_storm = true
-	is_level_one_storm = false
-	is_level_three_storm = false
-	snow_system.amount = snow_amount_level_two
-	snow_system.speed_scale = snow_speed_level_two
+	if weather_var.is_level_three_storm == true:
+		weather_var.emit_signal("clear_of_storm")
+		weather_var.is_ready_for_level_three_storm = false
+	if weather_var.is_level_two_storm == false:
+		weather_var.emit_signal("current_temp_freezing")
+	weather_var.is_level_two_storm = true
+	weather_var.is_level_one_storm = false
+	weather_var.is_level_three_storm = false
+	snow_system.amount = weather_var.snow_amount_level_two
+	snow_system.speed_scale = weather_var.snow_speed_level_two
 
 func change_storm_level_three():
 	print("level three storm approaching")
-	if is_level_three_storm == false:
-		emit_signal("warn_of_weather")
-		emit_signal("current_temp_below_freezing")
-		yield(get_tree().create_timer(delay_for_level_three_storm), "timeout")
-	is_ready_for_level_three_storm = true
-	is_level_three_storm = true
-	is_level_two_storm = false
-	is_level_one_storm = false
-	snow_system.amount = snow_amount_level_three
-	snow_system.speed_scale = snow_speed_level_three
+	if weather_var.is_level_three_storm == false:
+		weather_var.emit_signal("warn_of_weather")
+		weather_var.emit_signal("current_temp_below_freezing")
+		storm_time.wait_time = weather_var.delay_for_level_three_storm
+		storm_time.start()
+		weather_var.is_not_ready_for_level_three_storm = true
+		
+	if weather_var.is_not_ready_for_level_three_storm == false:
+		finish_changing_level_three_storm()
+
+func finish_changing_level_three_storm():
+	weather_var.is_ready_for_level_three_storm = true
+	weather_var.is_level_three_storm = true
+	weather_var.is_level_two_storm = false
+	weather_var.is_level_one_storm = false
+	snow_system.amount = weather_var.snow_amount_level_three
+	snow_system.speed_scale = weather_var.snow_speed_level_three
 
 func get_random_time(min_range, max_range):
-	rand_generate_time.randomize()
-	var rand_int = rand_generate_time.randi_range(min_range,max_range)
+	weather_var.rand_generate_time.randomize()
+	var rand_int = weather_var.rand_generate_time.randi_range(min_range,max_range)
 	return rand_int
 
 func _on_changeScene_requested() -> void:
@@ -139,12 +133,12 @@ func play_loaded_sound() -> void:
 func cleanup():
 	if $Door_Open_Sound.playing:
 		yield($Door_Open_Sound, "finished")
-		can_load_again = true
+		weather_var.can_load_again = true
 	queue_free()
 
 func _on_Player_using_door():
 	print("door open")
-	if can_load_again == true:
-		can_load_again = false
+	if weather_var.can_load_again == true:
+		weather_var.can_load_again = false
 		$Door_Open_Sound.play()
-		_on_changeScene_requested()
+		emit_signal("level_changed", level_name)

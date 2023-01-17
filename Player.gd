@@ -80,8 +80,8 @@ func _physics_process(delta):
 	
 	#if player_info.is_at_door == false:
 		
-		#for index in get_slide_count():
-			#var collision = get_slide_collision(index)
+	#for index in get_slide_count():
+		#var collision = get_slide_collision(index)
 			#if collision.collider.is_in_group("doors"):
 				#player_info.emit_signal("doorway_entered")
 		

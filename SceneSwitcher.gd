@@ -31,7 +31,7 @@ func handle_level_changed(current_level_name: String):
 	
 	next_level = load("res://" + next_level_name + ".tscn").instance()
 	
-	next_level.layer = -1
+	next_level.layer = -2
 	add_child(next_level)
 	anim.play("fade_in")
 	
@@ -44,7 +44,7 @@ func handle_level_changed(current_level_name: String):
 
 func transfer_data_between_scenes(old_scene, new_scene):
 	new_scene.load_level_paramters(old_scene.level_parameters)
-	pass
+
 
 #func _on_Outside_level_changed(level_name):
 	#handle_level_changed(level_name)

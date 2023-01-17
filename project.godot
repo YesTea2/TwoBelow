@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "player_variables",
 "language": "GDScript",
 "path": "res://player_info.gd"
+}, {
+"base": "Resource",
+"class": "weather_information",
+"language": "GDScript",
+"path": "res://weather_info.gd"
 } ]
 _global_script_class_icons={
-"player_variables": ""
+"player_variables": "",
+"weather_information": ""
 }
 
 [application]

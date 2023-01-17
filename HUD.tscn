@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Art/talki_profile.png" type="Texture" id=10]
 [ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://player_var.tres" type="Resource" id=12]
+[ext_resource path="res://weather_information.tres" type="Resource" id=13]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://bitpap/BitPap.ttf"
@@ -38,6 +39,7 @@ script = ExtResource( 2 )
 player_profile = ExtResource( 5 )
 walki_profile = ExtResource( 10 )
 player_var = ExtResource( 12 )
+weather_var = ExtResource( 13 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 804, 452 )
@@ -114,3 +116,20 @@ custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "Cold"
 align = 1
+
+[node name="center_message_time" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_freezing_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_normal_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_below_freeze_timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="center_message_time" to="." method="_on_center_message_time_timeout"]
+[connection signal="timeout" from="temp_freezing_timer" to="." method="_on_temp_freezing_timer_timeout"]
+[connection signal="timeout" from="temp_normal_timer" to="." method="_on_temp_normal_timer_timeout"]
+[connection signal="timeout" from="temp_below_freeze_timer" to="." method="_on_temp_below_freeze_timer_timeout"]

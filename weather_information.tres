@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://weather_info.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+snow_amount_level_one = 2500
+snow_amount_level_two = 3500
+snow_amount_level_three = 4500
+snow_speed_level_one = 0.3
+snow_speed_level_two = 0.4
+snow_speed_level_three = 0.5
+delay_for_level_three_storm = 6
+bar_value = 0

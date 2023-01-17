@@ -4,6 +4,7 @@ export var player_profile : Texture
 export var villager_profile : Texture
 export var walki_profile : Texture
 export (Resource) var player_var
+export (Resource) var weather_var
 #export var villager_profile : T
 # Declare member variables here. Examples:
 # var a = 2
@@ -11,18 +12,35 @@ export (Resource) var player_var
 onready var bar : TextureProgress = $TextureProgress
 onready var alert : AnimatedSprite = $Alert
 onready var temprature_text : Label = $temp_text
+onready var message_time : Timer = $center_message_time
+onready var temp_freeze_time : Timer = $temp_freezing_timer
+onready var temp_normal_time : Timer = $temp_normal_timer
+onready var temp_below_freeze_time : Timer = $temp_below_freeze_timer
+
 var rand_generate = RandomNumberGenerator.new()
 var giving_weather_alert = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_var.connect("doorway_entered", self, "_on_Player_doorway_entered")
 	player_var.connect("doorway_exited", self, "_on_Player_doorway_exited")
+	weather_var.connect("clear_of_storm", self, "_on_clear_of_storm")
+	weather_var.connect("current_temp_below_freezing", self, "_on_current_temp_below_freezing")
+	weather_var.connect("current_temp_freezing", self, "_on_current_temp_freezing")
+	weather_var.connect("current_temp_normal", self, "_on_current_temp_normal")
+	weather_var.connect("raise_temp_fast", self, "_on_raise_temp_fast")
+	weather_var.connect("lower_temp_fast", self, "_on_lower_temp_fast")
+	weather_var.connect("lower_temp_slow", self, "_on_lower_temp_slow")
+	weather_var.connect("raise_temp_slow", self, "_on_raise_temp_slow")
+	weather_var.connect("warn_of_weather", self, "_on_warn_of_weather")
 	
 	$Text_Container.hide()
 	$Text_Container/Container_Text.hide()
 	$Text_Container/Character_Photo.hide()
 	$Alert.hide()
 	set_percent_value_int(100)
+	
+func _process(delta):
+	bar.value = weather_var.bar_value / 2
 	
 
 func _display_center_message(message_to_display, profile, length_of_alert):
@@ -37,15 +55,10 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 		$Text_Container/Character_Photo.texture = walki_profile
 	$Text_Container/Character_Photo.show()
 	#$CenterText.show()
-	yield(get_tree().create_timer(length_of_alert), "timeout")
-	$Text_Container/Character_Photo.hide()
-	$Text_Container/Container_Text.hide()
-	$Text_Container.hide()
-	if $Alert.playing:
-		$Alert.stop()
-		$Alert.hide()
-	if giving_weather_alert == true:
-		giving_weather_alert = false
+	message_time.wait_time = length_of_alert
+	message_time.start()
+	
+	
 	#$CenterText.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -86,25 +99,25 @@ func weather_clear():
 		_display_center_message("Whew! looks like the storm has cleared, that was a doozy!", "walki", 5)
 
 func set_percent_value_int(values):
-	bar.value = values
+	weather_var.bar_value = values
 
 
-func _on_Outside_lower_temp_fast():
-	bar.value -= .02
-	print("lowering")
+func _on_lower_temp_fast():
+	weather_var.bar_value -= .02
+	print("lowering" + str(weather_var.bar_value))
 	pass
 
-func _on_Outside_lower_temp_slow():
-	bar.value -= .007
-	print("lowering")
+func _on_lower_temp_slow():
+	weather_var.bar_value -= .007
+	print("lowering" + str(weather_var.bar_value))
 	pass
 
-func _on_Outside_raise_temp_fast():
-	bar.value += .15
+func _on_raise_temp_fast():
+	weather_var.bar_value += .15
 	pass
 
-func _on_Outside_raise_temp_slow():
-	bar.value += .02
+func _on_raise_temp_slow():
+	weather_var.bar_value += .02
 	pass
 
 
@@ -135,91 +148,70 @@ func _on_Player_doorway_exited():
 
 
 
-func _on_Outside_warn_of_weather():
+func _on_warn_of_weather():
 	weather_warning()
 
 
-func _on_Outside_clear_of_storm():
+func _on_clear_of_storm():
 	weather_clear()
 
 
-func _on_Outside_current_temp_below_freezing():
-	yield(get_tree().create_timer(6), "timeout")
-	temprature_text.text = "Below Zero"
+func _on_current_temp_below_freezing():
+	temp_below_freeze_time.wait_time = 6
+	temp_below_freeze_time.start()
+	
+	
+	
 
 
 
-func _on_Outside_current_temp_freezing():
+func _on_current_temp_freezing():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
-	yield(get_tree().create_timer(2), "timeout")
-	temprature_text.text = "Freezing"
-	$Alert.stop()
-	$Alert.hide()
+	temp_freeze_time.wait_time = 2
+	temp_freeze_time.start()
+	
 
 
 
-func _on_Outside_current_temp_normal():
+func _on_current_temp_normal():
 	
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
-	yield(get_tree().create_timer(2), "timeout")
-	temprature_text.text = "Cold"
-	$Alert.stop()
-	$Alert.hide()
+	temp_normal_time.wait_time = 2
+	temp_normal_time.start()
+	
+	
 
 
 
-func _on_Inside_Building_clear_of_storm():
-	weather_clear()
 
 
-func _on_Inside_Building_current_temp_below_freezing():
-	yield(get_tree().create_timer(6), "timeout")
+
+func _on_center_message_time_timeout():
+	$Text_Container/Character_Photo.hide()
+	$Text_Container/Container_Text.hide()
+	$Text_Container.hide()
+	if $Alert.playing:
+		$Alert.stop()
+		$Alert.hide()
+	if giving_weather_alert == true:
+		giving_weather_alert = false
+
+
+func _on_temp_below_freeze_timer_timeout():
 	temprature_text.text = "Below Zero"
 
 
-func _on_Inside_Building_current_temp_freezing():
-	$Alert.show()
-	$Alert.speed_scale = .5
-	$Alert.play()
-	yield(get_tree().create_timer(2), "timeout")
+func _on_temp_freezing_timer_timeout():
 	temprature_text.text = "Freezing"
 	$Alert.stop()
 	$Alert.hide()
 
 
-func _on_Inside_Building_current_temp_normal():
-	$Alert.show()
-	$Alert.speed_scale = .5
-	$Alert.play()
-	yield(get_tree().create_timer(2), "timeout")
+func _on_temp_normal_timer_timeout():
 	temprature_text.text = "Cold"
 	$Alert.stop()
 	$Alert.hide()
-
-
-func _on_Inside_Building_lower_temp_fast():
-	bar.value -= .02
-	print("lowering")
-	pass
-
-func _on_Inside_Building_lower_temp_slow():
-	bar.value -= .007
-	print("lowering")
-	pass
-
-
-func _on_Inside_Building_raise_temp_fast():
-	bar.value += .15
-	pass
-
-func _on_Inside_Building_raise_temp_slow():
-	bar.value += .02
-	pass
-
-
-func _on_Inside_Building_warn_of_weather():
-	weather_warning()
