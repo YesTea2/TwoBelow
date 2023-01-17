@@ -4,6 +4,9 @@ class_name player_variables
 signal doorway_entered
 signal doorway_exited
 signal using_door
+signal pressing_use_wall
+signal pressing_use_fire
+signal pressing_use_repair
 
 
 var is_at_door = false

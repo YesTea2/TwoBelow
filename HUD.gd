@@ -60,7 +60,6 @@ func _ready():
 	
 func _process(delta):
 	bar.value = weather_var.bar_value / 2
-	
 
 func _display_center_message(message_to_display, profile, length_of_alert):
 	$Text_Container.show()
@@ -76,18 +75,6 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	#$CenterText.show()
 	message_time.wait_time = length_of_alert
 	message_time.start()
-	
-	
-	#$CenterText.hide()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
 func weather_warning():
 	giving_weather_alert = true
@@ -120,7 +107,6 @@ func weather_clear():
 func set_percent_value_int(values):
 	weather_var.bar_value = values
 
-
 func _on_lower_temp_fast():
 	weather_var.bar_value -= .02
 	print("lowering" + str(weather_var.bar_value))
@@ -138,8 +124,6 @@ func _on_raise_temp_fast():
 func _on_raise_temp_slow():
 	weather_var.bar_value += .02
 	pass
-
-
 
 func _on_Player_doorway_entered():
 	if giving_weather_alert == true:
@@ -164,25 +148,15 @@ func _on_Player_doorway_exited():
 	$Text_Container/Container_Text.hide()
 	pass
 	
-
-
-
 func _on_warn_of_weather():
 	weather_warning()
-
 
 func _on_clear_of_storm():
 	weather_clear()
 
-
 func _on_current_temp_below_freezing():
 	temp_below_freeze_time.wait_time = 6
 	temp_below_freeze_time.start()
-	
-	
-	
-
-
 
 func _on_current_temp_freezing():
 	$Alert.show()
@@ -190,9 +164,6 @@ func _on_current_temp_freezing():
 	$Alert.play()
 	temp_freeze_time.wait_time = 2
 	temp_freeze_time.start()
-	
-
-
 
 func _on_current_temp_normal():
 	
@@ -201,13 +172,6 @@ func _on_current_temp_normal():
 	$Alert.play()
 	temp_normal_time.wait_time = 2
 	temp_normal_time.start()
-	
-	
-
-
-
-
-
 
 func _on_center_message_time_timeout():
 	$Text_Container/Character_Photo.hide()
@@ -219,18 +183,39 @@ func _on_center_message_time_timeout():
 	if giving_weather_alert == true:
 		giving_weather_alert = false
 
-
 func _on_temp_below_freeze_timer_timeout():
 	temprature_text.text = "Below Zero"
-
 
 func _on_temp_freezing_timer_timeout():
 	temprature_text.text = "Freezing"
 	$Alert.stop()
 	$Alert.hide()
 
-
 func _on_temp_normal_timer_timeout():
 	temprature_text.text = "Cold"
 	$Alert.stop()
 	$Alert.hide()
+
+func _on_trying_to_craft_wall():
+	show_crafting_choice("Ice Wall", "Ice Brick", "none", 6, 0)
+	pass
+func _on_trying_to_craft_fire():
+	show_crafting_choice("Fire Kit", "Log", "none", 3, 0)
+	pass
+func _on_trying_to_craft_repair():
+	show_crafting_choice("Repair Kit", "Copper Pipe", "Wire", 2, 6)
+	pass
+func crafting_fire():
+	pass
+func crafting_wall():
+	pass
+func crafting_repair():
+	pass
+	
+func show_crafting_choice(type_of_item: String, item_needed : String, second_item : String, item_one_amount, item_two_amount):
+	if second_item == "none":
+		crafting_prompt_Text.text = "Craft " + "type_of_item" + "? /n The cost is " + "item_needed" + " x" + str(item_one_amount)
+	if second_item != "none":
+		crafting_prompt_Text.text = "Craft " + "type_of_item" + "? /n The cost is " + "item_needed" + " x" + str(item_one_amount) + " and " + "item_needed" + " x" + str(item_two_amount)
+	crafting_prompt_Text.show()
+	
