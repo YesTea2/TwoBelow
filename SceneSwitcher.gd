@@ -14,6 +14,7 @@ onready var anim = $AnimationPlayer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	current_level.connect("level_changed", self, "handle_level_changed")
+	current_level.play_loaded_sound()
 
 
 func handle_level_changed(current_level_name: String):
@@ -31,10 +32,10 @@ func handle_level_changed(current_level_name: String):
 	
 	next_level = load("res://" + next_level_name + ".tscn").instance()
 	
-	next_level.layer = -2
+	
+	next_level.visible = false
 	add_child(next_level)
 	anim.play("fade_in")
-	
 	next_level.connect("level_changed", self, "handle_level_changed")
 	transfer_data_between_scenes(current_level, next_level)
 	
@@ -55,7 +56,7 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 		"fade_in":
 			current_level.cleanup()
 			current_level = next_level
-			current_level.layer = 1
+			current_level.visible = true
 			next_level = null
 			anim.play("fade_out")
 		"fade_out":

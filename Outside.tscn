@@ -28,17 +28,17 @@ weather_var = ExtResource( 8 )
 level_name = "Outside"
 
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_left = -3.0
-margin_top = 3.0
-margin_right = 429.0
-margin_bottom = 514.0
+margin_left = -673.0
+margin_top = -1294.0
+margin_right = -241.0
+margin_bottom = -783.0
 rect_scale = Vector2( 3.21725, 2.72856 )
 texture = ExtResource( 2 )
 expand = true
 stretch_mode = 2
 
 [node name="Snow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 419, -97 )
+position = Vector2( -251, -1394 )
 rotation = -0.168624
 z_index = 2
 amount = 2000
@@ -48,11 +48,10 @@ randomness = 0.12
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
 [node name="TextureProgress" parent="HUD" index="2"]
-fill_mode = 3
 script = null
 
 [node name="Building" parent="." instance=ExtResource( 5 )]
-position = Vector2( 539, 1195 )
+position = Vector2( -131, -102 )
 z_index = 1
 
 [node name="DoorPos" parent="Building" index="2"]
@@ -77,15 +76,19 @@ z_index = 1
 
 [node name="Door_Open_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
+volume_db = -19.81
+pitch_scale = 1.86
 
 [node name="Door_Close_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+volume_db = -39.906
+pitch_scale = 1.71
 
 [node name="SpawnPosTest" type="Position2D" parent="."]
 position = Vector2( 668, 1257 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 670, 1295 )
+position = Vector2( 0, -61 )
 
 [node name="RemoteTransform2D" parent="Player" index="2"]
 remote_path = NodePath("../../FollowCam")
@@ -93,7 +96,7 @@ remote_path = NodePath("../../FollowCam")
 [node name="global_weather_timer" parent="." instance=ExtResource( 9 )]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 670, 1295 )
+position = Vector2( 0, -2 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -113,13 +116,13 @@ position = Vector2( -650, -601 )
 shape = SubResource( 2 )
 
 [node name="FollowCam" type="Camera2D" parent="."]
-position = Vector2( 670, 1295 )
+position = Vector2( 0, -61 )
 current = true
 zoom = Vector2( 0.35, 0.35 )
-limit_left = 40
-limit_top = 40
-limit_right = 1350
-limit_bottom = 1350
+limit_left = -650
+limit_top = -1250
+limit_right = 700
+limit_bottom = 46
 editor_draw_limits = true
 
 [node name="Storm_Timer" parent="." instance=ExtResource( 12 )]

@@ -3,7 +3,7 @@ extends Node
 
 
 var level_parameters := {
-	
+	"bar_value": 0
 }
 
 export (Resource) var player_var
@@ -25,6 +25,11 @@ func _ready():
 	global_weather_time.connect("timeout", self, "_on_finished_changing_weather")
 	storm_time.connect("timeout", self, "finish_changing_level_three_storm")
 	start_weather_time.connect("timeout", self, "finish_starting_weather")
+	
+	weather_var.connect("raise_temp_fast", self, "_on_change_bar_amount")
+	weather_var.connect("lower_temp_fast", self, "_on_change_bar_amount")
+	weather_var.connect("lower_temp_slow", self, "_on_change_bar_amount")
+	weather_var.connect("raise_temp_slow", self, "_on_change_bar_amount")
 	weather_var.is_changing_system = true
 	start_weather()
 
@@ -41,8 +46,12 @@ func _process(delta):
 
 func load_level_paramters(new_level_paramters: Dictionary):
 	level_parameters = new_level_paramters
+	weather_var.bar_value = level_parameters.bar_value
 	
 
+func _on_change_bar_amount() -> void:
+	level_parameters.bar_value = weather_var.bar_value
+	
 func start_weather():
 	weather_var.is_level_one_storm = true
 	change_storm_level_one()
@@ -133,12 +142,9 @@ func play_loaded_sound() -> void:
 func cleanup():
 	if $Door_Open_Sound.playing:
 		yield($Door_Open_Sound, "finished")
-		weather_var.can_load_again = true
 	queue_free()
 
 func _on_Player_using_door():
 	print("door open")
-	if weather_var.can_load_again == true:
-		weather_var.can_load_again = false
-		$Door_Open_Sound.play()
-		emit_signal("level_changed", level_name)
+	$Door_Open_Sound.play()
+	_on_changeScene_requested()
