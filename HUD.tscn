@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -13,11 +13,55 @@
 [ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://player_var.tres" type="Resource" id=12]
 [ext_resource path="res://weather_information.tres" type="Resource" id=13]
-[ext_resource path="res://Art/craft_panel.png" type="Texture" id=14]
-[ext_resource path="res://Art/Inventory_Panel.png" type="Texture" id=15]
-[ext_resource path="res://Art/craft_prompt.png" type="Texture" id=16]
-[ext_resource path="res://Art/Bottom_Panel.png" type="Texture" id=17]
+[ext_resource path="res://Art/craft_panel_2t.png" type="Texture" id=14]
+[ext_resource path="res://Art/Inventory_Panel_02.png" type="Texture" id=15]
+[ext_resource path="res://Art/y_button_unpressed.png" type="Texture" id=16]
+[ext_resource path="res://Art/Bottom_Panel_two.png" type="Texture" id=17]
 [ext_resource path="res://Inventory_Info.tres" type="Resource" id=18]
+[ext_resource path="res://Crafting_Promp_Timer.tscn" type="PackedScene" id=19]
+[ext_resource path="res://global_sig.tres" type="Resource" id=20]
+[ext_resource path="res://Art/n_button_pressed.png" type="Texture" id=21]
+[ext_resource path="res://Art/n_button_unpressed.png" type="Texture" id=22]
+[ext_resource path="res://Art/craft_prompt_02.png" type="Texture" id=23]
+[ext_resource path="res://Art/y_button_pressed.png" type="Texture" id=24]
+[ext_resource path="res://Art/n_button_hover.png" type="Texture" id=25]
+[ext_resource path="res://Art/y_button_hover.png" type="Texture" id=26]
+[ext_resource path="res://Art/repair_button_normal.png" type="Texture" id=27]
+[ext_resource path="res://Art/repair_button_pressed.png" type="Texture" id=28]
+[ext_resource path="res://Art/fire_button_highlight.png" type="Texture" id=29]
+[ext_resource path="res://Art/fire_button_normal.png" type="Texture" id=30]
+[ext_resource path="res://Art/Ice_wall_Button_Highlightl.png" type="Texture" id=31]
+[ext_resource path="res://Art/repair_button_highlightt.png" type="Texture" id=32]
+[ext_resource path="res://Art/fire_button_pressed.png" type="Texture" id=33]
+[ext_resource path="res://Art/Ice_wall_Button_Normal.png" type="Texture" id=34]
+[ext_resource path="res://Art/Ice_wall_Button_Pressedl.png" type="Texture" id=35]
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=6]
+outline_size = 1
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=4]
+outline_size = 2
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=9]
+outline_size = 1
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://bitpap/BitPap.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -27,35 +71,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="DynamicFont" id=5]
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=6]
-outline_size = 2
-outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=4]
-size = 23
-outline_size = 2
-outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=7]
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=8]
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=9]
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFontData" id=1]
-font_path = "res://bitpap/BitPap.ttf"
-
-[sub_resource type="DynamicFont" id=2]
-font_data = SubResource( 1 )
-
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
 player_profile = ExtResource( 5 )
@@ -63,268 +78,23 @@ walki_profile = ExtResource( 10 )
 player_var = ExtResource( 12 )
 weather_var = ExtResource( 13 )
 inventory_var = ExtResource( 18 )
+global_signal = ExtResource( 20 )
 
 [node name="Sprite2" type="Sprite" parent="."]
-position = Vector2( 804, 452 )
-scale = Vector2( 3, 3 )
+position = Vector2( 392, 943 )
+scale = Vector2( 7, 7 )
 texture = ExtResource( 3 )
 
-[node name="Alert" type="AnimatedSprite" parent="."]
-position = Vector2( 802, 404 )
-scale = Vector2( 6.875, 6.875 )
-frames = SubResource( 3 )
-animation = "alert"
-
-[node name="Inventory" type="ReferenceRect" parent="."]
-visible = false
+[node name="Bottom_Bar" type="ReferenceRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-rect_scale = Vector2( 3, 3 )
-rect_pivot_offset = Vector2( 20.5, 21 )
-
-[node name="TextureRect" type="TextureRect" parent="Inventory"]
-margin_left = 0.125
-margin_top = -19.75
-margin_right = 98.125
-margin_bottom = 62.25
-texture = ExtResource( 15 )
-
-[node name="TextureRect2" type="TextureRect" parent="Inventory"]
-margin_left = -67.875
-margin_top = -39.5
-margin_right = 1.125
-margin_bottom = 80.5
-texture = ExtResource( 14 )
-
-[node name="Ice_Block_Amount" type="Label" parent="Inventory"]
-margin_left = -0.125
-margin_top = 3.0
-margin_right = 99.875
-margin_bottom = 22.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Ice Block x 00"
-align = 1
-valign = 1
-
-[node name="Log_Amount" type="Label" parent="Inventory"]
-margin_left = 42.875
-margin_top = 3.0
-margin_right = 142.875
-margin_bottom = 22.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Log x 00"
-align = 1
-valign = 1
-
-[node name="Pipe_Amount" type="Label" parent="Inventory"]
-margin_left = -0.125
-margin_top = 38.0
-margin_right = 99.875
-margin_bottom = 57.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Copper Pipe x 00"
-align = 1
-valign = 1
-
-[node name="Wire_Amount" type="Label" parent="Inventory"]
-margin_left = 42.875
-margin_top = 38.0
-margin_right = 142.875
-margin_bottom = 57.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Wire x 00"
-align = 1
-valign = 1
-
-[node name="Repair_Craft_Text" type="Label" parent="Inventory"]
-margin_left = -62.125
-margin_top = 54.0
-margin_right = 37.875
-margin_bottom = 73.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Repair Kit"
-align = 1
-valign = 1
-
-[node name="Fire_Kit_Text" type="Label" parent="Inventory"]
-margin_left = -62.125
-margin_top = 19.0
-margin_right = 37.875
-margin_bottom = 38.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Fire Kit"
-align = 1
-valign = 1
-
-[node name="Ice_Wall_Text" type="Label" parent="Inventory"]
-margin_left = -62.125
-margin_top = -15.0
-margin_right = 37.875
-margin_bottom = 4.0
-rect_scale = Vector2( 0.25, 0.25 )
-rect_pivot_offset = Vector2( 20.4167, 7.5 )
-custom_fonts/font = SubResource( 5 )
-text = "Ice Wall"
-align = 1
-valign = 1
-
-[node name="Label" type="Label" parent="Inventory"]
-margin_left = -54.375
-margin_top = -44.0
-margin_right = 27.625
-margin_bottom = -28.0
-rect_scale = Vector2( 0.5, 0.5 )
-custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
-custom_fonts/font = SubResource( 6 )
-text = "CRAFTING MENU"
-
-[node name="Label2" type="Label" parent="Inventory"]
-margin_left = 28.875
-margin_top = -26.25
-margin_right = 110.875
-margin_bottom = -10.25
-rect_scale = Vector2( 0.5, 0.5 )
-custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
-custom_fonts/font = SubResource( 6 )
-text = "Inventory"
-align = 1
-
-[node name="Ice_Button" type="Button" parent="Inventory"]
-margin_left = -53.0
-margin_top = -29.0
-margin_right = 21.0
-margin_bottom = 116.0
-rect_scale = Vector2( 0.5, 0.2 )
-flat = true
-
-[node name="Fire_Button" type="Button" parent="Inventory"]
-margin_left = -53.0
-margin_top = 5.0
-margin_right = 22.0
-margin_bottom = 151.0
-rect_scale = Vector2( 0.5, 0.2 )
-flat = true
-
-[node name="Repair_Button" type="Button" parent="Inventory"]
-margin_left = -53.0
-margin_top = 40.0
-margin_right = 21.0
-margin_bottom = 185.0
-rect_scale = Vector2( 0.5, 0.2 )
-flat = true
-
-[node name="TextureProgress" type="TextureProgress" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 849.0
-margin_top = -168.0
-margin_right = 913.0
-margin_bottom = -40.0
-rect_pivot_offset = Vector2( 31, 64 )
-step = 0.0
-texture_over = ExtResource( 7 )
-texture_progress = ExtResource( 8 )
-fill_mode = 3
-script = ExtResource( 1 )
-
-[node name="temp_text" type="Label" parent="."]
-margin_left = 773.0
-margin_top = 505.0
-margin_right = 992.0
-margin_bottom = 529.0
-rect_pivot_offset = Vector2( 105, 11 )
-custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "Cold"
-align = 1
-
-[node name="center_message_time" type="Timer" parent="."]
-one_shot = true
-
-[node name="temp_freezing_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="temp_normal_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="temp_below_freeze_timer" type="Timer" parent="."]
-one_shot = true
-
-[node name="Cratft_Prompt" type="ReferenceRect" parent="."]
-margin_left = 456.0
-margin_top = 242.0
-margin_right = 496.0
-margin_bottom = 282.0
-rect_scale = Vector2( 8, 7 )
-rect_pivot_offset = Vector2( 19.2315, 20.0756 )
-
-[node name="TextureRect" type="TextureRect" parent="Cratft_Prompt"]
-margin_left = 0.35957
-margin_top = 3.56302
-margin_right = 40.3596
-margin_bottom = 43.563
-rect_pivot_offset = Vector2( 19.3333, 18.5 )
-texture = ExtResource( 16 )
-
-[node name="Label" type="Label" parent="Cratft_Prompt"]
-margin_left = 6.0
-margin_top = 12.0
-margin_right = 164.0
-margin_bottom = 115.0
-rect_scale = Vector2( 0.17, 0.17 )
-custom_fonts/font = SubResource( 7 )
-text = "Craft temp item?
- The cost is temp item x 0 and temp item x 0"
-align = 1
-valign = 1
-autowrap = true
-
-[node name="Yes_Craft" type="Button" parent="Cratft_Prompt"]
-margin_left = 10.9526
-margin_top = 27.7791
-margin_right = 41.9526
-margin_bottom = 49.7791
-rect_scale = Vector2( 0.2, 0.2 )
-custom_fonts/font = SubResource( 8 )
-text = "YES"
-
-[node name="No_Craft" type="Button" parent="Cratft_Prompt"]
-margin_left = 22.2025
-margin_top = 27.7791
-margin_right = 53.2025
-margin_bottom = 49.7791
-rect_scale = Vector2( 0.2, 0.2 )
-custom_fonts/font = SubResource( 8 )
-text = "NO"
-
-[node name="Bottom_Bar" type="ReferenceRect" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
 margin_left = -72.0
-margin_top = -49.0
+margin_top = 488.0
 margin_right = 72.0
-margin_bottom = -18.0
-rect_scale = Vector2( 4, 4 )
+margin_bottom = 519.0
+rect_scale = Vector2( 6, 6 )
 rect_pivot_offset = Vector2( 71.6836, 31.4307 )
 
 [node name="TextureRect" type="TextureRect" parent="Bottom_Bar"]
@@ -339,47 +109,339 @@ margin_bottom = 1.0
 rect_pivot_offset = Vector2( 73.5, 21.1875 )
 texture = ExtResource( 17 )
 
-[node name="Wall_Use_Text" type="Label" parent="Bottom_Bar"]
-margin_left = 12.2627
-margin_top = 4.823
-margin_right = 103.263
-margin_bottom = 77.823
-rect_scale = Vector2( 0.33, 0.33 )
-custom_fonts/font = SubResource( 9 )
-text = "
-Build Ice Wall
-0 available
-"
-align = 1
-autowrap = true
+[node name="Inventory" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 47.0
+margin_top = -45.0
+margin_right = 87.0
+margin_bottom = -5.0
+rect_scale = Vector2( 6, 6 )
+rect_pivot_offset = Vector2( 20.5, 21 )
 
-[node name="Fire_Use_Text" type="Label" parent="Bottom_Bar"]
-margin_left = 56.2627
-margin_top = 4.823
-margin_right = 147.263
-margin_bottom = 77.823
-rect_scale = Vector2( 0.33, 0.33 )
-custom_fonts/font = SubResource( 9 )
-text = "
-Create Fire
-0 available
-"
-align = 1
-autowrap = true
+[node name="TextureRect" type="TextureRect" parent="Inventory"]
+margin_left = 1.0
+margin_top = -27.1666
+margin_right = 99.0
+margin_bottom = 54.8334
+texture = ExtResource( 15 )
 
-[node name="Repair_Use_Text" type="Label" parent="Bottom_Bar"]
-margin_left = 100.596
-margin_top = 4.823
-margin_right = 191.596
-margin_bottom = 77.823
-rect_scale = Vector2( 0.33, 0.33 )
-custom_fonts/font = SubResource( 9 )
-text = "
-Use Repair Kit
-0 available
-"
+[node name="Ice_Block_Amount" type="Label" parent="Inventory"]
+margin_left = 0.687469
+margin_top = -3.625
+margin_right = 100.687
+margin_bottom = 15.375
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Ice Blocks: 0"
 align = 1
+valign = 1
+uppercase = true
+
+[node name="Log_Amount" type="Label" parent="Inventory"]
+margin_left = 43.6875
+margin_top = -3.625
+margin_right = 143.688
+margin_bottom = 15.375
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Logs: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Pipe_Amount" type="Label" parent="Inventory"]
+margin_left = 0.687469
+margin_top = 31.375
+margin_right = 100.687
+margin_bottom = 50.375
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Copper Pipes: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Wire_Amount" type="Label" parent="Inventory"]
+margin_left = 43.6875
+margin_top = 31.375
+margin_right = 143.688
+margin_bottom = 50.375
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Wires: 0"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label2" type="Label" parent="Inventory"]
+margin_left = 4.875
+margin_top = -32.6667
+margin_right = 184.875
+margin_bottom = -16.6667
+rect_scale = Vector2( 0.5, 0.5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Inventory"
+align = 1
+
+[node name="Crafting_Holder" type="ReferenceRect" parent="."]
+margin_left = 579.0
+margin_top = 281.0
+margin_right = 619.0
+margin_bottom = 321.0
+rect_scale = Vector2( 6, 6 )
+
+[node name="TextureRect2" type="TextureRect" parent="Crafting_Holder"]
+margin_left = -17.25
+margin_top = -26.4072
+margin_right = 51.75
+margin_bottom = 93.5928
+texture = ExtResource( 14 )
+
+[node name="Repair_Button" type="TextureButton" parent="Crafting_Holder"]
+margin_left = -1.66666
+margin_top = -15.3333
+margin_right = 35.3333
+margin_bottom = 13.6667
+texture_normal = ExtResource( 27 )
+texture_pressed = ExtResource( 28 )
+texture_hover = ExtResource( 32 )
+
+[node name="Ice_Button" type="TextureButton" parent="Crafting_Holder"]
+margin_left = -1.66666
+margin_top = 53.6667
+margin_right = 35.3333
+margin_bottom = 82.6667
+texture_normal = ExtResource( 34 )
+texture_pressed = ExtResource( 35 )
+texture_hover = ExtResource( 31 )
+
+[node name="Fire_Button" type="TextureButton" parent="Crafting_Holder"]
+margin_left = -1.66666
+margin_top = 19.0
+margin_right = 35.3333
+margin_bottom = 48.0
+texture_normal = ExtResource( 30 )
+texture_pressed = ExtResource( 33 )
+texture_hover = ExtResource( 29 )
+
+[node name="Repair_Craft_Text" type="Label" parent="Crafting_Holder"]
+margin_left = -11.0
+margin_top = -0.666672
+margin_right = 89.0
+margin_bottom = 18.3333
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Repair Kit"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Fire_Kit_Text" type="Label" parent="Crafting_Holder"]
+margin_left = -11.0
+margin_top = 33.6667
+margin_right = 89.0
+margin_bottom = 52.6667
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Fire Kit"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Ice_Wall_Text" type="Label" parent="Crafting_Holder"]
+margin_left = -11.6458
+margin_top = 68.375
+margin_right = 88.3542
+margin_bottom = 87.375
+rect_scale = Vector2( 0.25, 0.25 )
+rect_pivot_offset = Vector2( 20.4167, 7.5 )
+custom_colors/font_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Ice Wall"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label" type="Label" parent="Crafting_Holder"]
+margin_left = -10.0
+margin_top = -29.6667
+margin_right = 100.0
+margin_bottom = -13.6667
+rect_scale = Vector2( 0.5, 0.5 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "CRAFTING"
+align = 1
+
+[node name="TextureProgress" type="TextureProgress" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 1505.0
+margin_top = -246.0
+margin_right = 1569.0
+margin_bottom = -118.0
+rect_scale = Vector2( 2.5, 2.5 )
+rect_pivot_offset = Vector2( 31, 64 )
+step = 0.0
+texture_over = ExtResource( 7 )
+texture_progress = ExtResource( 8 )
+fill_mode = 3
+script = ExtResource( 1 )
+
+[node name="temp_text" type="Label" parent="."]
+margin_left = 1511.0
+margin_top = 1030.0
+margin_right = 1572.0
+margin_bottom = 1046.0
+rect_scale = Vector2( 3, 3 )
+rect_pivot_offset = Vector2( 31.0493, 7.96298 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Cold"
+align = 1
+valign = 1
+
+[node name="center_message_time" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_freezing_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_normal_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="temp_below_freeze_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Cratft_Prompt" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 229.0
+margin_top = -101.0
+margin_right = 269.0
+margin_bottom = -61.0
+rect_scale = Vector2( 4, 4 )
+rect_pivot_offset = Vector2( 19.2315, 20.0756 )
+
+[node name="TextureRect" type="TextureRect" parent="Cratft_Prompt"]
+margin_left = -58.3842
+margin_top = -41.9622
+margin_right = 97.6158
+margin_bottom = 90.0378
+rect_pivot_offset = Vector2( 19.3333, 18.5 )
+texture = ExtResource( 23 )
+
+[node name="Label" type="Label" parent="Cratft_Prompt"]
+margin_left = -30.0
+margin_top = -14.0
+margin_right = 133.0
+margin_bottom = 73.0
+rect_scale = Vector2( 0.6, 0.6 )
+custom_fonts/font = SubResource( 7 )
+text = "Craft temp item?
+ The cost is temp item x 0 and temp item x 0"
+align = 1
+valign = 1
 autowrap = true
+uppercase = true
+
+[node name="Yes_Craft" type="TextureButton" parent="Cratft_Prompt"]
+margin_left = -30.3842
+margin_top = 33.5378
+margin_right = 9.61575
+margin_bottom = 61.5378
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 24 )
+texture_hover = ExtResource( 26 )
+
+[node name="No_Craft" type="TextureButton" parent="Cratft_Prompt"]
+margin_left = 30.1158
+margin_top = 33.5378
+margin_right = 70.1158
+margin_bottom = 61.5378
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 21 )
+texture_hover = ExtResource( 25 )
+
+[node name="Crafting_Promp_Timer" parent="." instance=ExtResource( 19 )]
+
+[node name="Wall_Use_Text" type="Label" parent="."]
+margin_left = 734.0
+margin_top = 898.0
+margin_right = 754.0
+margin_bottom = 914.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 1
+
+[node name="Fire_Use_Text" type="Label" parent="."]
+margin_left = 998.0
+margin_top = 897.0
+margin_right = 1018.0
+margin_bottom = 913.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 1
+
+[node name="Repair_Use_Text" type="Label" parent="."]
+margin_left = 1262.0
+margin_top = 898.0
+margin_right = 1282.0
+margin_bottom = 914.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 1
+
+[node name="Use_1" type="Label" parent="."]
+margin_left = 660.0
+margin_top = 1011.0
+margin_right = 680.0
+margin_bottom = 1027.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "1"
+align = 1
+
+[node name="Use_2" type="Label" parent="."]
+margin_left = 929.0
+margin_top = 1012.0
+margin_right = 949.0
+margin_bottom = 1028.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "2"
+align = 1
+
+[node name="Use_3" type="Label" parent="."]
+margin_left = 1198.0
+margin_top = 1011.0
+margin_right = 1218.0
+margin_bottom = 1027.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 9 )
+text = "3"
+align = 1
 
 [node name="Text_Container" type="TextureRect" parent="."]
 visible = false
@@ -387,11 +449,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -64.0
-margin_top = 41.0
-margin_right = 64.0
-margin_bottom = 73.0
-rect_scale = Vector2( 4, 4 )
+margin_left = -52.0
+margin_top = 151.0
+margin_right = 76.0
+margin_bottom = 183.0
+rect_scale = Vector2( 8, 8 )
 rect_pivot_offset = Vector2( 64.0531, 15.1094 )
 texture = ExtResource( 4 )
 
@@ -400,14 +462,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -43.9602
-margin_top = -14.668
-margin_right = 223.04
-margin_bottom = 54.332
-rect_scale = Vector2( 0.3, 0.3 )
+margin_left = -46.0
+margin_top = -17.0
+margin_right = 294.0
+margin_bottom = 80.0
+rect_scale = Vector2( 0.25, 0.25 )
 rect_pivot_offset = Vector2( 25.6001, 6.39996 )
 size_flags_stretch_ratio = 0.0
-custom_colors/font_color = Color( 0.964706, 0.792157, 0.623529, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Press E"
 align = 1
@@ -422,7 +484,19 @@ margin_bottom = 28.0
 rect_pivot_offset = Vector2( 13.12, 11.5999 )
 texture = ExtResource( 5 )
 
+[node name="Alert" type="AnimatedSprite" parent="."]
+position = Vector2( 371, 819 )
+scale = Vector2( 9, 9 )
+frames = SubResource( 3 )
+animation = "alert"
+
+[connection signal="pressed" from="Crafting_Holder/Repair_Button" to="." method="_on_Repair_Button_pressed"]
+[connection signal="pressed" from="Crafting_Holder/Ice_Button" to="." method="_on_Ice_Button_pressed"]
+[connection signal="pressed" from="Crafting_Holder/Fire_Button" to="." method="_on_Fire_Button_pressed"]
 [connection signal="timeout" from="center_message_time" to="." method="_on_center_message_time_timeout"]
 [connection signal="timeout" from="temp_freezing_timer" to="." method="_on_temp_freezing_timer_timeout"]
 [connection signal="timeout" from="temp_normal_timer" to="." method="_on_temp_normal_timer_timeout"]
 [connection signal="timeout" from="temp_below_freeze_timer" to="." method="_on_temp_below_freeze_timer_timeout"]
+[connection signal="pressed" from="Cratft_Prompt/Yes_Craft" to="." method="_on_Yes_Craft_pressed"]
+[connection signal="pressed" from="Cratft_Prompt/No_Craft" to="." method="_on_No_Craft_pressed"]
+[connection signal="timeout" from="Crafting_Promp_Timer" to="." method="_on_Crafting_Promp_Timer_timeout"]

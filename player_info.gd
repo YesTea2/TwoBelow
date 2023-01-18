@@ -7,7 +7,7 @@ signal using_door
 signal pressing_use_wall
 signal pressing_use_fire
 signal pressing_use_repair
-
+signal is_opening_inventory
 
 var is_at_door = false
 var is_waiting = false

@@ -1,10 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Outside.tscn" type="PackedScene" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Node
-"
+[ext_resource path="res://SceneSwitcher.gd" type="Script" id=2]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -54,7 +51,7 @@ tracks/0/keys = {
 }
 
 [node name="scene_change" type="Node"]
-script = SubResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Main" parent="." instance=ExtResource( 1 )]
 

@@ -47,7 +47,7 @@ randomness = 0.12
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
 
-[node name="TextureProgress" parent="HUD" index="2"]
+[node name="TextureProgress" parent="HUD" index="4"]
 script = null
 
 [node name="Building" parent="." instance=ExtResource( 5 )]
@@ -118,7 +118,7 @@ shape = SubResource( 2 )
 [node name="FollowCam" type="Camera2D" parent="."]
 position = Vector2( 0, -61 )
 current = true
-zoom = Vector2( 0.35, 0.35 )
+zoom = Vector2( 0.15, 0.15 )
 limit_left = -650
 limit_top = -1250
 limit_right = 700

@@ -125,13 +125,15 @@ func _on_Area2D_area_exited(area):
 
 
 func _input(event):
-	if player_info.is_at_door == true:
-		if event.is_action_pressed("use"):
+	
+	if event.is_action_pressed("use"):
+		if player_info.is_at_door == true:
 			player_info.emit_signal("using_door")
 			if player_info.is_inside == false:
 				player_info.is_inside = true
 			elif player_info.is_inside == true:
 				player_info.is_inside = false
 			print("Using Door")
-		
-
+	elif event.is_action_pressed("open_inventory"):
+		print("opening inventory")
+		player_info.emit_signal("is_opening_inventory")

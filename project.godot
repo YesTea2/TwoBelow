@@ -15,6 +15,16 @@ _global_script_classes=[ {
 "path": "res://Inventory_Items.gd"
 }, {
 "base": "Resource",
+"class": "Searchable_Object",
+"language": "GDScript",
+"path": "res://Searchable.gd"
+}, {
+"base": "Resource",
+"class": "global_signal",
+"language": "GDScript",
+"path": "res://global_signals.gd"
+}, {
+"base": "Resource",
 "class": "player_variables",
 "language": "GDScript",
 "path": "res://player_info.gd"
@@ -26,6 +36,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Inventory_Info": "",
+"Searchable_Object": "",
+"global_signal": "",
 "player_variables": "",
 "weather_information": ""
 }
@@ -37,8 +49,9 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=960
-window/size/height=540
+window/size/width=1920
+window/size/height=1080
+window/size/fullscreen=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
