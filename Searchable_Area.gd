@@ -1,10 +1,5 @@
 extends Area2D
 
-export var wood_holder = false
-export var ice_holder = false
-export var wire_holder = false
-export var pipe_holder = false
-
 export (Resource) var global_signal
 export (Resource) var search_var
 # search_var = load("res://searchables//searchable.gd).instance()
@@ -29,11 +24,11 @@ func give_item():
 		var amount = search_var.ice_amount
 		global_signal.emit_signal("on_give_item","ice", amount)
 		pass
-	if search_var.contains_pipe == true:
+	if search_var.has_pipe == true:
 		var amount = search_var.pipe_amount
 		global_signal.emit_signal("on_give_item","pipe", amount)
 		pass
-	if search_var.contains_wire == true:
+	if search_var.has_wire == true:
 		var amount = search_var.wire_amount
 		global_signal.emit_signal("on_give_item","wire", amount)
 		pass
