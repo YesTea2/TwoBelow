@@ -6,7 +6,7 @@ export var walki_profile : Texture
 export (Resource) var player_var
 export (Resource) var weather_var
 export (Resource) var inventory_var
-export (Resource) var global_signal
+
 #export var villager_profile : T
 # Declare member variables here. Examples:
 # var a = 2
@@ -55,9 +55,9 @@ var rand_generate = RandomNumberGenerator.new()
 var giving_weather_alert = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	player_var.connect("doorway_entered", self, "_on_Player_doorway_entered")
-	player_var.connect("doorway_exited", self, "_on_Player_doorway_exited")
-	player_var.connect("is_opening_inventory", self,  "_on_opening_inventory")
+	Signals.connect("doorway_entered", self, "_on_Player_doorway_entered")
+	Signals.connect("doorway_exited", self, "_on_Player_doorway_exited")
+	Signals.connect("is_opening_inventory", self,  "_on_opening_inventory")
 	weather_var.connect("clear_of_storm", self, "_on_clear_of_storm")
 	weather_var.connect("current_temp_below_freezing", self, "_on_current_temp_below_freezing")
 	weather_var.connect("current_temp_freezing", self, "_on_current_temp_freezing")
@@ -67,7 +67,9 @@ func _ready():
 	weather_var.connect("lower_temp_slow", self, "_on_lower_temp_slow")
 	weather_var.connect("raise_temp_slow", self, "_on_raise_temp_slow")
 	weather_var.connect("warn_of_weather", self, "_on_warn_of_weather")
-	global_signal.connect("on_give_item", self, "_on_give_resource")
+	Signals.connect("on_next_to_searchable", self, "_on_show_searchable")
+	Signals.connect("on_give_item", self, "_on_give_resource")
+	Signals.connect("on_closed_container", self, "_on_close_chat_box")
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
 	_on_update_bottom_amount("repair")
@@ -97,8 +99,35 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 		$Text_Container/Character_Photo.texture = walki_profile
 	$Text_Container/Character_Photo.show()
 	#$CenterText.show()
-	message_time.wait_time = length_of_alert
-	message_time.start()
+	if length_of_alert != 99:
+		message_time.wait_time = length_of_alert
+		message_time.start()
+	
+func _on_show_searchable(search_var):
+	
+	#var scrip = script.script_var
+	if search_var.is_cab == true:
+		GlobalVariables.is_searching_drawer = true
+		_display_center_message("Search the cabinet?.  Press E to open", "Player", 99)
+		pass
+	if search_var.is_fireplace == true:
+		GlobalVariables.is_searching_drawer = true
+		_display_center_message("Search the fireplace?.  Press E to open", "Player",  99)
+		pass
+	if search_var.is_fridge == true:
+		GlobalVariables.is_searching_drawer = true
+		_display_center_message("Search the fridge?.  Press E to open", "Player", 99)
+		pass
+	if search_var.is_nightstand == true:
+		GlobalVariables.is_searching_drawer = true
+		_display_center_message("Search the nightstand?.  Press E to open", "Player", 99)
+		pass
+	
+	
+	#is_cab = false
+	#is_fireplace = false
+	#is_fridge = false
+	#is_nightstand = false
 
 func _on_give_resource(type, amount):
 	if type =="ice":
@@ -172,23 +201,34 @@ func _on_Player_doorway_entered():
 		return
 	rand_generate.randomize()
 	var rand_int = rand_generate.randi_range(1,4)
-	if rand_int == 1:
-		_display_center_message("Should I go inside? \n \n Press E to enter", "Player", 10)
-	if rand_int == 2:
-		_display_center_message("There may be things of use inside. \n \n Press E to enter", "Player", 10)
-	if rand_int ==3:
-		_display_center_message("I can go inside to escape the cold. \n \n Press E to enter", "Player", 10)
-	if rand_int ==4:
-		_display_center_message("I could find generator parts inside. \n \n Press E to enter", "Player", 10)
-	pass
+	if GlobalVariables.is_outside == true:
+		if rand_int == 1:
+			_display_center_message("Should I go inside? \n \n Press E to enter", "Player", 10)
+		if rand_int == 2:
+			_display_center_message("There may be things of use inside. \n \n Press E to enter", "Player", 10)
+		if rand_int ==3:
+			_display_center_message("I can go inside to escape the cold. \n \n Press E to enter", "Player", 10)
+		if rand_int ==4:
+			_display_center_message("I could find generator parts inside. \n \n Press E to enter", "Player", 10)
+		pass
+	if GlobalVariables.is_inside == true:
+		if rand_int == 1:
+			_display_center_message("Should I go back outside? \n \n Press E to exit", "Player", 10)
+		if rand_int == 2:
+			_display_center_message("I guess I should head back out. \n \n Press E to exit", "Player", 10)
+		if rand_int ==3:
+			_display_center_message("I should get back to fixing the generators. \n \n Press E to exit", "Player", 10)
+		if rand_int ==4:
+			_display_center_message("The town owes me hotcoco after this. \n \n Press E to exit", "Player", 10)
+		pass
 	
 func _on_Player_doorway_exited():
 	if giving_weather_alert == true:
 		return
 	$Text_Container.hide()
-	$Text_Container/Character_Photo.hide()
-	$Text_Container/Container_Text.hide()
 	pass
+func _on_close_chat_box():
+	$Text_Container.hide()
 	
 func _on_warn_of_weather():
 	weather_warning()

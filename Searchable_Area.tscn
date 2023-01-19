@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Searchable_Area.gd" type="Script" id=1]
-[ext_resource path="res://global_sig.tres" type="Resource" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
@@ -10,7 +9,6 @@ extents = Vector2( 38, 9 )
 [node name="Searchable_Area" type="Area2D"]
 z_index = 1
 script = ExtResource( 1 )
-global_signal = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

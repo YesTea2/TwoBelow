@@ -9,6 +9,11 @@ export var contains_ice = false
 export var contains_wire = false
 export var contains_repair = false
 
+export var is_cab = false
+export var is_fireplace = false
+export var is_fridge = false
+export var is_nightstand = false
+
 var has_wire = false
 var has_pipe = false
 export var log_amount = 0

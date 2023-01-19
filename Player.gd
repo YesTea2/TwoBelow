@@ -108,32 +108,40 @@ func handle_player_part(part, time_for, type_of_ground):
 
 func _on_finish_waiting_for_part():
 	player_info.is_waiting = false;
+	
 func _on_Area2D_area_entered(area):
-	if player_info.is_at_door == false:
+	if GlobalVariables.is_at_door == false:
 		if area.name == "Doorway":
-			player_info.is_at_door = true;
+			GlobalVariables.is_at_door = true;
 			print("colliding")
-			player_info.emit_signal("doorway_entered")
+			Signals.emit_signal("doorway_entered")
+			pass
+	if area.name.begins_with("Search"):
+		var search_var = area.search_var
+		print("colliding")
+		Signals.emit_signal("on_next_to_searchable", search_var)
 
 
 
 func _on_Area2D_area_exited(area):
-	if player_info.is_at_door == true:
+	if GlobalVariables.is_at_door == true:
 		if area.name == "Doorway":
-			player_info.is_at_door = false
-			player_info.emit_signal("doorway_exited")
-
+			GlobalVariables.is_at_door = false
+			Signals.emit_signal("doorway_exited")
+			pass
+	if area.name.begins_with("Search"):
+		Signals.emit_signal("on_closed_container")
 
 func _input(event):
 	
 	if event.is_action_pressed("use"):
-		if player_info.is_at_door == true:
+		if GlobalVariables.is_at_door == true:
 			player_info.emit_signal("using_door")
-			if player_info.is_inside == false:
-				player_info.is_inside = true
-			elif player_info.is_inside == true:
-				player_info.is_inside = false
+			if GlobalVariables.is_inside == false:
+				GlobalVariables.is_inside = true
+			elif GlobalVariables.is_inside == true:
+				GlobalVariables.is_inside = false
 			print("Using Door")
 	elif event.is_action_pressed("open_inventory"):
 		print("opening inventory")
-		player_info.emit_signal("is_opening_inventory")
+		Signals.emit_signal("is_opening_inventory")

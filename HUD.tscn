@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -19,7 +19,6 @@
 [ext_resource path="res://Art/Bottom_Panel_two.png" type="Texture" id=17]
 [ext_resource path="res://Inventory_Info.tres" type="Resource" id=18]
 [ext_resource path="res://Crafting_Promp_Timer.tscn" type="PackedScene" id=19]
-[ext_resource path="res://global_sig.tres" type="Resource" id=20]
 [ext_resource path="res://Art/n_button_pressed.png" type="Texture" id=21]
 [ext_resource path="res://Art/n_button_unpressed.png" type="Texture" id=22]
 [ext_resource path="res://Art/craft_prompt_02.png" type="Texture" id=23]
@@ -78,7 +77,6 @@ walki_profile = ExtResource( 10 )
 player_var = ExtResource( 12 )
 weather_var = ExtResource( 13 )
 inventory_var = ExtResource( 18 )
-global_signal = ExtResource( 20 )
 
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 265, 943 )

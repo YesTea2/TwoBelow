@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/Inside_Building_01.png" type="Texture" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://Searchable_Area.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Searchables/cab_1.tres" type="Resource" id=15]
 [ext_resource path="res://Searchables/stand_1.tres" type="Resource" id=16]
+[ext_resource path="res://player_var.tres" type="Resource" id=17]
+[ext_resource path="res://weather_information.tres" type="Resource" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 60, 1.5 )
@@ -63,6 +65,9 @@ extents = Vector2( 5, 9 )
 [node name="Inside_Building" type="CanvasLayer"]
 follow_viewport_enable = true
 script = ExtResource( 5 )
+player_var = ExtResource( 17 )
+weather_var = ExtResource( 18 )
+level_name = "Inside_Building"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -303.0

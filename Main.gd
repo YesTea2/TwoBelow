@@ -25,7 +25,6 @@ func _ready():
 	global_weather_time.connect("timeout", self, "_on_finished_changing_weather")
 	storm_time.connect("timeout", self, "finish_changing_level_three_storm")
 	start_weather_time.connect("timeout", self, "finish_starting_weather")
-	
 	weather_var.connect("raise_temp_fast", self, "_on_change_bar_amount")
 	weather_var.connect("lower_temp_fast", self, "_on_change_bar_amount")
 	weather_var.connect("lower_temp_slow", self, "_on_change_bar_amount")

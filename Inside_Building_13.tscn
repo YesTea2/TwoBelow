@@ -41,12 +41,12 @@ extents = Vector2( 4, 18 )
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 3, 9 )
 
-[node name="Inside_Building" type="CanvasLayer"]
+[node name="Inside_Building_13" type="CanvasLayer"]
 follow_viewport_enable = true
 script = ExtResource( 5 )
 player_var = ExtResource( 6 )
 weather_var = ExtResource( 7 )
-level_name = "Inside_Building"
+level_name = "Inside_Building_13"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -303.0

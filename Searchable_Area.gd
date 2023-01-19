@@ -1,6 +1,6 @@
 extends Area2D
 
-export (Resource) var global_signal
+
 export (Resource) var search_var
 # search_var = load("res://searchables//searchable.gd).instance()
 # next_level = load("res://" + next_level_name + ".tscn").instance()
@@ -17,18 +17,19 @@ func on_seach_area():
 func give_item():
 	if search_var.contains_log == true:
 		var amount = search_var.log_amount
-		global_signal.emit_signal("on_give_item","log", amount)
+		Signals.emit_signal("on_give_item","log", amount)
 		# emit_signal("go_to_next_text", null, null, null, null)
 		pass
 	if search_var.contains_ice == true:
 		var amount = search_var.ice_amount
-		global_signal.emit_signal("on_give_item","ice", amount)
+		Signals.emit_signal("on_give_item","ice", amount)
 		pass
 	if search_var.has_pipe == true:
 		var amount = search_var.pipe_amount
-		global_signal.emit_signal("on_give_item","pipe", amount)
+		Signals.emit_signal("on_give_item","pipe", amount)
 		pass
 	if search_var.has_wire == true:
 		var amount = search_var.wire_amount
-		global_signal.emit_signal("on_give_item","wire", amount)
+		Signals.emit_signal("on_give_item","wire", amount)
 		pass
+
