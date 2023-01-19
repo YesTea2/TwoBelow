@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Art/Inside_Building_01.png" type="Texture" id=2]
@@ -32,35 +32,39 @@ extents = Vector2( 1, 27.5 )
 extents = Vector2( 5, 1 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 38, 4.5 )
+extents = Vector2( 38, 5.5 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 8, 9.5 )
+extents = Vector2( 9, 11.5 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 13, 13 )
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 4, 18 )
+extents = Vector2( 5, 18 )
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 3, 9 )
+extents = Vector2( 3.5, 9 )
 
-[sub_resource type="RectangleShape2D" id=10]
-resource_local_to_scene = true
-extents = Vector2( 38, 9 )
+[sub_resource type="CapsuleShape2D" id=10]
+radius = 9.0
+height = 14.0
 
 [sub_resource type="RectangleShape2D" id=11]
 resource_local_to_scene = true
-extents = Vector2( 7, 10.5 )
+extents = Vector2( 38, 9 )
 
 [sub_resource type="RectangleShape2D" id=12]
 resource_local_to_scene = true
-extents = Vector2( 5, 12 )
+extents = Vector2( 10.5, 13 )
 
 [sub_resource type="RectangleShape2D" id=13]
 resource_local_to_scene = true
-extents = Vector2( 5, 9 )
+extents = Vector2( 7, 16.5 )
+
+[sub_resource type="RectangleShape2D" id=14]
+resource_local_to_scene = true
+extents = Vector2( 6, 10 )
 
 [node name="Inside_Building" type="CanvasLayer"]
 follow_viewport_enable = true
@@ -146,7 +150,7 @@ position = Vector2( -20, -75 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Back Cabnits"]
-position = Vector2( 0, -5.5 )
+position = Vector2( 0, -4.5 )
 shape = SubResource( 9 )
 
 [node name="Fridge" type="StaticBody2D" parent="."]
@@ -154,7 +158,7 @@ position = Vector2( 8, -41 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fridge"]
-position = Vector2( 2, -3.5 )
+position = Vector2( 1, -1.5 )
 shape = SubResource( 5 )
 
 [node name="Bed" type="StaticBody2D" parent="."]
@@ -170,7 +174,7 @@ position = Vector2( -48, 6 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Fireplace"]
-position = Vector2( -6, 0 )
+position = Vector2( -5, 0 )
 shape = SubResource( 7 )
 
 [node name="Cabnit" type="StaticBody2D" parent="."]
@@ -178,11 +182,15 @@ position = Vector2( 48, -36 )
 z_index = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cabnit"]
-position = Vector2( 7, 1 )
+position = Vector2( 6.5, 1 )
 shape = SubResource( 8 )
 
 [node name="Doorway" parent="." instance=ExtResource( 11 )]
 position = Vector2( 0, 45 )
+monitoring = false
+
+[node name="Doorway" parent="Doorway" index="0"]
+shape = SubResource( 10 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
@@ -219,35 +227,41 @@ editor_draw_limits = true
 
 [node name="Searchable_Area" parent="." instance=ExtResource( 14 )]
 position = Vector2( -21, -75 )
+monitoring = false
 search_var = ExtResource( 15 )
 
 [node name="CollisionShape2D" parent="Searchable_Area" index="0"]
 position = Vector2( 1, -1 )
-shape = SubResource( 10 )
+shape = SubResource( 11 )
 
 [node name="Searchable_Area2" parent="." instance=ExtResource( 14 )]
 position = Vector2( 10, -43 )
+monitoring = false
 search_var = ExtResource( 7 )
 
 [node name="CollisionShape2D" parent="Searchable_Area2" index="0"]
-position = Vector2( -6, 1.5 )
-shape = SubResource( 11 )
+position = Vector2( -3.5, 4 )
+shape = SubResource( 12 )
 
 [node name="Searchable_Area3" parent="." instance=ExtResource( 14 )]
 position = Vector2( -18, 7 )
+monitoring = false
 search_var = ExtResource( 6 )
 
 [node name="CollisionShape2D" parent="Searchable_Area3" index="0"]
-position = Vector2( -33, -1 )
-shape = SubResource( 12 )
+position = Vector2( -31, -1.5 )
+shape = SubResource( 13 )
 
 [node name="Searchable_Area4" parent="." instance=ExtResource( 14 )]
 position = Vector2( 53, -35 )
+monitoring = false
 search_var = ExtResource( 16 )
 
 [node name="CollisionShape2D" parent="Searchable_Area4" index="0"]
-shape = SubResource( 13 )
+position = Vector2( -1, -1 )
+shape = SubResource( 14 )
 
+[editable path="Doorway"]
 [editable path="HUD"]
 [editable path="Player"]
 [editable path="Searchable_Area"]

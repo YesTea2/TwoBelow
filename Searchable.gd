@@ -23,9 +23,17 @@ export var wire_amount = 0
 
 var rand_generate_num = RandomNumberGenerator.new()
 
+func searched_this():
+	print("I searched this")
+	has_been_searched = true
 
-func _ready():
+func prepar():
+	
+	if has_been_searched == true:
+		print("I searched this")
+		return
 	if has_been_searched == false:
+		print("I have not searched this")
 		if contains_log == true:
 			choose_resource_amounts_log_ice("log")
 			pass

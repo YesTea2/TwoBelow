@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -69,6 +69,42 @@ animations = [ {
 "name": "alert",
 "speed": 5.0
 } ]
+
+[sub_resource type="Animation" id=11]
+resource_name = "Blizzard_Note"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bottom_Alert:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 2978, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bottom_Alert:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=10]
+outline_size = 2
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 11 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -487,6 +523,25 @@ position = Vector2( 244, 819 )
 scale = Vector2( 9, 9 )
 frames = SubResource( 3 )
 animation = "alert"
+
+[node name="Alert_Player" type="AnimationPlayer" parent="."]
+anims/Blizzard_Note = SubResource( 11 )
+anims/RESET = SubResource( 12 )
+
+[node name="Bottom_Alert" type="ReferenceRect" parent="."]
+margin_right = 40.0001
+margin_bottom = 40.0
+
+[node name="Bottom_Alert_Text" type="Label" parent="Bottom_Alert"]
+margin_left = -1091.0
+margin_top = 1031.0
+margin_right = -747.0
+margin_bottom = 1047.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 10 )
+text = "Weather alert: Incoming storm, shelter immediately!"
+align = 1
+uppercase = true
 
 [connection signal="pressed" from="Crafting_Holder/Repair_Button" to="." method="_on_Repair_Button_pressed"]
 [connection signal="pressed" from="Crafting_Holder/Ice_Button" to="." method="_on_Ice_Button_pressed"]

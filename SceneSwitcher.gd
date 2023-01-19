@@ -17,6 +17,7 @@ func _ready() -> void:
 	current_level.play_loaded_sound()
 
 
+
 func handle_level_changed(current_level_name: String):
 	
 	var next_level_name: String
@@ -32,7 +33,8 @@ func handle_level_changed(current_level_name: String):
 	
 	next_level = load("res://" + next_level_name + ".tscn").instance()
 	
-	
+	current_level.visible = false
+	Signals.emit_signal("hide_entire_hud")
 	next_level.visible = false
 	add_child(next_level)
 	anim.play("fade_in")
@@ -56,6 +58,7 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 		"fade_in":
 			current_level.cleanup()
 			current_level = next_level
+			Signals.emit_signal("show_entire_hud")
 			current_level.visible = true
 			next_level = null
 			anim.play("fade_out")

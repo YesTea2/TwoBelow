@@ -17,7 +17,7 @@ signal level_changed(level_name)
 
 export (String) var level_name = "level"
 
-
+onready var hud : CanvasLayer = $HUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,9 +29,19 @@ func _ready():
 	weather_var.connect("lower_temp_fast", self, "_on_change_bar_amount")
 	weather_var.connect("lower_temp_slow", self, "_on_change_bar_amount")
 	weather_var.connect("raise_temp_slow", self, "_on_change_bar_amount")
+	Signals.connect("show_entire_hud", self, "show_the_hud")
+	Signals.connect("hide_entire_hud", self, "hide_the_hud")
 	weather_var.is_changing_system = true
 	start_weather()
 
+
+func show_the_hud():
+	hud.visible = true
+	pass
+func hide_the_hud():
+	hud.visible = false
+	pass
+	
 func _process(delta):
 	if weather_var.is_changing_system == false:
 		change_weather()
