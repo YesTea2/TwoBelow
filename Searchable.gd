@@ -3,7 +3,7 @@ extends Resource
 class_name Searchable_Object
 
 export var has_been_searched = false
-
+export var container_number = 0
 export var contains_log = false
 export var contains_ice = false
 export var contains_wire = false
@@ -26,10 +26,11 @@ var rand_generate_num = RandomNumberGenerator.new()
 func searched_this():
 	print("I searched this")
 	has_been_searched = true
+	AllContainers.set_container(container_number, true)
 
 func prepar():
-	
-	if has_been_searched == true:
+	if AllContainers.return_type_container(container_number) == true:
+		has_been_searched = true
 		print("I searched this")
 		return
 	if has_been_searched == false:

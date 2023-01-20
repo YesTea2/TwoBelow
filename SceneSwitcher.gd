@@ -21,18 +21,21 @@ func _ready() -> void:
 func handle_level_changed(current_level_name: String):
 	
 	var next_level_name: String
-	
+	var name_for_level : String
+	var number_for_building = GlobalVariables.number_of_current_building
+	name_for_level = "Inside_Building_" + str(number_for_building)
+	print(name_for_level)
 	match current_level_name:
 		"Outside":
-			next_level_name = "Inside_Building"
-		"Inside_Building":
+			next_level_name = name_for_level
+		name_for_level:
 			next_level_name = "Outside"
 		_:
 			return
 	
 	
 	next_level = load("res://" + next_level_name + ".tscn").instance()
-	
+
 	current_level.visible = false
 	Signals.emit_signal("hide_entire_hud")
 	next_level.visible = false

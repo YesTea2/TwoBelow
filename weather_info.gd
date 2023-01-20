@@ -11,7 +11,9 @@ export var snow_speed_level_two = 0.4
 export var snow_speed_level_three = 0.5
 export var delay_for_level_three_storm = 6
 
-
+var is_cold = false
+var is_freeze = false
+var is_below = false
 
 var is_changing_system = false;
 

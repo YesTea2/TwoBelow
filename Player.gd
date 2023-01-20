@@ -115,6 +115,10 @@ func _on_Area2D_area_entered(area):
 		GlobalVariables.is_at_door = true;
 		print("colliding")
 		Signals.emit_signal("doorway_entered")
+		GlobalVariables.number_of_current_building = area.door_number
+		if area.ignore_location == false:
+			GlobalVariables.current_offset = area.door_pos.position
+			print(str(GlobalVariables.current_offset))
 		Signals.emit_signal("close_inventory")
 		pass
 		
@@ -133,10 +137,12 @@ func _on_Area2D_area_exited(area):
 	if area.name == "Doorway":
 		GlobalVariables.is_at_door = false
 		Signals.emit_signal("doorway_exited")
+		GlobalVariables.number_of_current_building = 0
 		return
 	if area.name.begins_with("Search"):
 		var search_var = area.search_var
 		if TempContainer.has_been_searched == true:
+			search_var.searched_this()
 			search_var.has_been_searched = true
 		GlobalVariables.is_giving_item = false
 		GlobalVariables.is_searching_drawer = false
@@ -148,11 +154,12 @@ func _input(event):
 	
 	if event.is_action_pressed("use"):
 		if GlobalVariables.is_at_door == true:
-			player_info.emit_signal("using_door")
 			if GlobalVariables.is_inside == false:
 				GlobalVariables.is_inside = true
 			elif GlobalVariables.is_inside == true:
+				GlobalVariables.coming_from_inside = true
 				GlobalVariables.is_inside = false
+			player_info.emit_signal("using_door")
 			print("Using Door")
 			return
 		elif GlobalVariables.is_searching_drawer == true && GlobalVariables.is_giving_item == false:

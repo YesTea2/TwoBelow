@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource( 1 )
 has_been_searched = false
+container_number = 3
 contains_log = true
 contains_ice = false
 contains_wire = false

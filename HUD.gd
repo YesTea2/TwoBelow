@@ -46,6 +46,9 @@ onready var bottom_bar_repair_amount : Label = $Repair_Use_Text
 
 onready var alert_text_01 : Label = $Bottom_Alert/Bottom_Alert_Text
 
+var is_freezing
+var is_below
+var is_cold
 
 var is_trying_to_craft_fire = false
 var is_trying_to_craft_wall = false
@@ -221,6 +224,8 @@ func weather_warning():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
+	
+	alert_text_01.text = "Weather alert: Incoming storm, shelter immediately!"
 	w_alert_anim.play("Blizzard_Note")
 
 
@@ -229,14 +234,11 @@ func weather_clear():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
-	rand_generate.randomize()
-	var rand_int = rand_generate.randi_range(1,3)
-	if rand_int == 1:
-		_display_center_message("The storm has cleared up, stay warm out there!", "walki", 5)
-	if rand_int == 2:
-		_display_center_message("Looks like the storm is over, you should be ok to keep moving.", "walki", 5)
-	if rand_int == 3:
-		_display_center_message("Whew! looks like the storm has cleared, that was a doozy!", "walki", 5)
+	if weather_var.is_cold == true:
+		alert_text_01.text = "Weather alert: The storm has passed over, temperatures rising"
+	if weather_var.is_freeze == true:
+		alert_text_01.text = "Weather alert: Storm clear, temperatures remain frigid"
+	w_alert_anim.play("Blizzard_Note")
 
 func set_percent_value_int(values):
 	weather_var.bar_value = values
@@ -311,6 +313,8 @@ func _on_current_temp_freezing():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
+	is_cold = false
+	is_freezing = true
 	temp_freeze_time.wait_time = 2
 	temp_freeze_time.start()
 
@@ -319,6 +323,8 @@ func _on_current_temp_normal():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
+	is_freezing = false
+	is_cold = true
 	temp_normal_time.wait_time = 2
 	temp_normal_time.start()
 
@@ -329,10 +335,11 @@ func _on_center_message_time_timeout():
 	if $Alert.playing:
 		$Alert.stop()
 		$Alert.hide()
-	if giving_weather_alert == true:
-		giving_weather_alert = false
+
 
 func _on_temp_below_freeze_timer_timeout():
+	$Alert.stop()
+	$Alert.hide()
 	temprature_text.text = "Below Zero"
 
 func _on_temp_freezing_timer_timeout():

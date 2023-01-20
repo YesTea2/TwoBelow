@@ -13,6 +13,7 @@ onready var snow_system : Particles2D = $Snow
 onready var global_weather_time : Timer = $global_weather_timer
 onready var storm_time : Timer = $Storm_Timer
 onready var start_weather_time : Timer = $Start_Weather_Timer
+onready var player_ref = $Player
 signal level_changed(level_name)
 
 export (String) var level_name = "level"
@@ -33,8 +34,12 @@ func _ready():
 	Signals.connect("hide_entire_hud", self, "hide_the_hud")
 	weather_var.is_changing_system = true
 	start_weather()
-
-
+	if GlobalVariables.coming_from_inside == true:
+		print(str(GlobalVariables.current_offset))
+		player_ref.position = GlobalVariables.current_offset
+		GlobalVariables.coming_from_inside = false
+	if GlobalVariables.has_generated_buildings == false:
+		GlobalVariables.has_generated_buildings = true
 func show_the_hud():
 	hud.visible = true
 	pass
@@ -93,6 +98,8 @@ func _on_finished_changing_weather():
 	
 func change_storm_level_one():
 	print("level one storm approaching")
+	weather_var.is_freeze = false
+	weather_var.is_cold = true
 	if weather_var.is_level_three_storm == true:
 		weather_var.emit_signal("clear_of_storm")
 		weather_var.is_ready_for_level_three_storm = false
@@ -106,6 +113,8 @@ func change_storm_level_one():
 
 func change_storm_level_two():
 	print("level two storm approaching")
+	weather_var.is_freeze = true
+	weather_var.is_cold = false
 	if weather_var.is_level_three_storm == true:
 		weather_var.emit_signal("clear_of_storm")
 		weather_var.is_ready_for_level_three_storm = false
@@ -120,6 +129,8 @@ func change_storm_level_two():
 func change_storm_level_three():
 	print("level three storm approaching")
 	if weather_var.is_level_three_storm == false:
+		weather_var.is_freeze = false
+		weather_var.is_cold = false
 		weather_var.emit_signal("warn_of_weather")
 		weather_var.emit_signal("current_temp_below_freezing")
 		storm_time.wait_time = weather_var.delay_for_level_three_storm

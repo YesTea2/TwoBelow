@@ -162,6 +162,8 @@ shape = SubResource( 8 )
 
 [node name="Doorway" parent="." instance=ExtResource( 11 )]
 position = Vector2( 0, 45 )
+ignore_location = true
+door_number = 3
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 

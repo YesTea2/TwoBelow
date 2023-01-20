@@ -50,29 +50,34 @@ randomness = 0.12
 [node name="TextureProgress" parent="HUD" index="4"]
 script = null
 
+[node name="Building2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 101, -139 )
+z_index = 1
+building_number = 2
+
+[node name="Building3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 224, 6 )
+z_index = 1
+building_number = 3
+
+[node name="Building4" parent="." instance=ExtResource( 5 )]
+position = Vector2( -250, -20 )
+z_index = 1
+building_number = 4
+
+[node name="Building5" parent="." instance=ExtResource( 5 )]
+position = Vector2( -18, -246 )
+z_index = 1
+building_number = 5
+
 [node name="Building" parent="." instance=ExtResource( 5 )]
 position = Vector2( -131, -102 )
 z_index = 1
+building_number = 1
 
 [node name="DoorPos" parent="Building" index="2"]
 position = Vector2( 0, 18 )
 z_index = 2
-
-[node name="Building" parent="Building" instance=ExtResource( 5 )]
-position = Vector2( 232, -37 )
-z_index = 1
-
-[node name="Building2" parent="Building" instance=ExtResource( 5 )]
-position = Vector2( 355, 108 )
-z_index = 1
-
-[node name="Building3" parent="Building" instance=ExtResource( 5 )]
-position = Vector2( -119, 82 )
-z_index = 1
-
-[node name="Building4" parent="Building" instance=ExtResource( 5 )]
-position = Vector2( 113, -144 )
-z_index = 1
 
 [node name="Door_Open_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )

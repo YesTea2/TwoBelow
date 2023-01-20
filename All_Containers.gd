@@ -1,0 +1,90 @@
+extends Node
+
+
+var is_container_empty_1 = false
+var is_container_empty_2 = false
+var is_container_empty_3 = false
+var is_container_empty_4 = false
+var is_container_empty_5 = false
+var is_container_empty_6 = false
+var is_container_empty_7 = false
+var is_container_empty_8 = false
+var is_container_empty_9 = false
+var is_container_empty_10 = false
+var is_container_empty_11 = false
+var is_container_empty_12 = false
+var is_container_empty_13 = false
+var is_container_empty_14 = false
+var is_container_empty_15 = false
+var is_container_empty_16 = false
+var is_container_empty_17 = false
+var is_container_empty_18 = false
+var is_container_empty_19 = false
+var is_container_empty_20 = false
+var is_container_empty_21 = false
+var is_container_empty_22 = false
+var is_container_empty_23 = false
+var is_container_empty_24 = false
+var is_container_empty_25 = false
+var is_container_empty_26 = false
+var is_container_empty_27 = false
+var is_container_empty_28 = false
+var is_container_empty_29 = false
+var is_container_empty_30 = false
+var is_container_empty_31 = false
+var is_container_empty_32 = false
+var is_container_empty_33 = false
+var is_container_empty_34 = false
+var is_container_empty_35 = false
+var is_container_empty_36 = false
+var is_container_empty_37 = false
+var is_container_empty_38 = false
+var is_container_empty_39 = false
+var is_container_empty_40 = false
+var is_container_empty_41 = false
+var is_container_empty_42 = false
+var is_container_empty_43 = false
+var is_container_empty_44 = false
+var is_container_empty_45 = false
+var is_container_empty_46 = false
+var is_container_empty_47 = false
+var is_container_empty_48 = false
+var is_container_empty_49 = false
+var is_container_empty_50 = false
+var is_container_empty_51 = false
+var is_container_empty_52 = false
+var is_container_empty_53 = false
+var is_container_empty_54 = false
+var is_container_empty_55 = false
+var is_container_empty_56 = false
+var is_container_empty_57 = false
+var is_container_empty_58 = false
+var is_container_empty_59 = false
+var is_container_empty_60 = false
+var is_container_empty_61 = false
+var is_container_empty_62 = false
+var is_container_empty_63 = false
+var is_container_empty_64 = false
+var is_container_empty_65 = false
+var is_container_empty_66 = false
+var is_container_empty_67 = false
+var is_container_empty_68 = false
+var is_container_empty_69 = false
+var is_container_empty_70 = false
+var is_container_empty_71 = false
+var is_container_empty_72 = false
+var is_container_empty_73 = false
+var is_container_empty_74 = false
+var is_container_empty_75 = false
+var is_container_empty_76 = false
+var is_container_empty_77 = false
+var is_container_empty_78 = false
+var is_container_empty_79 = false
+var is_container_empty_80 = false
+
+func set_container(var pass_num, false_or_positive):
+	 set("is_container_empty_" + str(pass_num), false_or_positive)
+	
+func return_type_container(var pass_num):
+	return get("is_container_empty_" + str(pass_num))
+	
