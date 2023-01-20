@@ -28,8 +28,12 @@ func handle_level_changed(current_level_name: String):
 	match current_level_name:
 		"Outside":
 			next_level_name = name_for_level
+			GlobalVariables.is_inside = true
+			GlobalVariables.is_outside = false
 		name_for_level:
 			next_level_name = "Outside"
+			GlobalVariables.is_outside = true
+			GlobalVariables.is_inside = false
 		_:
 			return
 	
@@ -42,7 +46,7 @@ func handle_level_changed(current_level_name: String):
 	add_child(next_level)
 	anim.play("fade_in")
 	next_level.connect("level_changed", self, "handle_level_changed")
-	transfer_data_between_scenes(current_level, next_level)
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

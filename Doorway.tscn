@@ -15,4 +15,4 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="DoorPos" type="Position2D" parent="."]
-position = Vector2( 0, 35 )
+position = Vector2( 0, 63 )

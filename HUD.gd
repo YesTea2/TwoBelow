@@ -43,6 +43,7 @@ onready var bottom_bar_wall_amount : Label = $Wall_Use_Text
 onready var bottom_bar_fire_amount : Label = $Fire_Use_Text
 onready var bottom_bar_repair_amount : Label = $Repair_Use_Text
 
+onready var chat_anim : AnimationPlayer = $Chat_Player
 
 onready var alert_text_01 : Label = $Bottom_Alert/Bottom_Alert_Text
 
@@ -101,6 +102,7 @@ func _process(delta):
 	bar.value = weather_var.bar_value / 2
 
 func _display_center_message(message_to_display, profile, length_of_alert):
+	chat_anim.play("Show_Message")
 	$Text_Container.show()
 	$Text_Container/Container_Text.text = message_to_display
 	$Text_Container/Container_Text.show()
@@ -151,11 +153,11 @@ func _on_loot_container():
 	GlobalVariables.is_giving_item = true
 	
 	if TempContainer.has_been_searched == true:
-		_display_center_message("There is nothing left inside", "Player", 99)
+		$Text_Container/Container_Text.text = "There is nothing left inside"
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.has_wire == true && TempContainer.has_pipe == true:
-		_display_center_message("I found " + str(TempContainer.current_wire) + " wire and " + str(TempContainer.current_pipe) + " pipe!", "Player", 99)
+		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_wire) + " wire and " + str(TempContainer.current_pipe) + " pipe!"
 		var give_pipe = TempContainer.current_pipe
 		var give_wire = TempContainer.current_wire
 		_on_give_resource("pipe", give_pipe)
@@ -165,28 +167,28 @@ func _on_loot_container():
 		
 		return
 	if TempContainer.has_wire == true:
-		_display_center_message("I found " + str(TempContainer.current_wire) + " wire!", "Player", 99)
+		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_wire) + " wire!"
 		var give_wire = TempContainer.current_wire
 		_on_give_resource("wire", give_wire)
 		TempContainer.has_been_searched = true
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.has_pipe == true:
-		_display_center_message("I found " + str(TempContainer.current_pipe) + " pipe!", "Player", 99)
+		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_pipe) + " pipe!"
 		var give_pipe = TempContainer.current_pipe
 		_on_give_resource("pipe", give_pipe)
 		TempContainer.has_been_searched = true
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.contains_log == true:
-		_display_center_message("I found " + str(TempContainer.current_log) + " log!", "Player", 99)
+		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_log) + " log!"
 		var give_log = TempContainer.current_log
 		_on_give_resource("log", give_log)
 		TempContainer.has_been_searched = true
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.contains_ice == true:
-		_display_center_message("I found " + str(TempContainer.current_ice) + " ice brick!", "Player", 4)
+		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_ice) + " ice brick!"
 		var give_ice = TempContainer.current_ice
 		_on_give_resource("ice", give_ice)
 		TempContainer.has_been_searched = true
@@ -265,38 +267,48 @@ func _on_Player_doorway_entered():
 	rand_generate.randomize()
 	var rand_int = rand_generate.randi_range(1,4)
 	if GlobalVariables.is_outside == true:
+		GlobalVariables.finished_displaying_door_message = true
 		if rand_int == 1:
 			_display_center_message("Should I go inside? \n \n Press E to enter", "Player", 99)
+			return
 		if rand_int == 2:
 			_display_center_message("I may find things of use inside. \n \n Press E to enter", "Player", 99)
+			return
 		if rand_int ==3:
 			_display_center_message("I can go inside to escape the cold. \n \n Press E to enter", "Player", 99)
+			return
 		if rand_int ==4:
 			_display_center_message("I never thought I would be searching abandoned buildings. \n \n Press E to enter", "Player", 99)
+			return
 		return
 	if GlobalVariables.is_inside == true:
+		GlobalVariables.finished_displaying_door_message = true
 		if rand_int == 1:
 			_display_center_message("I hope the town is doing ok without heating. \n \n Press E to exit", "Player", 99)
+			return
 		if rand_int == 2:
 			_display_center_message("I guess I should head back out. \n \n Press E to exit", "Player", 99)
+			return
 		if rand_int ==3:
 			_display_center_message("I should get back to fixing the generators. \n \n Press E to exit", "Player", 99)
+			return
 		if rand_int ==4:
 			_display_center_message("I hope I get a hotcoco after this. \n \n Press E to exit", "Player", 99)
+			return
 		return
 	
 func _on_Player_doorway_exited():
-	$Text_Container.hide()
+	chat_anim.play("Hide_Message")
 	$Text_Container/Character_Photo.hide()
 	$Text_Container/Container_Text.hide()
 	pass
 func _on_close_chat_box():
-	$Text_Container.hide()
+	chat_anim.play("Hide_Message")
 	$Text_Container/Character_Photo.hide()
 	$Text_Container/Container_Text.hide()
 func _on_clear_and_close():
 	TempContainer.clear_the_searchable()
-	$Text_Container.hide()
+	chat_anim.play("Hide_Message")
 	$Text_Container/Character_Photo.hide()
 	$Text_Container/Container_Text.hide()
 func _on_warn_of_weather():
@@ -331,10 +343,8 @@ func _on_current_temp_normal():
 func _on_center_message_time_timeout():
 	$Text_Container/Character_Photo.hide()
 	$Text_Container/Container_Text.hide()
-	$Text_Container.hide()
-	if $Alert.playing:
-		$Alert.stop()
-		$Alert.hide()
+	chat_anim.play("Hide_Message")
+	
 
 
 func _on_temp_below_freeze_timer_timeout():

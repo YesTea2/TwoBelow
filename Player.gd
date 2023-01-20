@@ -111,16 +111,16 @@ func _on_finish_waiting_for_part():
 	
 func _on_Area2D_area_entered(area):
 	
-	if area.name == "Doorway":
-		GlobalVariables.is_at_door = true;
-		print("colliding")
+	if area.name == "Doorway" && GlobalVariables.finished_displaying_door_message == false:
+		GlobalVariables.finished_displaying_door_message == true
+		GlobalVariables.is_at_door = true
 		Signals.emit_signal("doorway_entered")
 		GlobalVariables.number_of_current_building = area.door_number
 		if area.ignore_location == false:
 			GlobalVariables.current_offset = area.door_pos.position
 			print(str(GlobalVariables.current_offset))
 		Signals.emit_signal("close_inventory")
-		pass
+		return
 		
 	if area.name.begins_with("Search") && GlobalVariables.is_at_door == false:
 		var search_var = area.search_var
@@ -138,6 +138,7 @@ func _on_Area2D_area_exited(area):
 		GlobalVariables.is_at_door = false
 		Signals.emit_signal("doorway_exited")
 		GlobalVariables.number_of_current_building = 0
+		GlobalVariables.finished_displaying_door_message = false
 		return
 	if area.name.begins_with("Search"):
 		var search_var = area.search_var
@@ -154,11 +155,8 @@ func _input(event):
 	
 	if event.is_action_pressed("use"):
 		if GlobalVariables.is_at_door == true:
-			if GlobalVariables.is_inside == false:
-				GlobalVariables.is_inside = true
-			elif GlobalVariables.is_inside == true:
+			if GlobalVariables.is_inside == true:
 				GlobalVariables.coming_from_inside = true
-				GlobalVariables.is_inside = false
 			player_info.emit_signal("using_door")
 			print("Using Door")
 			return

@@ -7,11 +7,11 @@ var is_outside = true
 var is_at_door = false
 var coming_from_inside = false
 var number_of_current_building = 0
-
+var max_time_between_storm = 20
 var current_offset : Vector2
-
+var has_weather_started = false
 var has_generated_buildings = false
-
+var finished_displaying_door_message = false
 var b_1 = false
 var b_2 = false
 var b_3 = false
@@ -32,6 +32,7 @@ var b_17 = false
 var b_18 = false
 var b_19 = false
 var b_20 = false
+var first_load = true
 
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)

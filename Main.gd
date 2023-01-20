@@ -33,7 +33,11 @@ func _ready():
 	Signals.connect("show_entire_hud", self, "show_the_hud")
 	Signals.connect("hide_entire_hud", self, "hide_the_hud")
 	weather_var.is_changing_system = true
-	start_weather()
+	if GlobalVariables.has_weather_started == false:
+		GlobalVariables.has_weather_started = true
+		start_weather()
+	elif GlobalVariables.has_weather_started == true:
+		continue_storm()
 	if GlobalVariables.coming_from_inside == true:
 		print(str(GlobalVariables.current_offset))
 		player_ref.position = GlobalVariables.current_offset
@@ -47,6 +51,10 @@ func hide_the_hud():
 	hud.visible = false
 	pass
 	
+func continue_storm():
+	var time = get_random_time(5,GlobalVariables.max_time_between_storm)
+	start_weather_time.wait_time = time
+	start_weather_time.start()
 func _process(delta):
 	if weather_var.is_changing_system == false:
 		change_weather()
