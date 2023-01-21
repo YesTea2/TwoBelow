@@ -74,5 +74,17 @@ stream = ExtResource( 16 )
 volume_db = -18.571
 pitch_scale = 3.51
 
+[node name="Left_Area" type="Position2D" parent="."]
+position = Vector2( 22, 0 )
+
+[node name="Right_Area" type="Position2D" parent="."]
+position = Vector2( -23, 0 )
+
+[node name="Up_Area" type="Position2D" parent="."]
+position = Vector2( 0, -30 )
+
+[node name="Down_Area" type="Position2D" parent="."]
+position = Vector2( 0, 29 )
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

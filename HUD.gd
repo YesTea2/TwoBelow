@@ -66,20 +66,21 @@ var giving_weather_alert = false
 var search
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	temprature_text.text = WeatherControl.current_temp
 	Signals.connect("close_inventory", self, "_on_close_inventory")
 	Signals.connect("on_searched_container", self, "_on_loot_container")
 	Signals.connect("doorway_entered", self, "_on_Player_doorway_entered")
 	Signals.connect("doorway_exited", self, "_on_Player_doorway_exited")
 	Signals.connect("is_opening_inventory", self,  "_on_opening_inventory")
-	weather_var.connect("clear_of_storm", self, "_on_clear_of_storm")
-	weather_var.connect("current_temp_below_freezing", self, "_on_current_temp_below_freezing")
-	weather_var.connect("current_temp_freezing", self, "_on_current_temp_freezing")
-	weather_var.connect("current_temp_normal", self, "_on_current_temp_normal")
-	weather_var.connect("raise_temp_fast", self, "_on_raise_temp_fast")
-	weather_var.connect("lower_temp_fast", self, "_on_lower_temp_fast")
-	weather_var.connect("lower_temp_slow", self, "_on_lower_temp_slow")
-	weather_var.connect("raise_temp_slow", self, "_on_raise_temp_slow")
-	weather_var.connect("warn_of_weather", self, "_on_warn_of_weather")
+	WeatherControl.connect("clear_of_storm", self, "_on_clear_of_storm")
+	WeatherControl.connect("current_temp_below_freezing", self, "_on_current_temp_below_freezing")
+	WeatherControl.connect("current_temp_freezing", self, "_on_current_temp_freezing")
+	WeatherControl.connect("current_temp_normal", self, "_on_current_temp_normal")
+	WeatherControl.connect("raise_temp_fast", self, "_on_raise_temp_fast")
+	WeatherControl.connect("lower_temp_fast", self, "_on_lower_temp_fast")
+	WeatherControl.connect("lower_temp_slow", self, "_on_lower_temp_slow")
+	WeatherControl.connect("raise_temp_slow", self, "_on_raise_temp_slow")
+	WeatherControl.connect("warn_of_weather", self, "_on_warn_of_weather")
 	Signals.connect("on_next_to_searchable", self, "_on_show_searchable")
 	Signals.connect("on_give_item", self, "_on_give_resource")
 	Signals.connect("on_closed_container", self, "_on_clear_and_close")
@@ -96,10 +97,15 @@ func _ready():
 	$Text_Container/Container_Text.hide()
 	$Text_Container/Character_Photo.hide()
 	$Alert.hide()
-	set_percent_value_int(100)
+	
+	wire_amount_text.text = "Wires: " + str(GlobalVariables.current_total_wire)
+	log_amount_text.text = "Logs: " + str(GlobalVariables.current_total_logs)
+	pipe_amount_text.text = "Pipes: " + str(GlobalVariables.current_total_pipe)
+	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
 	
 func _process(delta):
-	bar.value = weather_var.bar_value / 2
+	WeatherControl.bar_value = clamp(WeatherControl.bar_value, 0, 100)
+	bar.value = WeatherControl.bar_value
 
 func _display_center_message(message_to_display, profile, length_of_alert):
 	chat_anim.play("Show_Message")
@@ -202,21 +208,25 @@ func _on_loot_container():
 func _on_give_resource(type, amount):
 	if type =="ice":
 		var new_amount = inventory_var.current_ice_amount + amount
+		GlobalVariables.current_total_ice += amount
 		ice_amount_text.text = "Ice Blocks: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="wire":
 		var new_amount = inventory_var.current_wire_amount + amount
+		GlobalVariables.current_total_wires += amount
 		wire_amount_text.text = "Wires: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="pipe":
 		var new_amount = inventory_var.current_pipe_amount + amount
+		GlobalVariables.current_total_pipe += amount
 		pipe_amount_text.text = "Copper Pipes: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="log":
 		var new_amount = inventory_var.current_log_amount + amount
+		GlobalVariables.current_total_logs += amount
 		log_amount_text.text = "Logs: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
@@ -236,31 +246,31 @@ func weather_clear():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
-	if weather_var.is_cold == true:
+	if WeatherControl.is_cold == true:
 		alert_text_01.text = "Weather alert: The storm has passed over, temperatures rising"
-	if weather_var.is_freeze == true:
+	if WeatherControl.is_freeze == true:
 		alert_text_01.text = "Weather alert: Storm clear, temperatures remain frigid"
 	w_alert_anim.play("Blizzard_Note")
 
 func set_percent_value_int(values):
-	weather_var.bar_value = values
+	WeatherControl.bar_value = values
 
 func _on_lower_temp_fast():
-	weather_var.bar_value -= .02
+	WeatherControl.bar_value -= .02
 	
 	pass
 
 func _on_lower_temp_slow():
-	weather_var.bar_value -= .007
+	WeatherControl.bar_value -= .007
 	
 	pass
 
 func _on_raise_temp_fast():
-	weather_var.bar_value += .15
+	WeatherControl.bar_value += .15
 	pass
 
 func _on_raise_temp_slow():
-	weather_var.bar_value += .02
+	WeatherControl.bar_value += .02
 	pass
 
 func _on_Player_doorway_entered():
@@ -350,14 +360,17 @@ func _on_center_message_time_timeout():
 func _on_temp_below_freeze_timer_timeout():
 	$Alert.stop()
 	$Alert.hide()
+	WeatherControl.current_temp = "Below Zero"
 	temprature_text.text = "Below Zero"
 
 func _on_temp_freezing_timer_timeout():
+	WeatherControl.current_temp = "Freezing"
 	temprature_text.text = "Freezing"
 	$Alert.stop()
 	$Alert.hide()
 
 func _on_temp_normal_timer_timeout():
+	WeatherControl.current_temp = "Cold"
 	temprature_text.text = "Cold"
 	$Alert.stop()
 	$Alert.hide()

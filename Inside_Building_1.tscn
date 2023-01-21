@@ -189,6 +189,7 @@ door_number = 1
 [node name="HUD" parent="." instance=ExtResource( 15 )]
 
 [node name="Snow" parent="." instance=ExtResource( 18 )]
+position = Vector2( 660, -284 )
 
 [node name="Door_Open_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )

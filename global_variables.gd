@@ -34,6 +34,12 @@ var b_19 = false
 var b_20 = false
 var first_load = true
 
+
+var current_total_logs = 0
+var current_total_wire = 0
+var current_total_ice = 0
+var current_total_pipe = 0
+
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)
 
