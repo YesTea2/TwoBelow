@@ -36,6 +36,7 @@ func _ready():
 	Signals.connect("pressing_place_fire", self, "trying_to_build_fire")
 	Signals.connect("pressing_place_ice_wall", self, "trying_to_build_ice_wall")
 	Signals.connect("pressing_use_repair", self, "trying_to_repair_generator")
+	Signals.connect("pressing_use_ice_pick", self, "trying_to_use_ice_pick")
 	WeatherControl.is_changing_system = true
 	if GlobalVariables.has_weather_started == false:
 		GlobalVariables.has_weather_started = true
@@ -60,6 +61,22 @@ func trying_to_build_fire():
 		Signals.emit_signal("not_surrounded_by_ice")
 		return
 	pass
+	
+func trying_to_use_ice_pick():
+	if GlobalVariables.is_player_facing_down == true:
+		GlobalVariables.temp_wall.remove()
+		pass
+	if GlobalVariables.is_player_facing_up == true:
+		GlobalVariables.temp_wall.remove()
+		pass
+	if GlobalVariables.is_player_facing_left == true:
+		GlobalVariables.temp_wall.remove()
+		pass
+	if GlobalVariables.is_player_facing_right == true:
+		GlobalVariables.temp_wall.remove()
+		pass
+	pass
+	
 func trying_to_build_ice_wall():
 	if GlobalVariables.current_crafted_wall_amount >= 1 && GlobalVariables.is_inside == false:
 		Signals.emit_signal("build_ice_wall")

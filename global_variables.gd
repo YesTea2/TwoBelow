@@ -36,11 +36,21 @@ var first_load = true
 var current_crafted_wall_amount = 0
 var current_crafted_fire_amount = 0
 var current_crafted_repair_amount = 0
-
+var temp_wall = null
 var current_total_logs = 10
 var current_total_wire = 10
-var current_total_ice = 10
+var current_total_ice = 40
 var current_total_pipe = 10
+
+var temporary_x = 0.0
+var temporary_y = 0.0
+
+var is_currently_next_to_icewall = false
+
+var is_player_facing_left
+var is_player_facing_right
+var is_player_facing_down
+var is_player_facing_up
 
 var is_player_next_to_generator = false
 var is_player_surrounded_by_ice = false

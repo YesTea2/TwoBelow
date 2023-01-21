@@ -22,3 +22,5 @@ signal no_repair_kit
 signal not_surrounded_by_ice
 signal trying_to_build_indoor
 signal not_next_to_generator
+signal pressing_use_ice_pick
+signal ice_pick_not_near_wall

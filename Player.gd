@@ -2,10 +2,20 @@ extends KinematicBody2D
 
 
 export(Resource) var player_info
-
+export(Resource) var ice_wall_front
+export(Resource) var ice_wall_side
 
 onready var foot_timer : Timer = $Player_Foot_Timer
 onready var foot_sound : AudioStreamPlayer2D = $Foot_Sound
+onready var left_area : Position2D = $Left_Area
+onready var right_area : Position2D = $Right_Area
+onready var up_area : Position2D = $Up_Area
+onready var down_area : Position2D = $Down_Area
+
+var is_facing_left = false
+var is_facing_right = true
+var is_facing_up = false
+var is_facing_down = false
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -15,6 +25,7 @@ onready var foot_sound : AudioStreamPlayer2D = $Foot_Sound
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	foot_timer.connect("timeout", self, "_on_finish_waiting_for_part")
+	Signals.connect("build_ice_wall", self, "build_ice_wall")
 	pass # Replace with function body.
 
 func _physics_process(delta):
@@ -47,6 +58,11 @@ func _physics_process(delta):
 	#position.y = clamp(position.y, 0, screen_size.y)
 	
 	if direction.x > 0:
+		is_facing_right = false
+		is_facing_left = true
+		is_facing_down = false
+		is_facing_up = false
+		update_global_look()
 		$AnimatedSprite.animation = "right"
 		$AnimatedSprite.flip_h = false
 		if player_info.is_inside == false:
@@ -55,6 +71,11 @@ func _physics_process(delta):
 			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
 		
 	elif direction.x < 0:
+		is_facing_right = true
+		is_facing_left = false
+		is_facing_down = false
+		is_facing_up = false
+		update_global_look()
 		$AnimatedSprite.animation = "right"
 		$AnimatedSprite.flip_h = true
 		if player_info.is_inside == false:
@@ -63,6 +84,11 @@ func _physics_process(delta):
 			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
 		
 	elif direction.y < 0:
+		is_facing_right = false
+		is_facing_left = false
+		is_facing_down = false
+		is_facing_up = true
+		update_global_look()
 		$AnimatedSprite.animation = "up"
 		if player_info.is_inside == false:
 			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
@@ -71,6 +97,11 @@ func _physics_process(delta):
 		
 		
 	elif direction.y > 0 :
+		is_facing_right = false
+		is_facing_left = false
+		is_facing_down = true
+		is_facing_up = false
+		update_global_look()
 		$AnimatedSprite.animation = "down"
 		if player_info.is_inside == false:
 			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
@@ -80,17 +111,61 @@ func _physics_process(delta):
 	
 	move_and_slide(direction, Vector2(0,0), false, 4, 0.785, true)
 	
-	#if player_info.is_at_door == false:
+func update_global_look():
+	GlobalVariables.is_player_facing_down = is_facing_down
+	GlobalVariables.is_player_facing_left = is_facing_left
+	GlobalVariables.is_player_facing_right = is_facing_right
+	GlobalVariables.is_player_facing_up = is_facing_up
+#var door = doorway.instance()
+	#door.position = Vector2($DoorPos.position.x, $DoorPos.position.y)
+	#door.door_number = building_number
+	#get_parent().add_child(waterbolt)
+func build_ice_wall():
+	print("this is trying to work")
+	if is_facing_down == true:
+		print("down is working")
+		var icewall = ice_wall_front.instance()
+		var posx = down_area.global_position.x
+		var posy = down_area.global_position.y
+		GlobalVariables.temporary_x = posx
+		GlobalVariables.temporary_y = posy
+		get_parent().add_child(icewall)
+		icewall._setposition()
+		return
 		
-	#for index in get_slide_count():
-		#var collision = get_slide_collision(index)
-			#if collision.collider.is_in_group("doors"):
-				#player_info.emit_signal("doorway_entered")
+	if is_facing_up == true:
+		print("up is working")
+		var icewall = ice_wall_front.instance()
+		var posx = up_area.global_position.x
+		var posy = up_area.global_position.y
+		GlobalVariables.temporary_x = posx
+		GlobalVariables.temporary_y = posy
+		get_parent().add_child(icewall)
+		icewall._setposition()
+		return
 		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+	if is_facing_left == true:
+		print("left is working")
+		var icewall = ice_wall_side.instance()
+		var posx = left_area.global_position.x
+		var posy = left_area.global_position.y
+		GlobalVariables.temporary_x = posx
+		GlobalVariables.temporary_y = posy
+		get_parent().add_child(icewall)
+		icewall._setposition()
+		return
+	if is_facing_right == true:
+		print("right is working")
+		var icewall = ice_wall_side.instance()
+		var posx = right_area.global_position.x
+		var posy = right_area.global_position.y
+		GlobalVariables.temporary_x = posx
+		GlobalVariables.temporary_y = posy
+		get_parent().add_child(icewall)
+		icewall._setposition()
+		return
+		
+	
 func handle_player_part(part, time_for, type_of_ground):
 	
 	if player_info.is_waiting == false:
@@ -122,6 +197,11 @@ func _on_Area2D_area_entered(area):
 		Signals.emit_signal("close_inventory")
 		return
 		
+	if area.name.begins_with("Ice") || area.name.begins_with("wall"):
+		print ("currently at a wall")
+		GlobalVariables.is_currently_next_to_icewall = true
+		GlobalVariables.temp_wall = area
+		
 	if area.name.begins_with("Search") && GlobalVariables.is_at_door == false:
 		var search_var = area.search_var
 		search_var.prepar()
@@ -133,7 +213,7 @@ func _on_Area2D_area_entered(area):
 
 
 func _on_Area2D_area_exited(area):
-	
+
 	if area.name == "Doorway":
 		GlobalVariables.is_at_door = false
 		Signals.emit_signal("doorway_exited")
@@ -147,9 +227,12 @@ func _on_Area2D_area_exited(area):
 			search_var.has_been_searched = true
 		GlobalVariables.is_giving_item = false
 		GlobalVariables.is_searching_drawer = false
-		
-		Signals.emit_signal("on_closed_container")
-		return
+	if area.name.begins_with("Ice") || area.name.begins_with("wall"):
+		GlobalVariables.is_currently_next_to_icewall = false
+		GlobalVariables.temp_wall = null
+			
+	Signals.emit_signal("on_closed_container")
+	return
 
 func _input(event):
 	
@@ -176,3 +259,11 @@ func _input(event):
 	elif event.is_action_pressed("use_wall"):
 		Signals.emit_signal("pressing_place_ice_wall")
 		pass
+	elif event.is_action_pressed("use_ice_pick"):
+		if GlobalVariables.is_currently_next_to_icewall == true:
+			Signals.emit_signal("pressing_use_ice_pick")
+			return
+		elif GlobalVariables.is_currently_next_to_icewall == false:
+			Signals.emit_signal("ice_pick_not_near_wall")
+			return
+			

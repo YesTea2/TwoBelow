@@ -67,6 +67,15 @@ var search
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	temprature_text.text = WeatherControl.current_temp
+	Signals.connect("ice_pick_not_near_wall", self, "cant_use_pick")
+	Signals.connect("build_ice_wall", self, "used_ice_wall")
+	Signals.connect("build_fire", self, "used_fire")
+	Signals.connect("not_next_to_generator", self, "not_next_to_generator")
+	Signals.connect("trying_to_build_indoor", self, "trying_to_build_indoor")
+	Signals.connect("not_surrounded_by_ice", self, "not_surrounded_by_ice")
+	Signals.connect("no_fire_kit", self, "no_fire_kit")
+	Signals.connect("no_ice_wall", self, "no_ice_wall")
+	Signals.connect("no_repair_kit", self, "no_repair_kit") 
 	Signals.connect("close_inventory", self, "_on_close_inventory")
 	Signals.connect("on_searched_container", self, "_on_loot_container")
 	Signals.connect("doorway_entered", self, "_on_Player_doorway_entered")
@@ -123,6 +132,33 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	if length_of_alert != 99:
 		message_time.wait_time = length_of_alert
 		message_time.start()
+		
+func cant_use_pick():
+	_display_center_message("There are no ice walls around to use this", "Player", 2.5)
+func used_ice_wall():
+	print("using ice")
+	GlobalVariables.current_crafted_wall_amount -= 1
+	_on_update_bottom_amount("wall")
+func used_fire():
+	GlobalVariables.current_crafted_fire_amount -=  1
+	_on_update_bottom_amount("fire")
+	pass
+func not_next_to_generator():
+	_display_center_message("I should be at a generator to use this", "Player", 2.5)
+		
+func trying_to_build_indoor():
+	_display_center_message("I should build this outside", "Player", 2.5)
+func not_surrounded_by_ice():
+	_display_center_message("I need to have have atleast three icewalls around me to block the wind", "Player", 2.5)
+	
+func no_repair_kit():
+	_display_center_message("I have no repair kits to use.", "Player", 2.5)
+
+func no_ice_wall():
+	_display_center_message("I have no ice walls currently.", "Player", 2.5)
+
+func no_fire_kit():
+	_display_center_message("I need a fire kit to do that.", "Player", 2.5)
 	
 func _on_show_searchable(search_var):
 	
@@ -404,6 +440,7 @@ func crafting_repair():
 	pass
 	
 func _on_update_bottom_amount(type):
+	print ("changing ice")
 	if type == "fire":
 		bottom_bar_fire_amount.text =str(GlobalVariables.current_crafted_fire_amount)
 	if type == "wall":
