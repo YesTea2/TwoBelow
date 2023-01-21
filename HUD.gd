@@ -207,25 +207,25 @@ func _on_loot_container():
 
 func _on_give_resource(type, amount):
 	if type =="ice":
-		var new_amount = inventory_var.current_ice_amount + amount
+		var new_amount = GlobalVariables.current_total_ice + amount
 		GlobalVariables.current_total_ice += amount
 		ice_amount_text.text = "Ice Blocks: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="wire":
-		var new_amount = inventory_var.current_wire_amount + amount
+		var new_amount = GlobalVariables.current_total_wire + amount
 		GlobalVariables.current_total_wires += amount
 		wire_amount_text.text = "Wires: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="pipe":
-		var new_amount = inventory_var.current_pipe_amount + amount
+		var new_amount = GlobalVariables.current_total_pipe + amount
 		GlobalVariables.current_total_pipe += amount
 		pipe_amount_text.text = "Copper Pipes: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return
 	if type =="log":
-		var new_amount = inventory_var.current_log_amount + amount
+		var new_amount = GlobalVariables.current_total_logs + amount
 		GlobalVariables.current_total_logs += amount
 		log_amount_text.text = "Logs: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
@@ -391,25 +391,25 @@ func _on_trying_to_craft_repair():
 		is_trying_to_craft_repair = true
 		pass
 func crafting_fire():
-	inventory_var.current_crafted_fire_amount += 1
+	GlobalVariables.current_crafted_fire_amount += 1
 	_on_update_bottom_amount("fire")
 	pass
 func crafting_wall():
-	inventory_var.current_crafted_wall_amount += 1
+	GlobalVariables.current_crafted_wall_amount += 1
 	_on_update_bottom_amount("wall")
 	pass
 func crafting_repair():
-	inventory_var.current_crafted_repair_amount +=1
+	GlobalVariables.current_crafted_repair_amount +=1
 	_on_update_bottom_amount("repair")
 	pass
 	
 func _on_update_bottom_amount(type):
 	if type == "fire":
-		bottom_bar_fire_amount.text =str(inventory_var.current_crafted_fire_amount)
+		bottom_bar_fire_amount.text =str(GlobalVariables.current_crafted_fire_amount)
 	if type == "wall":
-		bottom_bar_wall_amount.text =str(inventory_var.current_crafted_wall_amount)
+		bottom_bar_wall_amount.text =str(GlobalVariables.current_crafted_wall_amount)
 	if type == "repair":
-		bottom_bar_repair_amount.text =str(inventory_var.current_crafted_repair_amount)
+		bottom_bar_repair_amount.text =str(GlobalVariables.current_crafted_repair_amount)
 	
 func show_crafting_choice(type_of_item, item_needed, second_item, item_one_amount, item_two_amount):
 	crafting_prompt.show()
@@ -481,10 +481,10 @@ func _on_Yes_Craft_pressed():
 		is_yes_currently_pressed_for_crafting = true
 		yes_craft_button.hide()
 		no_craft_button.hide()
-		var log_missing = 3 - inventory_var.current_log_amount
-		var ice_missing = 6 - inventory_var.current_ice_amount
-		var wire_missing = 6 - inventory_var.current_wire_amount
-		var pipe_missing = 2 - inventory_var.current_pipe_amount
+		var log_missing = 3 - GlobalVariables.current_total_logs
+		var ice_missing = 6 -GlobalVariables.current_total_ice
+		var wire_missing = 6 - GlobalVariables.current_total_wire
+		var pipe_missing = 2 - GlobalVariables.current_total_pipe
 		if pipe_missing < 0:
 			pipe_missing = 0
 		if wire_missing < 0:
@@ -492,13 +492,15 @@ func _on_Yes_Craft_pressed():
 		
 		if is_trying_to_craft_fire == true:
 			is_trying_to_craft_fire = false
-			if inventory_var.current_log_amount >= 3:
+			if GlobalVariables.current_total_logs >= 3:
 				crafting_prompt_Text.text = "\n Crafted a Fire Kit!"
+				GlobalVariables.current_total_logs -= 3
+				update_amounts()
 				crafting_fire()
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
 				is_timer_running_for_crafting = true
-			elif inventory_var.current_log_amount < 3:
+			elif GlobalVariables.current_total_logs < 3:
 				crafting_prompt_Text.text = "I need " + str(log_missing) + " more logs."
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
@@ -506,13 +508,16 @@ func _on_Yes_Craft_pressed():
 			pass
 		if is_trying_to_craft_repair == true:
 			is_trying_to_craft_repair = false
-			if inventory_var.current_pipe_amount >= 2 && inventory_var.current_wire_amount >= 6:
+			if GlobalVariables.current_total_pipe >= 2 && GlobalVariables.current_total_wire >= 6:
 				crafting_prompt_Text.text = "\n Crafted a Repair Kit!"
+				GlobalVariables.current_total_pipe -= 2
+				GlobalVariables.current_total_wire -= 6
+				update_amounts()
 				crafting_repair()
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
 				is_timer_running_for_crafting = true
-			elif inventory_var.current_pipe_amount < 2 || inventory_var.current_wire_amount < 6:
+			elif GlobalVariables.current_total_pipe < 2 || GlobalVariables.current_total_wire < 6:
 				crafting_prompt_Text.text = "I need " + str(pipe_missing) + " more pipes and " + str(wire_missing) + " wire."
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
@@ -520,19 +525,26 @@ func _on_Yes_Craft_pressed():
 			pass
 		if is_trying_to_craft_wall == true:
 			is_trying_to_craft_wall = false
-			if inventory_var.current_ice_amount >= 6:
+			if GlobalVariables.current_total_ice >= 6:
 				crafting_prompt_Text.text = "\n Crafted a Ice Wall!"
+				update_amounts()
 				crafting_wall()
+				GlobalVariables.current_total_ice -= 6
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
 				is_timer_running_for_crafting = true
-			elif inventory_var.current_ice_amount < 6:
+			elif GlobalVariables.current_total_ice < 6:
 				crafting_prompt_Text.text = "I need " + str(ice_missing) + " more ice bricks."
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
 				is_timer_running_for_crafting = true
 			pass
 	
+func update_amounts():
+	wire_amount_text.text = "Wires: " + str(GlobalVariables.current_total_wire)
+	log_amount_text.text = "Logs: " + str(GlobalVariables.current_total_logs)
+	pipe_amount_text.text = "Pipes: " + str(GlobalVariables.current_total_pipe)
+	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
 
 func _on_close_inventory():
 	inventory_container.hide()

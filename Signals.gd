@@ -10,3 +10,15 @@ signal is_opening_inventory
 signal close_inventory
 signal hide_entire_hud
 signal show_entire_hud
+signal pressing_place_fire
+signal pressing_use_repair
+signal pressing_place_ice_wall
+signal build_fire
+signal build_ice_wall
+signal use_repair_kit
+signal no_fire_kit
+signal no_ice_wall
+signal no_repair_kit
+signal not_surrounded_by_ice
+signal trying_to_build_indoor
+signal not_next_to_generator

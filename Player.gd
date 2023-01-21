@@ -167,3 +167,12 @@ func _input(event):
 	elif event.is_action_pressed("open_inventory"):
 		print("opening inventory")
 		Signals.emit_signal("is_opening_inventory")
+	elif event.is_action_pressed("use_fire"):
+		Signals.emit_signal("pressing_place_fire")
+		pass
+	elif event.is_action_pressed("use_repair"):
+		Signals.emit_signal("pressing_use_repair")
+		pass
+	elif event.is_action_pressed("use_wall"):
+		Signals.emit_signal("pressing_place_ice_wall")
+		pass

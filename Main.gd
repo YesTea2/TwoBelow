@@ -33,6 +33,9 @@ func _ready():
 	WeatherControl.connect("raise_temp_slow", self, "_on_change_bar_amount")
 	Signals.connect("show_entire_hud", self, "show_the_hud")
 	Signals.connect("hide_entire_hud", self, "hide_the_hud")
+	Signals.connect("pressing_place_fire", self, "trying_to_build_fire")
+	Signals.connect("pressing_place_ice_wall", self, "trying_to_build_ice_wall")
+	Signals.connect("pressing_use_repair", self, "trying_to_repair_generator")
 	WeatherControl.is_changing_system = true
 	if GlobalVariables.has_weather_started == false:
 		GlobalVariables.has_weather_started = true
@@ -45,6 +48,40 @@ func _ready():
 		GlobalVariables.coming_from_inside = false
 	if GlobalVariables.has_generated_buildings == false:
 		GlobalVariables.has_generated_buildings = true
+		
+func trying_to_build_fire():
+	if GlobalVariables.current_crafted_fire_amount >= 1 && GlobalVariables.is_player_surrounded_by_ice == true:
+		Signals.emit_signal("build_fire")
+		return
+	elif GlobalVariables.current_crafted_fire_amount <= 0:
+		Signals.emit_signal("no_fire_kit")
+		return
+	elif GlobalVariables.is_player_surrounded_by_ice == false:
+		Signals.emit_signal("not_surrounded_by_ice")
+		return
+	pass
+func trying_to_build_ice_wall():
+	if GlobalVariables.current_crafted_wall_amount >= 1 && GlobalVariables.is_inside == false:
+		Signals.emit_signal("build_ice_wall")
+		return
+	if GlobalVariables.is_inside == true:
+		Signals.emit_signal("trying_to_build_indoor")
+		return
+	if GlobalVariables.current_crafted_wall_amount <= 0:
+		Signals.emit_signal("no_ice_wall")
+		return
+	pass
+func trying_to_repair_generator():
+	if GlobalVariables.current_crafted_repair_amount >= 1 && GlobalVariables.is_player_next_to_generator == true:
+		Signals.emit_signal("use_repair_kit")
+		return
+	if GlobalVariables.is_player_next_to_generator == false:
+		Signals.emit_signal("not_next_to_generator")
+		return
+	if GlobalVariables.current_crafted_repair_amount <= 0:
+		Signals.emit_signal("no_repair_kit")
+		return
+	pass
 func show_the_hud():
 	hud.visible = true
 	pass

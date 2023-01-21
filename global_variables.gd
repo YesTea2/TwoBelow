@@ -33,12 +33,19 @@ var b_18 = false
 var b_19 = false
 var b_20 = false
 var first_load = true
+var current_crafted_wall_amount = 0
+var current_crafted_fire_amount = 0
+var current_crafted_repair_amount = 0
 
+var current_total_logs = 10
+var current_total_wire = 10
+var current_total_ice = 10
+var current_total_pipe = 10
 
-var current_total_logs = 0
-var current_total_wire = 0
-var current_total_ice = 0
-var current_total_pipe = 0
+var is_player_next_to_generator = false
+var is_player_surrounded_by_ice = false
+var is_player_next_to_fire = false
+var is_player_next_to_fireplace = false
 
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)
