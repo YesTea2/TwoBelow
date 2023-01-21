@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 export(Resource) var player_info
 export(Resource) var ice_wall_front
-
+export(Resource) var fire
 
 onready var foot_timer : Timer = $Player_Foot_Timer
 onready var foot_sound : AudioStreamPlayer2D = $Foot_Sound
@@ -30,6 +30,7 @@ func _ready():
 	foot_timer.connect("timeout", self, "_on_finish_waiting_for_part")
 # warning-ignore:return_value_discarded
 	Signals.connect("build_ice_wall", self, "build_ice_wall")
+	Signals.connect("build_fire", self, "build_fire")
 	pass # Replace with function body.
 
 func _physics_process(delta):
@@ -125,6 +126,16 @@ func update_global_look():
 	#door.position = Vector2($DoorPos.position.x, $DoorPos.position.y)
 	#door.door_number = building_number
 	#get_parent().add_child(waterbolt)
+	
+func build_fire():
+	var fire_pit = fire.instance()
+	var posx = spawn_area.global_position.x
+	var posy = spawn_area.global_position.y
+	GlobalVariables.temporary_x = posx
+	GlobalVariables.temporary_y = posy
+	get_parent().add_child(fire_pit)
+	fire_pit._setposition()
+	return
 func build_ice_wall():
 	print("this is trying to work")
 	var icewall = ice_wall_front.instance()

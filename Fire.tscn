@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Art/fire_pit4.png" type="Texture" id=1]
+[ext_resource path="res://Art/fire_pit2.png" type="Texture" id=2]
+[ext_resource path="res://Art/fire_pit5.png" type="Texture" id=3]
+[ext_resource path="res://Art/fire_pit7.png" type="Texture" id=4]
+[ext_resource path="res://Art/fire_pit6.png" type="Texture" id=5]
+[ext_resource path="res://Art/fire_pit3.png" type="Texture" id=6]
+[ext_resource path="res://Art/fire_pit1.png" type="Texture" id=7]
+[ext_resource path="res://Fire.gd" type="Script" id=8]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "Burn_Out",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "Dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Flicker",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Start_Fire",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Start_Fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "Start_Fire", "Flicker" ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Stop_Fire"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ "Burn_Out", "Dead" ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 10, 1 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35.5, 27.5 )
+
+[node name="Fire" type="Area2D"]
+z_index = 2
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -6.5 )
+frames = SubResource( 2 )
+animation = "Dead"
+playing = true
+
+[node name="Fire_Controller" type="AnimationPlayer" parent="."]
+anims/Start_Fire = SubResource( 3 )
+anims/Stop_Fire = SubResource( 4 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 0, -6.5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 0, 6 )
+shape = SubResource( 5 )
+
+[node name="area_of_flame" type="CollisionShape2D" parent="."]
+z_index = 1
+shape = SubResource( 1 )
+
+[connection signal="area_entered" from="." to="." method="_on_Fire_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_Fire_area_exited"]

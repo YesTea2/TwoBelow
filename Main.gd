@@ -125,7 +125,11 @@ func continue_storm():
 	
 # warning-ignore:unused_argument
 func _process(delta):
-	
+	if GlobalVariables.is_player_next_to_fire == true:
+		WeatherControl.is_warm = true
+		WeatherControl.emit_signal("warm_player")
+	elif GlobalVariables.is_player_next_to_fire == false:
+		WeatherControl.is_warm = false
 	if WeatherControl.is_changing_system == false:
 		change_weather()
 	if WeatherControl.is_level_one_storm == true:
@@ -134,7 +138,8 @@ func _process(delta):
 		WeatherControl.emit_signal("lower_temp_slow")
 	if WeatherControl.is_level_three_storm == true && WeatherControl.is_ready_for_level_three_storm == true:
 		WeatherControl.emit_signal("lower_temp_fast")
-
+	print(str(GlobalVariables.is_player_next_to_fire) + "fire")
+	
 func load_level_paramters(new_level_paramters: Dictionary):
 	level_parameters = new_level_paramters
 	WeatherControl.bar_value = level_parameters.bar_value

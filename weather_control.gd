@@ -12,6 +12,7 @@ var current_temp = "Cold"
 var is_cold = false
 var is_freeze = false
 var is_below = false
+var is_warm = false
 
 var is_changing_system = false;
 
@@ -25,7 +26,8 @@ var is_ready_for_level_two_storm = false
 var is_not_ready_for_level_three_storm
 
 var bar_value = 100.0
-
+signal player_left_fire
+signal warm_player
 # warning-ignore:unused_signal
 signal lower_temp_slow
 # warning-ignore:unused_signal

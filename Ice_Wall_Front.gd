@@ -32,12 +32,14 @@ func remove():
 
 func _on_Ice_Wall_Front_area_entered(area):
 	if area.name.begins_with("P"):
+		GlobalVariables.is_player_surrounded_by_ice = true
 		GlobalVariables.is_currently_next_to_icewall = true
 		is_player_around = true
 		GlobalVariables.is_able_to_build_another = false
 
 func _on_Ice_Wall_Front_area_exited(area):
 	if area.name.begins_with("P"):
+		GlobalVariables.is_player_surrounded_by_ice = false
 		GlobalVariables.is_currently_next_to_icewall = false
 		GlobalVariables.is_able_to_build_another = true
 		is_player_around = false

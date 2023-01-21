@@ -67,6 +67,7 @@ var search
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	temprature_text.text = WeatherControl.current_temp
+	WeatherControl.connect("player_left_fire", self, "player_left_fire")
 # warning-ignore:return_value_discarded
 	Signals.connect("ice_pick_not_near_wall", self, "cant_use_pick")
 # warning-ignore:return_value_discarded
@@ -113,6 +114,8 @@ func _ready():
 	WeatherControl.connect("raise_temp_slow", self, "_on_raise_temp_slow")
 # warning-ignore:return_value_discarded
 	WeatherControl.connect("warn_of_weather", self, "_on_warn_of_weather")
+	
+	WeatherControl.connect("warm_player", self, "_on_warm_player")
 # warning-ignore:return_value_discarded
 	Signals.connect("on_next_to_searchable", self, "_on_show_searchable")
 # warning-ignore:return_value_discarded
@@ -146,6 +149,7 @@ func _ready():
 func _process(delta):
 	WeatherControl.bar_value = clamp(WeatherControl.bar_value, 0, 100)
 	bar.value = WeatherControl.bar_value
+	
 
 func _display_center_message(message_to_display, profile, length_of_alert):
 	chat_anim.play("Show_Message")
@@ -163,6 +167,8 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	if length_of_alert != 99:
 		message_time.wait_time = length_of_alert
 		message_time.start()
+func player_left_fire():
+	temprature_text.text = WeatherControl.current_temp
 func need_to_move():
 	_display_center_message("It would be a waste to build more walls here, I should move farther away", "Player", 2.5)
 func to_close_to_building():
@@ -183,7 +189,7 @@ func not_next_to_generator():
 func trying_to_build_indoor():
 	_display_center_message("I should build this outside", "Player", 2.5)
 func not_surrounded_by_ice():
-	_display_center_message("I need to have have atleast three icewalls around me to block the wind", "Player", 2.5)
+	_display_center_message("I should be behind some ice before starting a fire or this wind would just blow it out", "Player", 2.5)
 	
 func no_repair_kit():
 	_display_center_message("I have no repair kits to use.", "Player", 2.5)
@@ -326,22 +332,36 @@ func set_percent_value_int(values):
 	WeatherControl.bar_value = values
 
 func _on_lower_temp_fast():
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	WeatherControl.bar_value -= .02
 	
 	pass
 
 func _on_lower_temp_slow():
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	WeatherControl.bar_value -= .007
-	
 	pass
 
 func _on_raise_temp_fast():
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	WeatherControl.bar_value += .15
 	pass
 
 func _on_raise_temp_slow():
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	WeatherControl.bar_value += .02
 	pass
+	
+func _on_warm_player():
+	WeatherControl.current_temp = "Cold"
+	temprature_text.text = "Cold"
+	WeatherControl.bar_value += .15
+	pass
+	
 
 func _on_Player_doorway_entered():
 	rand_generate.randomize()
@@ -431,16 +451,22 @@ func _on_temp_below_freeze_timer_timeout():
 	$Alert.stop()
 	$Alert.hide()
 	WeatherControl.current_temp = "Below Zero"
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	temprature_text.text = "Below Zero"
 
 func _on_temp_freezing_timer_timeout():
 	WeatherControl.current_temp = "Freezing"
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	temprature_text.text = "Freezing"
 	$Alert.stop()
 	$Alert.hide()
 
 func _on_temp_normal_timer_timeout():
 	WeatherControl.current_temp = "Cold"
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
 	temprature_text.text = "Cold"
 	$Alert.stop()
 	$Alert.hide()
