@@ -28,14 +28,23 @@ var is_not_ready_for_level_three_storm
 
 export var bar_value = 0
 
+# warning-ignore:unused_signal
 signal lower_temp_slow
+# warning-ignore:unused_signal
 signal lower_temp_fast
+# warning-ignore:unused_signal
 signal raise_temp_slow
+# warning-ignore:unused_signal
 signal raise_temp_fast
+# warning-ignore:unused_signal
 signal warn_of_weather
+# warning-ignore:unused_signal
 signal clear_of_storm
+# warning-ignore:unused_signal
 signal current_temp_normal
+# warning-ignore:unused_signal
 signal current_temp_freezing
+# warning-ignore:unused_signal
 signal current_temp_below_freezing
 
 var can_load_again = true

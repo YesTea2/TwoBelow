@@ -11,6 +11,7 @@ var rand_generate = RandomNumberGenerator.new()
 
 export var building_number = 0
 
+# warning-ignore:unused_signal
 signal doorway_entered
 
 # Called when the node enters the scene tree for the first time.
@@ -62,4 +63,15 @@ func choose_building_sprite(number):
 	#	$door.set_physics_process(true)
 	#	emit_signal("doorway_entered")
 	#	door.disconnect("body_entered", self, "_on_Door_body_entered")
+	
+
+
+func _on_No_Placement_area_entered(area):
+	if area.name.begins_with("P"):
+		GlobalVariables.is_to_close_to_building = true
+
+
+func _on_No_Placement_area_exited(area):
+	if area.name.begins_with("P"):
+		GlobalVariables.is_to_close_to_building = false
 	

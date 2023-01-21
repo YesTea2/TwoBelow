@@ -1,12 +1,19 @@
 extends Resource
 class_name player_variables
 
+# warning-ignore:unused_signal
 signal doorway_entered
+# warning-ignore:unused_signal
 signal doorway_exited
+# warning-ignore:unused_signal
 signal using_door
+# warning-ignore:unused_signal
 signal pressing_use_wall
+# warning-ignore:unused_signal
 signal pressing_use_fire
+# warning-ignore:unused_signal
 signal pressing_use_repair
+# warning-ignore:unused_signal
 signal is_opening_inventory
 
 

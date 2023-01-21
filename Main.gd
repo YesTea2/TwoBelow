@@ -15,7 +15,7 @@ onready var storm_time : Timer = $Storm_Timer
 onready var start_weather_time : Timer = $Start_Weather_Timer
 onready var player_ref = $Player
 signal level_changed(level_name)
-
+var current_wall
 export (String) var level_name = "level"
 
 onready var hud : CanvasLayer = $HUD
@@ -24,19 +24,34 @@ onready var hud : CanvasLayer = $HUD
 func _ready():
 	print(str(GlobalVariables.current_offset) + "dddd")
 	player_var.connect("using_door", self, "_on_Player_using_door")
+# warning-ignore:return_value_discarded
 	global_weather_time.connect("timeout", self, "_on_finished_changing_weather")
+# warning-ignore:return_value_discarded
 	storm_time.connect("timeout", self, "finish_changing_level_three_storm")
+# warning-ignore:return_value_discarded
 	start_weather_time.connect("timeout", self, "finish_starting_weather")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("raise_temp_fast", self, "_on_change_bar_amount")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("lower_temp_fast", self, "_on_change_bar_amount")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("lower_temp_slow", self, "_on_change_bar_amount")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("raise_temp_slow", self, "_on_change_bar_amount")
+# warning-ignore:return_value_discarded
 	Signals.connect("show_entire_hud", self, "show_the_hud")
+# warning-ignore:return_value_discarded
 	Signals.connect("hide_entire_hud", self, "hide_the_hud")
+# warning-ignore:return_value_discarded
 	Signals.connect("pressing_place_fire", self, "trying_to_build_fire")
+# warning-ignore:return_value_discarded
 	Signals.connect("pressing_place_ice_wall", self, "trying_to_build_ice_wall")
+# warning-ignore:return_value_discarded
 	Signals.connect("pressing_use_repair", self, "trying_to_repair_generator")
+# warning-ignore:return_value_discarded
 	Signals.connect("pressing_use_ice_pick", self, "trying_to_use_ice_pick")
+# warning-ignore:return_value_discarded
+	Signals.connect("next_to_this_wall", self, "next_to_this_wall")
 	WeatherControl.is_changing_system = true
 	if GlobalVariables.has_weather_started == false:
 		GlobalVariables.has_weather_started = true
@@ -61,28 +76,25 @@ func trying_to_build_fire():
 		Signals.emit_signal("not_surrounded_by_ice")
 		return
 	pass
-	
+
+func next_to_this_wall(area):
+	current_wall = area
 func trying_to_use_ice_pick():
-	if GlobalVariables.is_player_facing_down == true:
-		GlobalVariables.temp_wall.remove()
-		pass
-	if GlobalVariables.is_player_facing_up == true:
-		GlobalVariables.temp_wall.remove()
-		pass
-	if GlobalVariables.is_player_facing_left == true:
-		GlobalVariables.temp_wall.remove()
-		pass
-	if GlobalVariables.is_player_facing_right == true:
-		GlobalVariables.temp_wall.remove()
-		pass
-	pass
+	current_wall.remove()
+	GlobalVariables.is_currently_next_to_icewall = false
 	
 func trying_to_build_ice_wall():
-	if GlobalVariables.current_crafted_wall_amount >= 1 && GlobalVariables.is_inside == false:
+	if GlobalVariables.current_crafted_wall_amount >= 1 && GlobalVariables.is_inside == false && GlobalVariables.is_to_close_to_building == false && GlobalVariables.is_able_to_build_another == true:
 		Signals.emit_signal("build_ice_wall")
 		return
 	if GlobalVariables.is_inside == true:
 		Signals.emit_signal("trying_to_build_indoor")
+		return
+	if GlobalVariables.is_to_close_to_building == true:
+		Signals.emit_signal("to_close_to_building")
+		return
+	if GlobalVariables.is_able_to_build_another == false:
+		Signals.emit_signal("need_to_move")
 		return
 	if GlobalVariables.current_crafted_wall_amount <= 0:
 		Signals.emit_signal("no_ice_wall")
@@ -111,6 +123,7 @@ func continue_storm():
 	start_weather_time.wait_time = time
 	start_weather_time.start()
 	
+# warning-ignore:unused_argument
 func _process(delta):
 	
 	if WeatherControl.is_changing_system == false:

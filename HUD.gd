@@ -67,32 +67,62 @@ var search
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	temprature_text.text = WeatherControl.current_temp
+# warning-ignore:return_value_discarded
 	Signals.connect("ice_pick_not_near_wall", self, "cant_use_pick")
+# warning-ignore:return_value_discarded
 	Signals.connect("build_ice_wall", self, "used_ice_wall")
+# warning-ignore:return_value_discarded
 	Signals.connect("build_fire", self, "used_fire")
+# warning-ignore:return_value_discarded
 	Signals.connect("not_next_to_generator", self, "not_next_to_generator")
+# warning-ignore:return_value_discarded
 	Signals.connect("trying_to_build_indoor", self, "trying_to_build_indoor")
+# warning-ignore:return_value_discarded
 	Signals.connect("not_surrounded_by_ice", self, "not_surrounded_by_ice")
+# warning-ignore:return_value_discarded
 	Signals.connect("no_fire_kit", self, "no_fire_kit")
+# warning-ignore:return_value_discarded
 	Signals.connect("no_ice_wall", self, "no_ice_wall")
+# warning-ignore:return_value_discarded
 	Signals.connect("no_repair_kit", self, "no_repair_kit") 
+# warning-ignore:return_value_discarded
 	Signals.connect("close_inventory", self, "_on_close_inventory")
+# warning-ignore:return_value_discarded
 	Signals.connect("on_searched_container", self, "_on_loot_container")
+# warning-ignore:return_value_discarded
 	Signals.connect("doorway_entered", self, "_on_Player_doorway_entered")
+# warning-ignore:return_value_discarded
 	Signals.connect("doorway_exited", self, "_on_Player_doorway_exited")
+# warning-ignore:return_value_discarded
 	Signals.connect("is_opening_inventory", self,  "_on_opening_inventory")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("clear_of_storm", self, "_on_clear_of_storm")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("current_temp_below_freezing", self, "_on_current_temp_below_freezing")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("current_temp_freezing", self, "_on_current_temp_freezing")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("current_temp_normal", self, "_on_current_temp_normal")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("raise_temp_fast", self, "_on_raise_temp_fast")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("lower_temp_fast", self, "_on_lower_temp_fast")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("lower_temp_slow", self, "_on_lower_temp_slow")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("raise_temp_slow", self, "_on_raise_temp_slow")
+# warning-ignore:return_value_discarded
 	WeatherControl.connect("warn_of_weather", self, "_on_warn_of_weather")
+# warning-ignore:return_value_discarded
 	Signals.connect("on_next_to_searchable", self, "_on_show_searchable")
+# warning-ignore:return_value_discarded
 	Signals.connect("on_give_item", self, "_on_give_resource")
+# warning-ignore:return_value_discarded
 	Signals.connect("on_closed_container", self, "_on_clear_and_close")
+# warning-ignore:return_value_discarded
+	Signals.connect("to_close_to_building", self, "to_close_to_building")
+# warning-ignore:return_value_discarded
+	Signals.connect("need_to_move", self, "need_to_move")
 	
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
@@ -112,6 +142,7 @@ func _ready():
 	pipe_amount_text.text = "Pipes: " + str(GlobalVariables.current_total_pipe)
 	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
 	
+# warning-ignore:unused_argument
 func _process(delta):
 	WeatherControl.bar_value = clamp(WeatherControl.bar_value, 0, 100)
 	bar.value = WeatherControl.bar_value
@@ -132,7 +163,10 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	if length_of_alert != 99:
 		message_time.wait_time = length_of_alert
 		message_time.start()
-		
+func need_to_move():
+	_display_center_message("It would be a waste to build more walls here, I should move farther away", "Player", 2.5)
+func to_close_to_building():
+	_display_center_message("I need to be further away from the building before making walls", "Player", 2.5)
 func cant_use_pick():
 	_display_center_message("There are no ice walls around to use this", "Player", 2.5)
 func used_ice_wall():
@@ -465,14 +499,7 @@ func _on_opening_inventory():
 		crafting_container.show()
 		inventory_container.show()
 	elif is_inventory_open == true:
-		inventory_container.hide()
-		crafting_container.hide()
-		crafting_prompt.hide()
-		is_crafting = false
-		is_trying_to_craft_fire = false
-		is_trying_to_craft_repair = false
-		is_trying_to_craft_wall = false
-		is_inventory_open = false
+		_on_close_inventory()
 		
 func _on_Ice_Button_pressed():
 	if is_crafting == false && has_yes_been_pressed == false:
@@ -584,6 +611,7 @@ func update_amounts():
 	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
 
 func _on_close_inventory():
+	crafting_promp_time.stop()
 	inventory_container.hide()
 	crafting_container.hide()
 	crafting_prompt.hide()
@@ -592,6 +620,9 @@ func _on_close_inventory():
 	is_trying_to_craft_repair = false
 	is_trying_to_craft_wall = false
 	is_inventory_open = false
+	is_yes_currently_pressed_for_crafting = false
+	is_timer_running_for_crafting = false
+	has_yes_been_pressed = false
 	
 func _on_No_Craft_pressed():
 	if is_timer_running_for_crafting == false:

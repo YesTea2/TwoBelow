@@ -3,7 +3,7 @@ extends KinematicBody2D
 
 export(Resource) var player_info
 export(Resource) var ice_wall_front
-export(Resource) var ice_wall_side
+
 
 onready var foot_timer : Timer = $Player_Foot_Timer
 onready var foot_sound : AudioStreamPlayer2D = $Foot_Sound
@@ -11,11 +11,13 @@ onready var left_area : Position2D = $Left_Area
 onready var right_area : Position2D = $Right_Area
 onready var up_area : Position2D = $Up_Area
 onready var down_area : Position2D = $Down_Area
+onready var spawn_area : Position2D = $Spawn_area
 
 var is_facing_left = false
 var is_facing_right = true
 var is_facing_up = false
 var is_facing_down = false
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -24,7 +26,9 @@ var is_facing_down = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+# warning-ignore:return_value_discarded
 	foot_timer.connect("timeout", self, "_on_finish_waiting_for_part")
+# warning-ignore:return_value_discarded
 	Signals.connect("build_ice_wall", self, "build_ice_wall")
 	pass # Replace with function body.
 
@@ -109,6 +113,7 @@ func _physics_process(delta):
 			handle_player_part(player_info.snow_footstep, player_info.time_foot_indoor, "wood")
 	
 	
+# warning-ignore:return_value_discarded
 	move_and_slide(direction, Vector2(0,0), false, 4, 0.785, true)
 	
 func update_global_look():
@@ -122,48 +127,14 @@ func update_global_look():
 	#get_parent().add_child(waterbolt)
 func build_ice_wall():
 	print("this is trying to work")
-	if is_facing_down == true:
-		print("down is working")
-		var icewall = ice_wall_front.instance()
-		var posx = down_area.global_position.x
-		var posy = down_area.global_position.y
-		GlobalVariables.temporary_x = posx
-		GlobalVariables.temporary_y = posy
-		get_parent().add_child(icewall)
-		icewall._setposition()
-		return
-		
-	if is_facing_up == true:
-		print("up is working")
-		var icewall = ice_wall_front.instance()
-		var posx = up_area.global_position.x
-		var posy = up_area.global_position.y
-		GlobalVariables.temporary_x = posx
-		GlobalVariables.temporary_y = posy
-		get_parent().add_child(icewall)
-		icewall._setposition()
-		return
-		
-	if is_facing_left == true:
-		print("left is working")
-		var icewall = ice_wall_side.instance()
-		var posx = left_area.global_position.x
-		var posy = left_area.global_position.y
-		GlobalVariables.temporary_x = posx
-		GlobalVariables.temporary_y = posy
-		get_parent().add_child(icewall)
-		icewall._setposition()
-		return
-	if is_facing_right == true:
-		print("right is working")
-		var icewall = ice_wall_side.instance()
-		var posx = right_area.global_position.x
-		var posy = right_area.global_position.y
-		GlobalVariables.temporary_x = posx
-		GlobalVariables.temporary_y = posy
-		get_parent().add_child(icewall)
-		icewall._setposition()
-		return
+	var icewall = ice_wall_front.instance()
+	var posx = spawn_area.global_position.x
+	var posy = spawn_area.global_position.y
+	GlobalVariables.temporary_x = posx
+	GlobalVariables.temporary_y = posy
+	get_parent().add_child(icewall)
+	icewall._setposition()
+	return
 		
 	
 func handle_player_part(part, time_for, type_of_ground):
@@ -187,6 +158,7 @@ func _on_finish_waiting_for_part():
 func _on_Area2D_area_entered(area):
 	
 	if area.name == "Doorway" && GlobalVariables.finished_displaying_door_message == false:
+# warning-ignore:standalone_expression
 		GlobalVariables.finished_displaying_door_message == true
 		GlobalVariables.is_at_door = true
 		Signals.emit_signal("doorway_entered")
@@ -197,18 +169,13 @@ func _on_Area2D_area_entered(area):
 		Signals.emit_signal("close_inventory")
 		return
 		
-	if area.name.begins_with("Ice") || area.name.begins_with("wall"):
-		print ("currently at a wall")
-		GlobalVariables.is_currently_next_to_icewall = true
-		GlobalVariables.temp_wall = area
-		
 	if area.name.begins_with("Search") && GlobalVariables.is_at_door == false:
 		var search_var = area.search_var
 		search_var.prepar()
 		print("colliding")
 		Signals.emit_signal("close_inventory")
 		Signals.emit_signal("on_next_to_searchable", search_var)
-		
+		return
 
 
 
@@ -227,11 +194,8 @@ func _on_Area2D_area_exited(area):
 			search_var.has_been_searched = true
 		GlobalVariables.is_giving_item = false
 		GlobalVariables.is_searching_drawer = false
-	if area.name.begins_with("Ice") || area.name.begins_with("wall"):
-		GlobalVariables.is_currently_next_to_icewall = false
-		GlobalVariables.temp_wall = null
-			
-	Signals.emit_signal("on_closed_container")
+		Signals.emit_signal("on_closed_container")
+		return
 	return
 
 func _input(event):
@@ -260,10 +224,7 @@ func _input(event):
 		Signals.emit_signal("pressing_place_ice_wall")
 		pass
 	elif event.is_action_pressed("use_ice_pick"):
-		if GlobalVariables.is_currently_next_to_icewall == true:
-			Signals.emit_signal("pressing_use_ice_pick")
-			return
-		elif GlobalVariables.is_currently_next_to_icewall == false:
+		if GlobalVariables.is_currently_next_to_icewall == false:
 			Signals.emit_signal("ice_pick_not_near_wall")
 			return
 			

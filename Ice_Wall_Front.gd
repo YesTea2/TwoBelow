@@ -1,14 +1,14 @@
 extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
+var is_player_around = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
+func _input(event):
+	if event.is_action_pressed("use_ice_pick"):
+		if is_player_around == true:
+			remove()
+		pass
 	
 func _setposition():
 	print("setting position")
@@ -21,3 +21,19 @@ func remove():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+
+
+func _on_Ice_Wall_Front_area_entered(area):
+	if area.name.begins_with("P"):
+		GlobalVariables.is_currently_next_to_icewall = true
+		is_player_around = true
+		GlobalVariables.is_able_to_build_another = false
+
+func _on_Ice_Wall_Front_area_exited(area):
+	if area.name.begins_with("P"):
+		GlobalVariables.is_currently_next_to_icewall = false
+		GlobalVariables.is_able_to_build_another = true
+		is_player_around = false
+	pass # Replace with function body.

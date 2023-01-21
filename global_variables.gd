@@ -36,17 +36,17 @@ var first_load = true
 var current_crafted_wall_amount = 0
 var current_crafted_fire_amount = 0
 var current_crafted_repair_amount = 0
-var temp_wall = null
+var temp_wall = Area2D
 var current_total_logs = 10
 var current_total_wire = 10
 var current_total_ice = 40
 var current_total_pipe = 10
-
+var is_player_around = false
 var temporary_x = 0.0
 var temporary_y = 0.0
-
+var is_to_close_to_building = false
 var is_currently_next_to_icewall = false
-
+var is_able_to_build_another = true
 var is_player_facing_left
 var is_player_facing_right
 var is_player_facing_down
