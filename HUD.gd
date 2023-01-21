@@ -640,3 +640,30 @@ func _on_Crafting_Promp_Timer_timeout():
 	inventory_container.show()
 	has_yes_been_pressed = false
 	
+
+
+func _on_close_inv_b_pressed():
+	_on_close_inventory()
+	
+
+
+func _on_Bottom_Fire_Button_pressed():
+	Signals.emit_signal("pressing_place_fire")
+	pass # Replace with function body.
+
+
+func _on_Bottom_Ice_Pick_Button_pressed():
+	Signals.emit_signal("looking_for_ice_wall")
+	if GlobalVariables.is_currently_next_to_icewall == false:
+			Signals.emit_signal("ice_pick_not_near_wall")
+	pass # Replace with function body.
+
+
+func _on_Bottom_Repair_Button_pressed():
+	Signals.emit_signal("pressing_use_repair")
+	pass # Replace with function body.
+
+
+func _on_Bottom_ice_Wall_Button_pressed():
+	Signals.emit_signal("pressing_place_ice_wall")
+	pass # Replace with function body.

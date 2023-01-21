@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Temp.gd" type="Script" id=1]
 [ext_resource path="res://HUD.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Art/Bottom_Panel_two.png" type="Texture" id=17]
 [ext_resource path="res://Inventory_Info.tres" type="Resource" id=18]
 [ext_resource path="res://Crafting_Promp_Timer.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Art/close_b_hightlight.png" type="Texture" id=20]
 [ext_resource path="res://Art/n_button_pressed.png" type="Texture" id=21]
 [ext_resource path="res://Art/n_button_unpressed.png" type="Texture" id=22]
 [ext_resource path="res://Art/craft_prompt_02.png" type="Texture" id=23]
@@ -34,6 +35,20 @@
 [ext_resource path="res://Art/fire_button_pressed.png" type="Texture" id=33]
 [ext_resource path="res://Art/Ice_wall_Button_Normal.png" type="Texture" id=34]
 [ext_resource path="res://Art/Ice_wall_Button_Pressedl.png" type="Texture" id=35]
+[ext_resource path="res://Art/close_b_unpressed.png" type="Texture" id=36]
+[ext_resource path="res://Art/close_b_pressedt.png" type="Texture" id=37]
+[ext_resource path="res://Art/ice_pick_bottom_button_highlight.png" type="Texture" id=38]
+[ext_resource path="res://Art/fire_bottom_button_normal.png" type="Texture" id=39]
+[ext_resource path="res://Art/fire_bottom_button_hightlightl.png" type="Texture" id=40]
+[ext_resource path="res://Art/fire_bottom_button_pressed.png" type="Texture" id=41]
+[ext_resource path="res://Art/ice_wall_bottom_button_normal.png" type="Texture" id=42]
+[ext_resource path="res://Art/ice_wall_bottom_button_pressed.png" type="Texture" id=43]
+[ext_resource path="res://Art/repair_bottom_button_pressedl.png" type="Texture" id=44]
+[ext_resource path="res://Art/repair_bottom_button_highlight.png" type="Texture" id=45]
+[ext_resource path="res://Art/ice_pick_bottom_button_normal.png" type="Texture" id=46]
+[ext_resource path="res://Art/repair_bottom_button_normal.png" type="Texture" id=47]
+[ext_resource path="res://Art/ice_pick_bottom_button_pressedl.png" type="Texture" id=48]
+[ext_resource path="res://Art/ice_wall_bottom_button_hightlightl.png" type="Texture" id=49]
 
 [sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 11 )
@@ -190,6 +205,42 @@ margin_bottom = 1.0
 rect_pivot_offset = Vector2( 73.5, 21.1875 )
 texture = ExtResource( 17 )
 
+[node name="Bottom_Fire_Button" type="TextureButton" parent="Bottom_Bar"]
+margin_left = 54.2058
+margin_top = 3.32793
+margin_right = 91.2058
+margin_bottom = 29.3279
+texture_normal = ExtResource( 39 )
+texture_pressed = ExtResource( 41 )
+texture_hover = ExtResource( 40 )
+
+[node name="Bottom_Ice_Pick_Button" type="TextureButton" parent="Bottom_Bar"]
+margin_left = 142.206
+margin_top = 3.32793
+margin_right = 179.206
+margin_bottom = 29.3279
+texture_normal = ExtResource( 46 )
+texture_pressed = ExtResource( 38 )
+texture_hover = ExtResource( 48 )
+
+[node name="Bottom_Repair_Button" type="TextureButton" parent="Bottom_Bar"]
+margin_left = 98.0392
+margin_top = 3.32793
+margin_right = 135.039
+margin_bottom = 29.3279
+texture_normal = ExtResource( 47 )
+texture_pressed = ExtResource( 45 )
+texture_hover = ExtResource( 44 )
+
+[node name="Bottom_ice_Wall_Button" type="TextureButton" parent="Bottom_Bar"]
+margin_left = 10.3725
+margin_top = 3.32793
+margin_right = 47.3725
+margin_bottom = 29.3279
+texture_normal = ExtResource( 42 )
+texture_pressed = ExtResource( 43 )
+texture_hover = ExtResource( 49 )
+
 [node name="Inventory" type="ReferenceRect" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -275,6 +326,15 @@ custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 6 )
 text = "Inventory"
 align = 1
+
+[node name="close_inv_b" type="TextureButton" parent="Inventory"]
+margin_left = 68.0833
+margin_top = 54.8333
+margin_right = 93.0833
+margin_bottom = 67.8333
+texture_normal = ExtResource( 36 )
+texture_pressed = ExtResource( 37 )
+texture_hover = ExtResource( 20 )
 
 [node name="Crafting_Holder" type="ReferenceRect" parent="."]
 margin_left = 544.0
@@ -411,6 +471,7 @@ one_shot = true
 one_shot = true
 
 [node name="Cratft_Prompt" type="ReferenceRect" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -607,6 +668,11 @@ anims/Show_Message = SubResource( 15 )
 [node name="Alert_Over" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="pressed" from="Bottom_Bar/Bottom_Fire_Button" to="." method="_on_Bottom_Fire_Button_pressed"]
+[connection signal="pressed" from="Bottom_Bar/Bottom_Ice_Pick_Button" to="." method="_on_Bottom_Ice_Pick_Button_pressed"]
+[connection signal="pressed" from="Bottom_Bar/Bottom_Repair_Button" to="." method="_on_Bottom_Repair_Button_pressed"]
+[connection signal="pressed" from="Bottom_Bar/Bottom_ice_Wall_Button" to="." method="_on_Bottom_ice_Wall_Button_pressed"]
+[connection signal="pressed" from="Inventory/close_inv_b" to="." method="_on_close_inv_b_pressed"]
 [connection signal="pressed" from="Crafting_Holder/Repair_Button" to="." method="_on_Repair_Button_pressed"]
 [connection signal="pressed" from="Crafting_Holder/Ice_Button" to="." method="_on_Ice_Button_pressed"]
 [connection signal="pressed" from="Crafting_Holder/Fire_Button" to="." method="_on_Fire_Button_pressed"]

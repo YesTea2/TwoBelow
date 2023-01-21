@@ -1,9 +1,14 @@
 extends Area2D
 
+func _ready():
+	Signals.connect("looking_for_ice_wall", self, "check_for_player")
 
 
 var is_player_around = false
 
+func check_for_player():
+	if is_player_around == true:
+		remove()
 func _input(event):
 	if event.is_action_pressed("use_ice_pick"):
 		if is_player_around == true:

@@ -54,3 +54,4 @@ signal ice_pick_not_near_wall
 signal to_close_to_building
 # warning-ignore:unused_signal
 signal need_to_move
+signal looking_for_ice_wall
