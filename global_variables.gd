@@ -37,10 +37,10 @@ var current_crafted_wall_amount = 0
 var current_crafted_fire_amount = 0
 var current_crafted_repair_amount = 0
 var temp_wall = Area2D
-var current_total_logs = 10
-var current_total_wire = 10
-var current_total_ice = 40
-var current_total_pipe = 10
+var current_total_logs = 6
+var current_total_wire = 0
+var current_total_ice = 12
+var current_total_pipe = 0
 var is_player_around = false
 var temporary_x = 0.0
 var temporary_y = 0.0
@@ -56,6 +56,10 @@ var is_player_next_to_generator = false
 var is_player_surrounded_by_ice = false
 var is_player_next_to_fire = false
 var is_player_next_to_fireplace = false
+var is_foot_steps_outside = true
+var generator_one_fixed = false
+var generator_two_fixed = false
+var is_waiting_for_foot = false
 
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)

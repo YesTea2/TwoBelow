@@ -626,9 +626,9 @@ func _on_Yes_Craft_pressed():
 			is_trying_to_craft_wall = false
 			if GlobalVariables.current_total_ice >= 6:
 				crafting_prompt_Text.text = "\n Crafted a Ice Wall!"
-				update_amounts()
 				crafting_wall()
 				GlobalVariables.current_total_ice -= 6
+				update_amounts()
 				crafting_promp_time.wait_time = 1.5
 				crafting_promp_time.start()
 				is_timer_running_for_crafting = true

@@ -26,8 +26,10 @@ var is_facing_down = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 # warning-ignore:return_value_discarded
 	foot_timer.connect("timeout", self, "_on_finish_waiting_for_part")
+	handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
 # warning-ignore:return_value_discarded
 	Signals.connect("build_ice_wall", self, "build_ice_wall")
 	Signals.connect("build_fire", self, "build_fire")
@@ -70,9 +72,9 @@ func _physics_process(delta):
 		update_global_look()
 		$AnimatedSprite.animation = "right"
 		$AnimatedSprite.flip_h = false
-		if player_info.is_inside == false:
+		if GlobalVariables.is_foot_steps_outside == true:
 			handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
-		if player_info.is_inside == true:
+		if GlobalVariables.is_foot_steps_outside == false:
 			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
 		
 	elif direction.x < 0:
@@ -83,9 +85,9 @@ func _physics_process(delta):
 		update_global_look()
 		$AnimatedSprite.animation = "right"
 		$AnimatedSprite.flip_h = true
-		if player_info.is_inside == false:
+		if GlobalVariables.is_foot_steps_outside == true:
 			handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
-		if player_info.is_inside == true:
+		if GlobalVariables.is_foot_steps_outside == false:
 			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
 		
 	elif direction.y < 0:
@@ -95,9 +97,9 @@ func _physics_process(delta):
 		is_facing_up = true
 		update_global_look()
 		$AnimatedSprite.animation = "up"
-		if player_info.is_inside == false:
+		if GlobalVariables.is_foot_steps_outside == true:
 			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
-		if player_info.is_inside == true:
+		if GlobalVariables.is_foot_steps_outside == false:
 			handle_player_part(player_info.snow_footstep, player_info.time_foot_indoor, "wood")
 		
 		
@@ -108,9 +110,9 @@ func _physics_process(delta):
 		is_facing_up = false
 		update_global_look()
 		$AnimatedSprite.animation = "down"
-		if player_info.is_inside == false:
+		if GlobalVariables.is_foot_steps_outside == true:
 			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
-		if player_info.is_inside == true:
+		if GlobalVariables.is_foot_steps_outside == false:
 			handle_player_part(player_info.snow_footstep, player_info.time_foot_indoor, "wood")
 	
 	
@@ -150,8 +152,8 @@ func build_ice_wall():
 	
 func handle_player_part(part, time_for, type_of_ground):
 	
-	if player_info.is_waiting == false:
-		player_info.is_waiting = true
+	if GlobalVariables.is_waiting_for_foot == false:
+		GlobalVariables.is_waiting_for_foot = true
 		var footstep = part.instance()
 		if type_of_ground == "snow":
 			foot_sound.play()
@@ -164,7 +166,7 @@ func handle_player_part(part, time_for, type_of_ground):
 		
 
 func _on_finish_waiting_for_part():
-	player_info.is_waiting = false;
+	GlobalVariables.is_waiting_for_foot = false;
 	
 func _on_Area2D_area_entered(area):
 	
