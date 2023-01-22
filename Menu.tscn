@@ -239,6 +239,22 @@ margin_bottom = 1073.0
 custom_fonts/font = SubResource( 5 )
 text = "Credits"
 
+[node name="credit2" type="Button" parent="."]
+margin_left = 1131.0
+margin_top = 1016.0
+margin_right = 1286.0
+margin_bottom = 1073.0
+custom_fonts/font = SubResource( 5 )
+text = "Bugs"
+
+[node name="credit3" type="Button" parent="."]
+margin_left = 890.0
+margin_top = 1016.0
+margin_right = 1045.0
+margin_bottom = 1073.0
+custom_fonts/font = SubResource( 5 )
+text = "Controls"
+
 [connection signal="mouse_entered" from="Start_Button" to="." method="_on_Start_Button_mouse_entered"]
 [connection signal="pressed" from="Start_Button" to="." method="_on_Start_Button_pressed"]
 [connection signal="mouse_entered" from="Options_Button" to="." method="_on_Options_Button_mouse_entered"]
@@ -248,3 +264,7 @@ text = "Credits"
 [connection signal="animation_finished" from="Start_Anim" to="." method="_on_Start_Anim_animation_finished"]
 [connection signal="mouse_entered" from="credit" to="." method="_on_credit_mouse_entered"]
 [connection signal="pressed" from="credit" to="." method="_on_credit_pressed"]
+[connection signal="mouse_entered" from="credit2" to="." method="_on_credit2_mouse_entered"]
+[connection signal="pressed" from="credit2" to="." method="_on_credit2_pressed"]
+[connection signal="mouse_entered" from="credit3" to="." method="_on_credit2_mouse_entered"]
+[connection signal="pressed" from="credit3" to="." method="_on_credit3_pressed"]

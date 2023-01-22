@@ -130,6 +130,7 @@ func update_global_look():
 	#get_parent().add_child(waterbolt)
 	
 func build_fire():
+	MusicController.play_specific_sound("build_fire")
 	var fire_pit = fire.instance()
 	var posx = spawn_area.global_position.x
 	var posy = spawn_area.global_position.y
@@ -140,6 +141,7 @@ func build_fire():
 	return
 func build_ice_wall():
 	print("this is trying to work")
+	MusicController.play_specific_sound("build_ice")
 	var icewall = ice_wall_front.instance()
 	var posx = spawn_area.global_position.x
 	var posy = spawn_area.global_position.y

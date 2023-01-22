@@ -159,7 +159,7 @@ func _on_change_bar_amount() -> void:
 func start_weather():
 	WeatherControl.is_level_one_storm = true
 	change_storm_level_one()
-	var time = get_random_time(5,15)
+	var time = get_random_time(10,20)
 	start_weather_time.wait_time = time
 	start_weather_time.start()
 	
@@ -178,7 +178,7 @@ func change_weather():
 	if number == 3:
 		change_storm_level_three()
 	
-	var time = get_random_time(5,15)
+	var time = get_random_time(10,20)
 	global_weather_time.wait_time = time
 	global_weather_time.start()
 	
@@ -247,14 +247,13 @@ func _on_changeScene_requested() -> void:
 	emit_signal("level_changed", level_name)
 
 func play_loaded_sound() -> void:
-	$Door_Close_Sound.play()
+	MusicController.play_specific_sound("door_enter")
 
 func cleanup():
-	if $Door_Open_Sound.playing:
-		yield($Door_Open_Sound, "finished")
+	
 	queue_free()
 
 func _on_Player_using_door():
 	print("door open")
-	$Door_Open_Sound.play()
+	
 	_on_changeScene_requested()

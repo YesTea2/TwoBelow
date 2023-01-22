@@ -41,6 +41,7 @@ var current_total_logs = 6
 var current_total_wire = 0
 var current_total_ice = 12
 var current_total_pipe = 0
+var is_casual_mode = false
 var is_player_around = false
 var temporary_x = 0.0
 var temporary_y = 0.0
@@ -51,6 +52,7 @@ var is_player_facing_left
 var is_player_facing_right
 var is_player_facing_down
 var is_player_facing_up
+var has_ended_game = false
 var is_in_sub_menu = false
 var is_player_next_to_generator = false
 var is_player_surrounded_by_ice = false

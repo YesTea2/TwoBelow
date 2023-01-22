@@ -37,7 +37,7 @@ func _input(event):
 				GlobalVariables.gen_total_fixed +=1
 				Signals.emit_signal("update_repair_amount")
 				Signals.emit_signal("fixed_gen")
-				
+				MusicController.play_specific_sound("generator_on")
 				fix_generator()
 				return
 			else:

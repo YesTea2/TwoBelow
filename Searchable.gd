@@ -49,29 +49,29 @@ func prepar():
 
 func choose_resource_amounts_log_ice(resource):
 	if resource == "log":
-		var amount = get_random_number(1, 2)
+		var amount = get_random_number(2, 4)
 		log_amount = amount
 		pass
 	if resource == "ice":
-		var amount = get_random_number(1, 3)
+		var amount = get_random_number(2, 4)
 		ice_amount = amount
 		pass
 	
 func choose_repair_resource():
 	var choice = get_random_number(1,3)
 	if choice == 1:
-		var amount = get_random_number(2,4)
+		var amount = get_random_number(3,4)
 		has_wire = true
 		wire_amount = amount
 		pass
 	if choice == 2:
-		var amount = get_random_number(1,2)
+		var amount = get_random_number(1,3)
 		has_pipe = true
 		pipe_amount = amount
 		pass
 	if choice == 3:
-		var amount_one = get_random_number(2,4)
-		var amount_two = get_random_number(1,2)
+		var amount_one = get_random_number(3,4)
+		var amount_two = get_random_number(1,3)
 		has_wire = true
 		has_pipe = true
 		wire_amount = amount_one

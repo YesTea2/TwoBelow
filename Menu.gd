@@ -72,3 +72,21 @@ func _on_credit_pressed():
 func _on_credit_mouse_entered():
 	MusicController.play_button("highlight")
 	pass # Replace with function body.
+
+
+func _on_credit2_pressed():
+	MusicController.play_button("down")
+	var bugs = load("res://Bugs.tscn").instance()
+	get_tree().current_scene.add_child(bugs)
+	pass # Replace with function body.
+
+
+func _on_credit2_mouse_entered():
+	MusicController.play_button("highlight")
+	pass # Replace with function body.
+
+
+func _on_credit3_pressed():
+	var controls = load("res://controls.tscn").instance()
+	get_tree().current_scene.add_child(controls)
+	pass

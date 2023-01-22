@@ -63,3 +63,4 @@ signal no_repair_kit_at_gen
 signal at_a_gen
 signal fixed_gen
 signal game_won
+signal player_death

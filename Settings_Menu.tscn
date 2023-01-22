@@ -90,19 +90,19 @@ custom_fonts/font = SubResource( 1 )
 text = "SFX Volume"
 
 [node name="Label4" type="Label" parent="."]
-margin_left = 362.333
-margin_top = 530.0
-margin_right = 435.333
-margin_bottom = 546.0
+margin_left = 356.0
+margin_top = 510.333
+margin_right = 429.0
+margin_bottom = 526.333
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = SubResource( 1 )
 text = "Full Screen"
 
 [node name="Label5" type="Label" parent="."]
-margin_left = 677.333
-margin_top = 530.0
-margin_right = 750.333
-margin_bottom = 546.0
+margin_left = 650.0
+margin_top = 510.333
+margin_right = 723.0
+margin_bottom = 526.333
 rect_scale = Vector2( 3, 3 )
 custom_fonts/font = SubResource( 1 )
 text = "Windowed"
@@ -119,17 +119,33 @@ align = 1
 uppercase = true
 
 [node name="CheckBox" type="CheckBox" parent="."]
-margin_left = 565.333
-margin_top = 519.0
-margin_right = 589.333
-margin_bottom = 543.0
+margin_left = 559.0
+margin_top = 499.333
+margin_right = 583.0
+margin_bottom = 523.333
 rect_scale = Vector2( 3, 3 )
 
 [node name="CheckBox2" type="CheckBox" parent="."]
-margin_left = 860.333
-margin_top = 519.0
-margin_right = 884.333
-margin_bottom = 543.0
+margin_left = 833.0
+margin_top = 499.333
+margin_right = 857.0
+margin_bottom = 523.333
+rect_scale = Vector2( 3, 3 )
+
+[node name="Label7" type="Label" parent="."]
+margin_left = 703.333
+margin_top = 579.0
+margin_right = 776.333
+margin_bottom = 595.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 1 )
+text = "Casual"
+
+[node name="CheckBox3" type="CheckBox" parent="."]
+margin_left = 833.333
+margin_top = 567.0
+margin_right = 857.333
+margin_bottom = 591.0
 rect_scale = Vector2( 3, 3 )
 
 [node name="Close_Settings_Button" type="TextureButton" parent="."]
@@ -148,6 +164,8 @@ texture_hover = ExtResource( 5 )
 [connection signal="value_changed" from="SFX_Volume" to="." method="_on_SFX_Volume_value_changed"]
 [connection signal="pressed" from="CheckBox" to="." method="_on_CheckBox_pressed"]
 [connection signal="pressed" from="CheckBox2" to="." method="_on_CheckBox2_pressed"]
+[connection signal="pressed" from="CheckBox3" to="." method="_on_CheckBox3_pressed"]
+[connection signal="toggled" from="CheckBox3" to="." method="_on_CheckBox3_toggled"]
 [connection signal="button_down" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_button_down"]
 [connection signal="mouse_entered" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_mouse_entered"]
 [connection signal="pressed" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_pressed"]

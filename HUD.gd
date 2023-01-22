@@ -132,6 +132,7 @@ func _ready():
 	Signals.connect("update_repair_amount", self, "update_repair_amount")
 	Signals.connect("at_a_gen", self, "at_a_gen")
 	Signals.connect("fixed_gen", self, "fixed_gen")
+	Signals.connect("player_death", self, "player_died")
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
 	_on_update_bottom_amount("repair")
@@ -177,6 +178,10 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 		message_time.wait_time = length_of_alert
 		message_time.start()
 
+func player_died():
+	_display_center_message("Its so cold, I can't make it any further, I need to head back down the mountain. The town will need to find someone else to try", "Player", 5.0)
+	yield(get_tree().create_timer(4), "timeout")
+	get_tree().change_scene("res://End.tscn")
 func fixed_gen():
 	if GlobalVariables.gen_total_fixed < 2:
 		_display_center_message("Hey its working!!", "Player", 2.5)
@@ -242,18 +247,22 @@ func _on_show_searchable(search_var):
 	
 	if search_var.is_cab == true:
 		GlobalVariables.is_searching_drawer = true
+		MusicController.play_specific_sound("button_press")
 		_display_center_message("Search the cabinet?.  Press E to open", "Player", 99)
 		pass
 	if search_var.is_fireplace == true:
 		GlobalVariables.is_searching_drawer = true
+		MusicController.play_specific_sound("button_press")
 		_display_center_message("Search the fireplace?.  Press E to open", "Player",  99)
 		pass
 	if search_var.is_fridge == true:
 		GlobalVariables.is_searching_drawer = true
+		MusicController.play_specific_sound("button_press")
 		_display_center_message("Search the fridge?.  Press E to open", "Player", 99)
 		pass
 	if search_var.is_nightstand == true:
 		GlobalVariables.is_searching_drawer = true
+		MusicController.play_specific_sound("button_press")
 		_display_center_message("Search the nightstand?.  Press E to open", "Player", 99)
 		pass
 	
@@ -261,10 +270,12 @@ func _on_loot_container():
 	GlobalVariables.is_giving_item = true
 	
 	if TempContainer.has_been_searched == true:
+		MusicController.play_specific_sound("item_empty")
 		$Text_Container/Container_Text.text = "There is nothing left inside"
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.has_wire == true && TempContainer.has_pipe == true:
+		MusicController.play_specific_sound("item_obtain")
 		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_wire) + " wire and " + str(TempContainer.current_pipe) + " pipe!"
 		var give_pipe = TempContainer.current_pipe
 		var give_wire = TempContainer.current_wire
@@ -275,6 +286,7 @@ func _on_loot_container():
 		
 		return
 	if TempContainer.has_wire == true:
+		MusicController.play_specific_sound("item_obtain")
 		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_wire) + " wire!"
 		var give_wire = TempContainer.current_wire
 		_on_give_resource("wire", give_wire)
@@ -282,6 +294,7 @@ func _on_loot_container():
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.has_pipe == true:
+		MusicController.play_specific_sound("item_obtain")
 		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_pipe) + " pipe!"
 		var give_pipe = TempContainer.current_pipe
 		_on_give_resource("pipe", give_pipe)
@@ -289,6 +302,7 @@ func _on_loot_container():
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.contains_log == true:
+		MusicController.play_specific_sound("item_obtain")
 		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_log) + " log!"
 		var give_log = TempContainer.current_log
 		_on_give_resource("log", give_log)
@@ -296,6 +310,7 @@ func _on_loot_container():
 		GlobalVariables.is_searching_drawer = false
 		return
 	if TempContainer.contains_ice == true:
+		MusicController.play_specific_sound("item_obtain")
 		$Text_Container/Container_Text.text = "I found " + str(TempContainer.current_ice) + " ice brick!"
 		var give_ice = TempContainer.current_ice
 		_on_give_resource("ice", give_ice)
@@ -338,7 +353,7 @@ func weather_warning():
 	$Alert.show()
 	$Alert.speed_scale = .5
 	$Alert.play()
-	
+	MusicController.play_specific_sound("weather_alert")
 	alert_text_01.text = "Weather alert: Incoming storm, shelter immediately!"
 	w_alert_anim.play("Blizzard_Note")
 
@@ -360,12 +375,20 @@ func set_percent_value_int(values):
 func _on_lower_temp_fast():
 	if GlobalVariables.is_player_next_to_fire == true:
 		return
+	if WeatherControl.bar_value == 0 && GlobalVariables.is_casual_mode == false && GlobalVariables.has_ended_game == false:
+		GlobalVariables.has_ended_game = true
+		Signals.emit_signal("player_death")
+		return
 	WeatherControl.bar_value -= .02
 	
 	pass
 
 func _on_lower_temp_slow():
 	if GlobalVariables.is_player_next_to_fire == true:
+		return
+	if WeatherControl.bar_value == 0 && GlobalVariables.is_casual_mode == false && GlobalVariables.has_ended_game == false:
+		GlobalVariables.has_ended_game = true
+		Signals.emit_signal("player_death")
 		return
 	WeatherControl.bar_value -= .007
 	pass
@@ -567,6 +590,7 @@ func _on_Ice_Button_pressed():
 		
 
 func _on_Fire_Button_pressed():
+	MusicController.play_specific_sound("button_press")
 	if is_crafting == false && has_yes_been_pressed == false:
 		is_crafting = true
 		inventory_container.hide()
@@ -579,6 +603,7 @@ func _on_Fire_Button_pressed():
 		pass
 
 func _on_Repair_Button_pressed():
+	MusicController.play_specific_sound("button_press")
 	if is_crafting == false && has_yes_been_pressed == false:
 		is_crafting = true
 		inventory_container.hide()
@@ -592,6 +617,7 @@ func _on_Repair_Button_pressed():
 
 
 func _on_Yes_Craft_pressed():
+	MusicController.play_specific_sound("button_press")
 	if is_yes_currently_pressed_for_crafting == false && has_yes_been_pressed == false:
 		has_yes_been_pressed = true
 		is_yes_currently_pressed_for_crafting = true
@@ -663,6 +689,7 @@ func update_amounts():
 	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
 
 func _on_close_inventory():
+	
 	crafting_promp_time.stop()
 	inventory_container.hide()
 	crafting_container.hide()

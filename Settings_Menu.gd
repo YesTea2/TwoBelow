@@ -64,3 +64,17 @@ func _on_SFX_Volume_changed():
 func _on_Close_Settings_Button_mouse_entered():
 	MusicController.play_button("highlight")
 	pass # Replace with function body.
+
+
+
+
+
+
+func _on_CheckBox3_pressed():
+	if GlobalVariables.is_casual_mode == false:
+		GlobalVariables.is_casual_mode = true
+		return
+		
+	elif GlobalVariables.is_casual_mode == true:
+		GlobalVariables.is_casual_mode = false
+	
