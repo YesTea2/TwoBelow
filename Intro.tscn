@@ -1,0 +1,143 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Art/arrow_left_pressed.png" type="Texture" id=1]
+[ext_resource path="res://Art/arrow_right_highlight.png" type="Texture" id=2]
+[ext_resource path="res://Art/arrow_left_unpressed.png" type="Texture" id=3]
+[ext_resource path="res://Art/story_panel.png" type="Texture" id=4]
+[ext_resource path="res://Art/arrow_right_unpressed.png" type="Texture" id=5]
+[ext_resource path="res://Art/arrow_right_pressed.png" type="Texture" id=6]
+[ext_resource path="res://Art/arrow_left_highlight.png" type="Texture" id=7]
+[ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Intro.gd" type="Script" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 8 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "load_story"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, 1e-05 ), Vector2( 8, 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Left_Button:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 6, 1e-05 ), Vector2( 6, 1e-05 ), Vector2( 6, 6 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Right_Button:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 6, 1e-05 ), Vector2( 6, 1e-05 ), Vector2( 6, 6 ) ]
+}
+
+[node name="Intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 9 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.145098, 0.188235, 0.34902, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 881.0
+margin_top = 473.0
+margin_right = 1077.0
+margin_bottom = 637.0
+rect_scale = Vector2( 8, 1e-05 )
+rect_pivot_offset = Vector2( 98.125, 82.25 )
+texture = ExtResource( 4 )
+
+[node name="Story_01" type="Label" parent="TextureRect"]
+visible = false
+margin_left = 27.0
+margin_top = 36.0
+margin_right = 313.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 1 )
+text = "In a remote town, high up in the mountains where tempratures can drop to well below freezing in a matter of minutes the power has been lost."
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Story_02" type="Label" parent="TextureRect"]
+visible = false
+margin_left = 27.0
+margin_top = 36.0
+margin_right = 313.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 1 )
+text = "The town needs power before nightfall and only you can scale the mountain to fix the generators to keep the town warm"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Story_03" type="Label" parent="TextureRect"]
+visible = false
+margin_left = 27.0
+margin_top = 36.0
+margin_right = 313.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 1 )
+text = "As you prepare to leave the town the mayor hands you a few supplies and says 
+
+\"Take these with you, it should be enough supplies to build a fire on the way up but you will need to find more while you are up there. My advice is to look for the old buildings we left behind when we moved down the mountain, take care and stay warm\""
+align = 1
+valign = 1
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/load_story = SubResource( 2 )
+
+[node name="Left_Button" type="TextureButton" parent="."]
+margin_left = 583.0
+margin_top = 934.0
+margin_right = 611.0
+margin_bottom = 950.0
+rect_scale = Vector2( 6, 1e-05 )
+rect_pivot_offset = Vector2( 13.9445, -0.555557 )
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 1 )
+texture_hover = ExtResource( 7 )
+
+[node name="Right_Button" type="TextureButton" parent="."]
+margin_left = 1337.0
+margin_top = 935.0
+margin_right = 1365.0
+margin_bottom = 951.0
+rect_scale = Vector2( 6, 1e-05 )
+rect_pivot_offset = Vector2( 14.3333, -0.333328 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 2 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="pressed" from="Left_Button" to="." method="_on_Left_Button_pressed"]
+[connection signal="pressed" from="Right_Button" to="." method="_on_Right_Button_pressed"]

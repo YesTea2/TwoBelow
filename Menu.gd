@@ -9,7 +9,7 @@ onready var anim : AnimationPlayer = $Start_Anim
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -31,4 +31,4 @@ func _on_Options_Button_pressed():
 
 
 func _on_Start_Anim_animation_finished(anim_name):
-	get_tree().change_scene("res://SceneSwitcher.tscn")
+	get_tree().change_scene("res://Intro.tscn")

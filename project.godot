@@ -39,8 +39,15 @@ _global_script_class_icons={
 [application]
 
 config/name="TwoBelow"
-run/main_scene="res://SceneSwitcher.tscn"
-config/icon="res://icon.png"
+config/description="A small remote town in Iceland has lost power, as mayor of the town you are tasked with going out into the higher mountains to fix the generators for the town below, search abandoned buildings for supplies and survive the harsh tempratures
+
+A Godot Wild Jam  Game jam game"
+run/main_scene="res://Initial_Screen.tscn"
+boot_splash/show_image=false
+boot_splash/image="res://Art/tea.png"
+boot_splash/fullsize=false
+boot_splash/bg_color=Color( 0.141176, 0.141176, 0.141176, 1 )
+config/icon="res://Art/walkie_talkie2.png"
 
 [autoload]
 
