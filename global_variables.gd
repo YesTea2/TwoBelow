@@ -51,7 +51,7 @@ var is_player_facing_left
 var is_player_facing_right
 var is_player_facing_down
 var is_player_facing_up
-
+var is_in_sub_menu = false
 var is_player_next_to_generator = false
 var is_player_surrounded_by_ice = false
 var is_player_next_to_fire = false

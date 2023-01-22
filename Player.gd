@@ -211,6 +211,9 @@ func _on_Area2D_area_exited(area):
 
 func _input(event):
 	
+	if event.is_action_pressed("menu"):
+		get_tree().change_scene("res://Menu.tscn")
+		return
 	if event.is_action_pressed("use"):
 		if GlobalVariables.is_at_door == true:
 			if GlobalVariables.is_inside == true:
@@ -238,4 +241,4 @@ func _input(event):
 		if GlobalVariables.is_currently_next_to_icewall == false:
 			Signals.emit_signal("ice_pick_not_near_wall")
 			return
-			
+	

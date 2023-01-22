@@ -126,6 +126,7 @@ func _ready():
 	Signals.connect("to_close_to_building", self, "to_close_to_building")
 # warning-ignore:return_value_discarded
 	Signals.connect("need_to_move", self, "need_to_move")
+	Signals.connect("open_menu", self, "open_menu")
 	
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
@@ -144,7 +145,11 @@ func _ready():
 	log_amount_text.text = "Logs: " + str(GlobalVariables.current_total_logs)
 	pipe_amount_text.text = "Pipes: " + str(GlobalVariables.current_total_pipe)
 	ice_amount_text.text = "Ice Blocks: " + str(GlobalVariables.current_total_ice)
-	
+
+func open_menu():
+	var options = load("res://Settings_Menu.tscn").instance()
+	get_tree().current_scene.add_child(options)
+	pass # Replace with function body.
 # warning-ignore:unused_argument
 func _process(delta):
 	WeatherControl.bar_value = clamp(WeatherControl.bar_value, 0, 100)

@@ -9,6 +9,7 @@ var level_parameters := {
 export (Resource) var player_var
 export (Resource) var weather_var
 
+
 onready var snow_system : Particles2D = $Snow
 onready var global_weather_time : Timer = $global_weather_timer
 onready var storm_time : Timer = $Storm_Timer
@@ -52,6 +53,7 @@ func _ready():
 	Signals.connect("pressing_use_ice_pick", self, "trying_to_use_ice_pick")
 # warning-ignore:return_value_discarded
 	Signals.connect("next_to_this_wall", self, "next_to_this_wall")
+
 	WeatherControl.is_changing_system = true
 	if GlobalVariables.has_weather_started == false:
 		GlobalVariables.has_weather_started = true
@@ -64,7 +66,8 @@ func _ready():
 		GlobalVariables.coming_from_inside = false
 	if GlobalVariables.has_generated_buildings == false:
 		GlobalVariables.has_generated_buildings = true
-		
+
+
 func trying_to_build_fire():
 	if GlobalVariables.current_crafted_fire_amount >= 1 && GlobalVariables.is_player_surrounded_by_ice == true:
 		Signals.emit_signal("build_fire")
@@ -138,7 +141,7 @@ func _process(delta):
 		WeatherControl.emit_signal("lower_temp_slow")
 	if WeatherControl.is_level_three_storm == true && WeatherControl.is_ready_for_level_three_storm == true:
 		WeatherControl.emit_signal("lower_temp_fast")
-	print(str(GlobalVariables.is_player_next_to_fire) + "fire")
+	
 	
 func load_level_paramters(new_level_paramters: Dictionary):
 	level_parameters = new_level_paramters
