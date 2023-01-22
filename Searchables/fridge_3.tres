@@ -5,10 +5,15 @@
 [resource]
 script = ExtResource( 1 )
 has_been_searched = false
+container_number = 10
 contains_log = false
-contains_ice = false
+contains_ice = true
 contains_wire = false
 contains_repair = false
+is_cab = false
+is_fireplace = false
+is_fridge = true
+is_nightstand = false
 log_amount = 0
 pipe_amount = 0
 ice_amount = 0

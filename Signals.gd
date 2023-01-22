@@ -57,3 +57,5 @@ signal need_to_move
 signal looking_for_ice_wall
 signal open_menu
 signal destroy_sub_menu
+
+signal trying_to_leave_mountain

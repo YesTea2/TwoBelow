@@ -7,6 +7,7 @@ extends Control
 onready var story_one : Label = $TextureRect/Story_01
 onready var story_two : Label = $TextureRect/Story_02
 onready var story_three : Label = $TextureRect/Story_03
+onready var story_four : Label = $TextureRect/Story_04
 
 onready var anim : AnimationPlayer = $AnimationPlayer
 
@@ -45,6 +46,11 @@ func _on_Left_Button_pressed():
 		story_two.show()
 		story_index -= 1
 		return
+	if story_index == 3:
+		story_four.hide()
+		story_three.show()
+		story_index -=1
+		return
 
 
 func _on_Right_Button_pressed():
@@ -60,6 +66,11 @@ func _on_Right_Button_pressed():
 		story_index+=1
 		return
 	if story_index == 2:
+		story_three.hide()
+		story_four.show()
+		story_index+=1
+		return
+	if story_index == 3:
 		MusicController.play_close_menu()
 		anim.play("close")
 		

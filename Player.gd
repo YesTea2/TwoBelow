@@ -170,7 +170,7 @@ func _on_Area2D_area_entered(area):
 	
 	if area.name == "Doorway" && GlobalVariables.finished_displaying_door_message == false:
 # warning-ignore:standalone_expression
-		GlobalVariables.finished_displaying_door_message == true
+		GlobalVariables.finished_displaying_door_message = true
 		GlobalVariables.is_at_door = true
 		Signals.emit_signal("doorway_entered")
 		GlobalVariables.number_of_current_building = area.door_number
@@ -187,6 +187,9 @@ func _on_Area2D_area_entered(area):
 		Signals.emit_signal("close_inventory")
 		Signals.emit_signal("on_next_to_searchable", search_var)
 		return
+	
+	if area.name.begins_with("Leaving"):
+		Signals.emit_signal("trying_to_leave_mountain")
 
 
 

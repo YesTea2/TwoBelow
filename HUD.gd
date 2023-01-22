@@ -127,6 +127,7 @@ func _ready():
 # warning-ignore:return_value_discarded
 	Signals.connect("need_to_move", self, "need_to_move")
 	Signals.connect("open_menu", self, "open_menu")
+	Signals.connect("trying_to_leave_mountain", self, "trying_to_leave")
 	
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
@@ -172,6 +173,9 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	if length_of_alert != 99:
 		message_time.wait_time = length_of_alert
 		message_time.start()
+		
+func trying_to_leave():
+	_display_center_message("I need to fix the generators before going back down the mountain", "Player", 2.5)
 func player_left_fire():
 	temprature_text.text = WeatherControl.current_temp
 func need_to_move():
@@ -295,7 +299,7 @@ func _on_give_resource(type, amount):
 		return
 	if type =="wire":
 		var new_amount = GlobalVariables.current_total_wire + amount
-		GlobalVariables.current_total_wires += amount
+		GlobalVariables.current_total_wire += amount
 		wire_amount_text.text = "Wires: " + str(new_amount)
 		GlobalVariables.is_giving_item = false
 		return

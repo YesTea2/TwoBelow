@@ -4,12 +4,12 @@
 
 [resource]
 script = ExtResource( 1 )
-has_been_searched = true
+has_been_searched = false
 container_number = 1
 contains_log = false
 contains_ice = false
-contains_wire = false
-contains_repair = false
+contains_wire = true
+contains_repair = true
 is_cab = true
 is_fireplace = false
 is_fridge = false

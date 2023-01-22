@@ -133,7 +133,7 @@ margin_right = 313.0
 margin_bottom = 215.0
 rect_scale = Vector2( 0.5, 0.5 )
 custom_fonts/font = SubResource( 1 )
-text = "The town needs power before nightfall and only you can scale the mountain to re-assemble the generators to keep the town warm"
+text = "The town needs their power before nightfall and only you can scale the mountain in time to re-assemble the generators to keep the town warm"
 align = 1
 valign = 1
 autowrap = true
@@ -146,9 +146,20 @@ margin_right = 313.0
 margin_bottom = 215.0
 rect_scale = Vector2( 0.5, 0.5 )
 custom_fonts/font = SubResource( 1 )
-text = "As you prepare to leave the town the mayor hands you a few supplies and says 
+text = "As you prepare to leave the town the mayor hands you a few supplies and says "
+align = 1
+valign = 1
+autowrap = true
 
-\"Take these with you, it should be enough supplies to build a couple of fires on the way up but you will need to find more while you are up there. My advice is to look for the old buildings we left behind when we moved down the mountain, take care, and stay warm\""
+[node name="Story_04" type="Label" parent="TextureRect"]
+visible = false
+margin_left = 27.0
+margin_top = 36.0
+margin_right = 313.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 1 )
+text = "\"Take these with you, it should be enough supplies to build a couple of fires on the way up as well as a radio I will use to warn you of incoming storms but you will need to find more supplies while you are up there. My advice is to look for the old buildings we left behind when we moved down the mountain. take care, and stay warm\" "
 align = 1
 valign = 1
 autowrap = true
