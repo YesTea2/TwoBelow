@@ -60,6 +60,7 @@ var is_foot_steps_outside = true
 var generator_one_fixed = false
 var generator_two_fixed = false
 var is_waiting_for_foot = false
+var gen_total_fixed = 0
 
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)

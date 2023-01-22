@@ -53,6 +53,8 @@ func _ready():
 	Signals.connect("pressing_use_ice_pick", self, "trying_to_use_ice_pick")
 # warning-ignore:return_value_discarded
 	Signals.connect("next_to_this_wall", self, "next_to_this_wall")
+	
+	Signals.connect("game_won", self, "game_won")
 
 	WeatherControl.is_changing_system = true
 	if GlobalVariables.has_weather_started == false:
@@ -80,6 +82,9 @@ func trying_to_build_fire():
 		return
 	pass
 
+func game_won():
+	yield(get_tree().create_timer(4), "timeout")
+	get_tree().change_scene("res://End.tscn")
 func next_to_this_wall(area):
 	current_wall = area
 func trying_to_use_ice_pick():
@@ -173,7 +178,7 @@ func change_weather():
 	if number == 3:
 		change_storm_level_three()
 	
-	var time = get_random_time(10,20)
+	var time = get_random_time(5,15)
 	global_weather_time.wait_time = time
 	global_weather_time.start()
 	

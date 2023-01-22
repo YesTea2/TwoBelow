@@ -60,3 +60,15 @@ func _on_Quit_Button_mouse_entered():
 
 
 	
+
+
+func _on_credit_pressed():
+	MusicController.play_button("down")
+	var credit = load("res://Credits.tscn").instance()
+	get_tree().current_scene.add_child(credit)
+	pass # Replace with function body.
+
+
+func _on_credit_mouse_entered():
+	MusicController.play_button("highlight")
+	pass # Replace with function body.

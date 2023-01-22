@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Art/story_panel.png" type="Texture" id=1]
+[ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Credits.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 55
+outline_size = 1
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 45
+font_data = ExtResource( 2 )
+
+[node name="Credits" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 165.0
+margin_top = -96.0
+margin_right = 361.0
+margin_bottom = 68.0
+rect_scale = Vector2( 8, 8 )
+texture = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 380.0
+margin_top = 185.0
+margin_right = 1522.0
+margin_bottom = 906.0
+custom_fonts/font = SubResource( 1 )
+text = "
+                 Art / code / music / design  
+			                            by: YesTea
+		
+		                  Sounds made with ChipTone
+		               https://sfbgames.itch.io/chiptone
+					
+					                     Equipment & software
+										      Music: Abelton Live & Novation Launchkey Mini 
+											      Artwork: Asesprite
+												      Engine: Godot"
+uppercase = true
+
+[node name="Button" type="Button" parent="."]
+margin_left = 911.0
+margin_top = 855.0
+margin_right = 1034.0
+margin_bottom = 907.0
+custom_fonts/font = SubResource( 2 )
+text = "Close"
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_Button_mouse_entered"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

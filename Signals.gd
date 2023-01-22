@@ -57,5 +57,9 @@ signal need_to_move
 signal looking_for_ice_wall
 signal open_menu
 signal destroy_sub_menu
-
+signal update_repair_amount
 signal trying_to_leave_mountain
+signal no_repair_kit_at_gen
+signal at_a_gen
+signal fixed_gen
+signal game_won

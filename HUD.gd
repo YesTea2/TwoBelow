@@ -128,7 +128,10 @@ func _ready():
 	Signals.connect("need_to_move", self, "need_to_move")
 	Signals.connect("open_menu", self, "open_menu")
 	Signals.connect("trying_to_leave_mountain", self, "trying_to_leave")
-	
+	Signals.connect("no_repair_kit_at_gen", self, "no_repair_kit_at_gen")
+	Signals.connect("update_repair_amount", self, "update_repair_amount")
+	Signals.connect("at_a_gen", self, "at_a_gen")
+	Signals.connect("fixed_gen", self, "fixed_gen")
 	_on_update_bottom_amount("fire")
 	_on_update_bottom_amount("wall")
 	_on_update_bottom_amount("repair")
@@ -173,7 +176,21 @@ func _display_center_message(message_to_display, profile, length_of_alert):
 	if length_of_alert != 99:
 		message_time.wait_time = length_of_alert
 		message_time.start()
-		
+
+func fixed_gen():
+	if GlobalVariables.gen_total_fixed < 2:
+		_display_center_message("Hey its working!!", "Player", 2.5)
+		return
+	elif GlobalVariables.gen_total_fixed >= 2:
+		_display_center_message("Whatever you did worked!! the power is restored to the town, can't wait to see you back down here!", "walki", 3.5)
+		Signals.emit_signal("game_won")
+func at_a_gen():
+	_display_center_message("This is one of the generators I need to fix!", "Player", 2.5)
+func no_repair_kit_at_gen():
+	_display_center_message("I need a repair kit to fix this generator", "Player", 2.5)
+func update_repair_amount():
+	update_amounts()
+	
 func trying_to_leave():
 	_display_center_message("I need to fix the generators before going back down the mountain", "Player", 2.5)
 func player_left_fire():
