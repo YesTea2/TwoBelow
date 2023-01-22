@@ -144,7 +144,10 @@ texture_hover = ExtResource( 5 )
 
 [connection signal="value_changed" from="Music_Volume" to="." method="_on_Music_Volume_value_changed"]
 [connection signal="value_changed" from="Main_Volume" to="." method="_on_Main_Volume_value_changed"]
+[connection signal="changed" from="SFX_Volume" to="." method="_on_SFX_Volume_changed"]
 [connection signal="value_changed" from="SFX_Volume" to="." method="_on_SFX_Volume_value_changed"]
 [connection signal="pressed" from="CheckBox" to="." method="_on_CheckBox_pressed"]
 [connection signal="pressed" from="CheckBox2" to="." method="_on_CheckBox2_pressed"]
+[connection signal="button_down" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_button_down"]
+[connection signal="mouse_entered" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_mouse_entered"]
 [connection signal="pressed" from="Close_Settings_Button" to="." method="_on_Close_Settings_Button_pressed"]

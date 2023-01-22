@@ -8,6 +8,7 @@ onready var anim : AnimationPlayer = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	MusicController.play_music()
 	anim.play("FI")
 	pass # Replace with function body.
 

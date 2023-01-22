@@ -38,7 +38,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Start"
-length = 1.5
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("Assembly:rect_position")
 tracks/0/interp = 1
@@ -46,7 +46,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.001, 0.6, 1 ),
+"times": PoolRealArray( 0, 0.001, 0.4, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -25, -212 ), Vector2( -25, -212 ), Vector2( -25, -212 ), Vector2( -25, 923 ) ]
@@ -58,7 +58,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4, 0.6 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ 27.9106, -20.4904, -110.949 ]
@@ -227,7 +227,10 @@ texture = ExtResource( 9 )
 anims/RESET = SubResource( 4 )
 anims/Start = SubResource( 3 )
 
+[connection signal="mouse_entered" from="Start_Button" to="." method="_on_Start_Button_mouse_entered"]
 [connection signal="pressed" from="Start_Button" to="." method="_on_Start_Button_pressed"]
+[connection signal="mouse_entered" from="Options_Button" to="." method="_on_Options_Button_mouse_entered"]
 [connection signal="pressed" from="Options_Button" to="." method="_on_Options_Button_pressed"]
+[connection signal="mouse_entered" from="Quit_Button" to="." method="_on_Quit_Button_mouse_entered"]
 [connection signal="pressed" from="Quit_Button" to="." method="_on_Quit_Button_pressed"]
 [connection signal="animation_finished" from="Start_Anim" to="." method="_on_Start_Anim_animation_finished"]

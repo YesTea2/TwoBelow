@@ -56,6 +56,7 @@ GlobalVariables="*res://global_variables.gd"
 TempContainer="*res://temp_container.gd"
 AllContainers="*res://All_Containers.gd"
 WeatherControl="*res://weather_control.gd"
+MusicController="*res://MusicController.tscn"
 
 [display]
 
