@@ -34,14 +34,15 @@ margin_right = 1522.0
 margin_bottom = 906.0
 custom_fonts/font = SubResource( 1 )
 text = "
-                 Art / code / music / design  
+                       Art / code / design  
 			                            by: YesTea
 		
 		                  Sounds made with ChipTone
 		               https://sfbgames.itch.io/chiptone
+						                          music from 
+								                zapsplat.com with gold account
 					
 					                     Equipment & software
-										      Music: Abelton Live & Novation Launchkey Mini 
 											      Artwork: Asesprite
 												      Engine: Godot"
 uppercase = true

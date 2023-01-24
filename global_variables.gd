@@ -64,6 +64,10 @@ var generator_two_fixed = false
 var is_waiting_for_foot = false
 var gen_total_fixed = 0
 
+var current_main_audio_slider_value = 1.0
+var current_music_slider_value = 0.5
+var current_sfx_slider_value = 0.5
+
 func set_building_sprite(num_for_sprite, true_or_false):
 	set("b_" + str(num_for_sprite), true_or_false)
 

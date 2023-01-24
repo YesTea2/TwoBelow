@@ -8,7 +8,8 @@
 [ext_resource path="res://Art/close_b_pressedt.png" type="Texture" id=6]
 
 [sub_resource type="DynamicFont" id=1]
-outline_size = 1
+size = 50
+outline_size = 3
 outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
 font_data = ExtResource( 3 )
 
@@ -34,9 +35,9 @@ texture = ExtResource( 2 )
 
 [node name="Music_Volume" type="HSlider" parent="."]
 margin_left = 608.333
-margin_top = 312.0
+margin_top = 286.333
 margin_right = 967.333
-margin_bottom = 328.0
+margin_bottom = 302.333
 rect_scale = Vector2( 1, 2 )
 max_value = 1.0
 step = 0.0
@@ -54,9 +55,9 @@ value = 1.0
 
 [node name="SFX_Volume" type="HSlider" parent="."]
 margin_left = 609.333
-margin_top = 437.0
+margin_top = 376.333
 margin_right = 967.333
-margin_bottom = 453.0
+margin_bottom = 392.333
 rect_scale = Vector2( 1, 2 )
 max_value = 1.0
 step = 0.0
@@ -67,52 +68,46 @@ margin_left = 332.333
 margin_top = 183.0
 margin_right = 398.333
 margin_bottom = 199.0
-rect_scale = Vector2( 3, 3 )
 custom_fonts/font = SubResource( 1 )
 text = "Main Volume"
 
 [node name="Label2" type="Label" parent="."]
 margin_left = 322.333
-margin_top = 305.0
-margin_right = 395.333
-margin_bottom = 321.0
-rect_scale = Vector2( 3, 3 )
+margin_top = 279.333
+margin_right = 551.333
+margin_bottom = 330.333
 custom_fonts/font = SubResource( 1 )
 text = "Music Volume"
 
 [node name="Label3" type="Label" parent="."]
 margin_left = 338.333
-margin_top = 430.0
-margin_right = 411.333
-margin_bottom = 446.0
-rect_scale = Vector2( 3, 3 )
+margin_top = 369.333
+margin_right = 530.333
+margin_bottom = 420.333
 custom_fonts/font = SubResource( 1 )
 text = "SFX Volume"
 
 [node name="Label4" type="Label" parent="."]
 margin_left = 356.0
-margin_top = 510.333
-margin_right = 429.0
-margin_bottom = 526.333
-rect_scale = Vector2( 3, 3 )
+margin_top = 468.0
+margin_right = 542.0
+margin_bottom = 519.0
 custom_fonts/font = SubResource( 1 )
 text = "Full Screen"
 
 [node name="Label5" type="Label" parent="."]
-margin_left = 650.0
-margin_top = 510.333
-margin_right = 723.0
-margin_bottom = 526.333
-rect_scale = Vector2( 3, 3 )
+margin_left = 652.667
+margin_top = 469.334
+margin_right = 809.667
+margin_bottom = 520.334
 custom_fonts/font = SubResource( 1 )
 text = "Windowed"
 
 [node name="Label6" type="Label" parent="."]
-margin_left = 528.333
-margin_top = 106.0
-margin_right = 601.333
-margin_bottom = 122.0
-rect_scale = Vector2( 3, 3 )
+margin_left = 547.333
+margin_top = 98.6667
+margin_right = 685.333
+margin_bottom = 149.667
 custom_fonts/font = SubResource( 1 )
 text = "Options"
 align = 1
@@ -120,32 +115,31 @@ uppercase = true
 
 [node name="CheckBox" type="CheckBox" parent="."]
 margin_left = 559.0
-margin_top = 499.333
+margin_top = 454.667
 margin_right = 583.0
-margin_bottom = 523.333
+margin_bottom = 478.667
 rect_scale = Vector2( 3, 3 )
 
 [node name="CheckBox2" type="CheckBox" parent="."]
 margin_left = 833.0
-margin_top = 499.333
+margin_top = 454.667
 margin_right = 857.0
-margin_bottom = 523.333
+margin_bottom = 478.667
 rect_scale = Vector2( 3, 3 )
 
 [node name="Label7" type="Label" parent="."]
 margin_left = 703.333
-margin_top = 579.0
-margin_right = 776.333
-margin_bottom = 595.0
-rect_scale = Vector2( 3, 3 )
+margin_top = 554.667
+margin_right = 810.333
+margin_bottom = 605.667
 custom_fonts/font = SubResource( 1 )
 text = "Casual"
 
 [node name="CheckBox3" type="CheckBox" parent="."]
 margin_left = 833.333
-margin_top = 567.0
+margin_top = 542.667
 margin_right = 857.333
-margin_bottom = 591.0
+margin_bottom = 566.667
 rect_scale = Vector2( 3, 3 )
 
 [node name="Close_Settings_Button" type="TextureButton" parent="."]
