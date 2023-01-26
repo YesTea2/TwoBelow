@@ -23,8 +23,8 @@ onready var hud : CanvasLayer = $HUD
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print(str(GlobalVariables.current_offset) + "dddd")
-	player_var.connect("using_door", self, "_on_Player_using_door")
+	
+	Signals.connect("using_door", self, "_on_Player_using_door")
 # warning-ignore:return_value_discarded
 	global_weather_time.connect("timeout", self, "_on_finished_changing_weather")
 # warning-ignore:return_value_discarded
@@ -244,10 +244,25 @@ func get_random_time(min_range, max_range):
 	return rand_int
 
 func _on_changeScene_requested() -> void:
-	emit_signal("level_changed", level_name)
-
+	GlobalVariables.is_scene_fully_loaded = false
+	if GlobalVariables.is_outside == true:
+		GlobalVariables.is_outside = false
+		GlobalVariables.is_inside = true
+		GlobalVariables.is_waiting_for_foot = false
+		GlobalVariables.is_foot_steps_outside = false
+		emit_signal("level_changed", level_name)
+		return
+	elif GlobalVariables.is_inside == true:
+		GlobalVariables.is_inside = false
+		GlobalVariables.is_outside = true
+		GlobalVariables.is_waiting_for_foot = false
+		GlobalVariables.is_foot_steps_outside = true
+		emit_signal("level_changed", level_name)
+		return
+	
 func play_loaded_sound() -> void:
 	MusicController.play_specific_sound("door_enter")
+	GlobalVariables.is_scene_fully_loaded = true
 
 func cleanup():
 	

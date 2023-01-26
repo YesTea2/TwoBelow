@@ -28,16 +28,12 @@ func handle_level_changed(current_level_name: String):
 	match current_level_name:
 		"Outside":
 			next_level_name = name_for_level
-			GlobalVariables.is_inside = true
-			GlobalVariables.is_outside = false
-			GlobalVariables.is_foot_steps_outside = false
-			GlobalVariables.is_waiting_for_foot = false
+			
+			
 		name_for_level:
 			next_level_name = "Outside"
-			GlobalVariables.is_outside = true
-			GlobalVariables.is_inside = false
-			GlobalVariables.is_foot_steps_outside = true
-			GlobalVariables.is_waiting_for_foot = false
+			
+			
 		_:
 			return
 	

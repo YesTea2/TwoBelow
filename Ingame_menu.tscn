@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://menuingame.gd" type="Script" id=1]
+[ext_resource path="res://Art/story_panel.png" type="Texture" id=2]
+[ext_resource path="res://Art/menu_button_highlight.png" type="Texture" id=3]
+[ext_resource path="res://Art/menu_button_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Art/menu_button_unpressed.png" type="Texture" id=5]
+[ext_resource path="res://bitpap/BitPap.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+outline_size = 2
+outline_color = Color( 0.145098, 0.188235, 0.34902, 1 )
+font_data = ExtResource( 6 )
+
+[node name="Ingame_menu" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = 385.0
+margin_top = -99.0
+margin_right = 581.0
+margin_bottom = 65.0
+rect_scale = Vector2( 6, 8 )
+texture = ExtResource( 2 )
+
+[node name="Options_Button" type="TextureButton" parent="."]
+margin_left = 686.0
+margin_top = 256.0
+margin_right = 782.0
+margin_bottom = 278.0
+rect_scale = Vector2( 6, 6 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+
+[node name="Resume_Button" type="TextureButton" parent="."]
+margin_left = 686.0
+margin_top = 487.0
+margin_right = 782.0
+margin_bottom = 509.0
+rect_scale = Vector2( 6, 6 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+
+[node name="Exit_Button" type="TextureButton" parent="."]
+margin_left = 686.0
+margin_top = 714.0
+margin_right = 782.0
+margin_bottom = 736.0
+rect_scale = Vector2( 6, 6 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 707.0
+margin_top = 284.0
+margin_right = 1245.0
+margin_bottom = 384.0
+custom_fonts/font = SubResource( 1 )
+text = "Options"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 707.0
+margin_top = 515.0
+margin_right = 1245.0
+margin_bottom = 615.0
+custom_fonts/font = SubResource( 1 )
+text = "Resume"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 707.0
+margin_top = 741.0
+margin_right = 1245.0
+margin_bottom = 841.0
+custom_fonts/font = SubResource( 1 )
+text = "Exit"
+align = 1
+valign = 1
+uppercase = true
+
+[connection signal="mouse_entered" from="Options_Button" to="." method="_on_Options_Button_mouse_entered"]
+[connection signal="pressed" from="Options_Button" to="." method="_on_Options_Button_pressed"]
+[connection signal="mouse_entered" from="Resume_Button" to="." method="_on_Resume_Button_mouse_entered"]
+[connection signal="pressed" from="Resume_Button" to="." method="_on_Resume_Button_pressed"]
+[connection signal="mouse_entered" from="Exit_Button" to="." method="_on_Exit_Button_mouse_entered"]
+[connection signal="pressed" from="Exit_Button" to="." method="_on_Exit_Button_pressed"]

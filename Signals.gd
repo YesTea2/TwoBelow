@@ -64,3 +64,9 @@ signal at_a_gen
 signal fixed_gen
 signal game_won
 signal player_death
+signal closing_sub_menu
+signal closing_options_sub_menu
+
+# warning-ignore:unused_signal
+signal using_door
+# warning-ignore:unused_signal

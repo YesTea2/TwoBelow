@@ -57,6 +57,7 @@ TempContainer="*res://temp_container.gd"
 AllContainers="*res://All_Containers.gd"
 WeatherControl="*res://weather_control.gd"
 MusicController="*res://MusicController.tscn"
+PlayerGlobal="*res://player_global.gd"
 
 [display]
 

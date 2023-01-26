@@ -30,7 +30,7 @@ func set_slider_values():
 func _on_Music_Volume_value_changed(value) -> void:
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),linear2db(value))
 	GlobalVariables.current_music_slider_value = value
-
+	
 
 func _on_Main_Volume_value_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),linear2db(value))

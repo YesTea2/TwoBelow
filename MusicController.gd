@@ -18,7 +18,7 @@ var build_ice = load("res://SFX/build_ice.wav")
 var build_fire = load("res://SFX/build_fire.wav")
 var item_empty = load("res://SFX/item_empty.wav")
 var item_obtain = load("res://SFX/item_obtain.wav")
-var close_menu_two = load("res://SFX/close_menu_01.wav")
+
 
 
 func stop_sfx():

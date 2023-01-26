@@ -29,95 +29,97 @@ func _ready():
 	
 # warning-ignore:return_value_discarded
 	foot_timer.connect("timeout", self, "_on_finish_waiting_for_part")
-	handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
 # warning-ignore:return_value_discarded
 	Signals.connect("build_ice_wall", self, "build_ice_wall")
 	Signals.connect("build_fire", self, "build_fire")
+	
 	pass # Replace with function body.
 
 func _physics_process(delta):
-	var direction = Vector2.ZERO
+	if GlobalVariables.is_scene_fully_loaded == true:
+		var direction = Vector2.ZERO
 	
-	if Input.is_action_pressed("move_right"):
-		direction.x += 1
+		if Input.is_action_pressed("move_right"):
+			direction.x += 1
 		
 		
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
+		if Input.is_action_pressed("move_left"):
+			direction.x -= 1
 		
 		
-	if Input.is_action_pressed("move_down"):
-		direction.y += 1
+		if Input.is_action_pressed("move_down"):
+			direction.y += 1
 		
 		
-	if Input.is_action_pressed("move_up"):
-		direction.y -= 1
+		if Input.is_action_pressed("move_up"):
+			direction.y -= 1
 		
 		
-	if direction.length() > 0:
-		direction = direction.normalized()
-		$AnimatedSprite.play()
-	else:
-		$AnimatedSprite.stop()
+		if direction.length() > 0:
+			direction = direction.normalized()
+			$AnimatedSprite.play()
+		else:
+				$AnimatedSprite.stop()
 
-	position += direction * player_info.speed * delta
+		position += direction * player_info.speed * delta
 	#position.x = clamp(position.x, 0, screen_size.x)
 	#position.y = clamp(position.y, 0, screen_size.y)
 	
-	if direction.x > 0:
-		is_facing_right = false
-		is_facing_left = true
-		is_facing_down = false
-		is_facing_up = false
-		update_global_look()
-		$AnimatedSprite.animation = "right"
-		$AnimatedSprite.flip_h = false
-		if GlobalVariables.is_foot_steps_outside == true:
-			handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
-		if GlobalVariables.is_foot_steps_outside == false:
-			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
+		if direction.x > 0:
+			is_facing_right = false
+			is_facing_left = true
+			is_facing_down = false
+			is_facing_up = false
+			update_global_look()
+			$AnimatedSprite.animation = "right"
+			$AnimatedSprite.flip_h = false
+			if GlobalVariables.is_foot_steps_outside == true:
+				handle_player_part(player_info.foot_step_side, PlayerGlobal.time_foot_outdoor, "snow")
+			if GlobalVariables.is_foot_steps_outside == false:
+				handle_player_part(player_info.snow_footstep_side, PlayerGlobal.time_foot_indoor, "wood")
 		
-	elif direction.x < 0:
-		is_facing_right = true
-		is_facing_left = false
-		is_facing_down = false
-		is_facing_up = false
-		update_global_look()
-		$AnimatedSprite.animation = "right"
-		$AnimatedSprite.flip_h = true
-		if GlobalVariables.is_foot_steps_outside == true:
-			handle_player_part(player_info.foot_step_side, player_info.time_foot_outdoor, "snow")
-		if GlobalVariables.is_foot_steps_outside == false:
-			handle_player_part(player_info.snow_footstep_side, player_info.time_foot_indoor, "wood")
+		elif direction.x < 0:
+			is_facing_right = true
+			is_facing_left = false
+			is_facing_down = false
+			is_facing_up = false
+			update_global_look()
+			$AnimatedSprite.animation = "right"
+			$AnimatedSprite.flip_h = true
+			if GlobalVariables.is_foot_steps_outside == true:
+				handle_player_part(player_info.foot_step_side, PlayerGlobal.time_foot_outdoor, "snow")
+			if GlobalVariables.is_foot_steps_outside == false:
+				handle_player_part(player_info.snow_footstep_side, PlayerGlobal.time_foot_indoor, "wood")
 		
-	elif direction.y < 0:
-		is_facing_right = false
-		is_facing_left = false
-		is_facing_down = false
-		is_facing_up = true
-		update_global_look()
-		$AnimatedSprite.animation = "up"
-		if GlobalVariables.is_foot_steps_outside == true:
-			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
-		if GlobalVariables.is_foot_steps_outside == false:
-			handle_player_part(player_info.snow_footstep, player_info.time_foot_indoor, "wood")
+		elif direction.y < 0:
+			is_facing_right = false
+			is_facing_left = false
+			is_facing_down = false
+			is_facing_up = true
+			update_global_look()
+			$AnimatedSprite.animation = "up"
+			if GlobalVariables.is_foot_steps_outside == true:
+				handle_player_part(player_info.foot_step, PlayerGlobal.time_foot_outdoor, "snow")
+			if GlobalVariables.is_foot_steps_outside == false:
+				handle_player_part(player_info.snow_footstep, PlayerGlobal.time_foot_indoor, "wood")
 		
 		
-	elif direction.y > 0 :
-		is_facing_right = false
-		is_facing_left = false
-		is_facing_down = true
-		is_facing_up = false
-		update_global_look()
-		$AnimatedSprite.animation = "down"
-		if GlobalVariables.is_foot_steps_outside == true:
-			handle_player_part(player_info.foot_step, player_info.time_foot_outdoor, "snow")
-		if GlobalVariables.is_foot_steps_outside == false:
-			handle_player_part(player_info.snow_footstep, player_info.time_foot_indoor, "wood")
+		elif direction.y > 0 :
+			is_facing_right = false
+			is_facing_left = false
+			is_facing_down = true
+			is_facing_up = false
+			update_global_look()
+			$AnimatedSprite.animation = "down"
+			if GlobalVariables.is_foot_steps_outside == true:
+				handle_player_part(player_info.foot_step, PlayerGlobal.time_foot_outdoor, "snow")
+				
+			if GlobalVariables.is_foot_steps_outside == false:
+				handle_player_part(player_info.snow_footstep, PlayerGlobal.time_foot_indoor, "wood")
 	
 	
 # warning-ignore:return_value_discarded
-	move_and_slide(direction, Vector2(0,0), false, 4, 0.785, true)
+		move_and_slide(direction, Vector2(0,0), false, 4, 0.785, true)
 	
 func update_global_look():
 	GlobalVariables.is_player_facing_down = is_facing_down
@@ -155,13 +157,16 @@ func build_ice_wall():
 func handle_player_part(part, time_for, type_of_ground):
 	
 	if GlobalVariables.is_waiting_for_foot == false:
+		
 		GlobalVariables.is_waiting_for_foot = true
 		var footstep = part.instance()
 		if type_of_ground == "snow":
 			foot_sound.play()
 		footstep.emitting = true
 		footstep.global_position = Vector2(global_position.x + -.5 , global_position.y + 9)
-		get_parent().add_child(footstep)
+		#call_deferred("add_child", new_child)
+		#get_parent().add_child(footstep)
+		get_parent().call_deferred("add_child", footstep)
 		foot_timer.wait_time = time_for
 		foot_timer.start()
 		
@@ -219,13 +224,23 @@ func _on_Area2D_area_exited(area):
 func _input(event):
 	
 	if event.is_action_pressed("menu"):
-		get_tree().change_scene("res://Menu.tscn")
-		return
+		if GlobalVariables.is_sub_menu_open == false:
+			print("opening")
+			var submenu = load("res://Ingame_menu.tscn").instance()
+			get_tree().current_scene.add_child(submenu)
+			return
+		elif GlobalVariables.is_sub_menu_open == true && GlobalVariables.is_sub_options_open == false:
+			print("closing")
+			Signals.emit_signal("closing_sub_menu")
+			return
+		elif GlobalVariables.is_sub_menu_open == true && GlobalVariables.is_sub_options_open == true:
+			Signals.emit_signal("closing_options_sub_menu")
+			return
 	if event.is_action_pressed("use"):
 		if GlobalVariables.is_at_door == true:
 			if GlobalVariables.is_inside == true:
 				GlobalVariables.coming_from_inside = true
-			player_info.emit_signal("using_door")
+			Signals.emit_signal("using_door")
 			print("Using Door")
 			return
 		elif GlobalVariables.is_searching_drawer == true && GlobalVariables.is_giving_item == false:

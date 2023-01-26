@@ -21,10 +21,14 @@ onready var temp_below_freeze_time : Timer = $temp_below_freeze_timer
 onready var crafting_promp_time : Timer = $Crafting_Promp_Timer
 onready var w_alert_anim : AnimationPlayer = $Alert_Player
 
-onready var ice_amount_text : Label = $Inventory/Ice_Block_Amount
-onready var log_amount_text : Label = $Inventory/Log_Amount
-onready var pipe_amount_text : Label = $Inventory/Pipe_Amount
-onready var wire_amount_text : Label = $Inventory/Wire_Amount
+onready var ice_amount_text : Label = $Ice_Block_Amount
+onready var log_amount_text : Label = $Log_Amount
+onready var pipe_amount_text : Label = $Pipe_Amount
+onready var wire_amount_text : Label = $Wire_Amount
+
+onready var i_kit_label : Label = $Ice_Wall_Text
+onready var f_kit_label : Label = $Fire_Kit_Text
+onready var r_kit_label : Label = $Repair_Craft_Text
 
 onready var buy_ice_button : TextureButton = $Crafting_Holder/Ice_Button
 onready var buy_fire_button : TextureButton = $Crafting_Holder/Fire_Button
@@ -35,16 +39,16 @@ onready var crafting_prompt : ReferenceRect = $Cratft_Prompt
 onready var crafting_container : ReferenceRect = $Crafting_Holder
 onready var bottom_inventory : ReferenceRect = $Bottom_Bar
 
-onready var crafting_prompt_Text : Label = $Cratft_Prompt/Label
+onready var crafting_prompt_Text : Label = $craft_prompt_text
 onready var yes_craft_button :TextureButton = $Cratft_Prompt/Yes_Craft
 onready var no_craft_button : TextureButton = $Cratft_Prompt/No_Craft
-
+onready var crafting_label : Label = $Craft_Label
 onready var bottom_bar_wall_amount : Label = $Wall_Use_Text
 onready var bottom_bar_fire_amount : Label = $Fire_Use_Text
 onready var bottom_bar_repair_amount : Label = $Repair_Use_Text
 
 onready var chat_anim : AnimationPlayer = $Chat_Player
-
+onready var inventory_label : Label = $Inv_Label
 onready var alert_text_01 : Label = $Bottom_Alert/Bottom_Alert_Text
 
 var is_freezing
@@ -62,6 +66,10 @@ var has_yes_been_pressed = false
 var is_inventory_open = false
 var rand_generate = RandomNumberGenerator.new()
 var giving_weather_alert = false
+
+onready var inventory_label_array = [$Ice_Block_Amount, $Log_Amount, $Wire_Amount, $Pipe_Amount, $Inv_Label]
+onready var crafting_label_array = [$Craft_Label, $Ice_Wall_Text, $Repair_Craft_Text, $Fire_Kit_Text]
+
 
 var search
 # Called when the node enters the scene tree for the first time.
@@ -140,7 +148,12 @@ func _ready():
 	inventory_container.hide()
 	crafting_prompt.hide()
 	crafting_container.hide()
-	
+	crafting_prompt_Text.hide()
+	for i in crafting_label_array:
+		i.hide()
+	for i in inventory_label_array:
+		i.hide()
+		
 	$Text_Container.hide()
 	$Text_Container/Container_Text.hide()
 	$Text_Container/Character_Photo.hide()
@@ -380,6 +393,8 @@ func _on_lower_temp_fast():
 		Signals.emit_signal("player_death")
 		return
 	WeatherControl.bar_value -= .02
+	WeatherControl.current_temp = "Below Zero"
+	temprature_text.text = "Below Zero"
 	
 	pass
 
@@ -391,23 +406,29 @@ func _on_lower_temp_slow():
 		Signals.emit_signal("player_death")
 		return
 	WeatherControl.bar_value -= .007
+	WeatherControl.current_temp = "Freezing"
+	temprature_text.text = "Freezing"
 	pass
 
 func _on_raise_temp_fast():
 	if GlobalVariables.is_player_next_to_fire == true:
 		return
 	WeatherControl.bar_value += .15
+	WeatherControl.current_temp = "Warm"
+	temprature_text.text = "Warm"
 	pass
 
 func _on_raise_temp_slow():
 	if GlobalVariables.is_player_next_to_fire == true:
 		return
+	WeatherControl.current_temp = "Cold"
+	temprature_text.text = "Cold"
 	WeatherControl.bar_value += .02
 	pass
 	
 func _on_warm_player():
-	WeatherControl.current_temp = "Cold"
-	temprature_text.text = "Cold"
+	WeatherControl.current_temp = "Warm"
+	temprature_text.text = "Warm"
 	WeatherControl.bar_value += .15
 	pass
 	
@@ -499,26 +520,30 @@ func _on_center_message_time_timeout():
 func _on_temp_below_freeze_timer_timeout():
 	$Alert.stop()
 	$Alert.hide()
-	WeatherControl.current_temp = "Below Zero"
 	if GlobalVariables.is_player_next_to_fire == true:
 		return
-	temprature_text.text = "Below Zero"
+	else:
+		temprature_text.text = "Below Zero"
+		WeatherControl.current_temp = "Below Zero"
 
 func _on_temp_freezing_timer_timeout():
-	WeatherControl.current_temp = "Freezing"
-	if GlobalVariables.is_player_next_to_fire == true:
-		return
-	temprature_text.text = "Freezing"
 	$Alert.stop()
 	$Alert.hide()
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
+	else:
+		temprature_text.text = "Freezing"
+		WeatherControl.current_temp = "Freezing"
+
 
 func _on_temp_normal_timer_timeout():
-	WeatherControl.current_temp = "Cold"
-	if GlobalVariables.is_player_next_to_fire == true:
-		return
-	temprature_text.text = "Cold"
 	$Alert.stop()
 	$Alert.hide()
+	if GlobalVariables.is_player_next_to_fire == true:
+		return
+	else:
+		WeatherControl.current_temp = "Cold"
+		temprature_text.text = "Cold"
 
 func _on_trying_to_craft_wall():
 	if has_yes_been_pressed == false:
@@ -559,6 +584,8 @@ func _on_update_bottom_amount(type):
 	
 func show_crafting_choice(type_of_item, item_needed, second_item, item_one_amount, item_two_amount):
 	crafting_prompt.show()
+	for i in crafting_label_array:
+		i.show()
 	yes_craft_button.show()
 	no_craft_button.show()
 	if second_item == "none":
@@ -573,6 +600,10 @@ func _on_opening_inventory():
 		is_inventory_open = true
 		crafting_container.show()
 		inventory_container.show()
+		for i in inventory_label_array:
+			i.show()
+		for i in crafting_label_array:
+			i.show()
 	elif is_inventory_open == true:
 		_on_close_inventory()
 		
@@ -694,6 +725,11 @@ func _on_close_inventory():
 	inventory_container.hide()
 	crafting_container.hide()
 	crafting_prompt.hide()
+	crafting_prompt_Text.hide()
+	for i in crafting_label_array:
+		i.hide()
+	for i in inventory_label_array:
+		i.hide()
 	is_crafting = false
 	is_trying_to_craft_fire = false
 	is_trying_to_craft_repair = false
@@ -702,11 +738,13 @@ func _on_close_inventory():
 	is_yes_currently_pressed_for_crafting = false
 	is_timer_running_for_crafting = false
 	has_yes_been_pressed = false
+
 	
 func _on_No_Craft_pressed():
 	if is_timer_running_for_crafting == false:
 		is_crafting = false
 		crafting_prompt.hide()
+		
 		inventory_container.show()
 		is_yes_currently_pressed_for_crafting = false
 
@@ -714,6 +752,7 @@ func _on_No_Craft_pressed():
 func _on_Crafting_Promp_Timer_timeout():
 	is_crafting = false
 	crafting_prompt.hide()
+	crafting_prompt_Text.hide()
 	is_yes_currently_pressed_for_crafting = false
 	is_timer_running_for_crafting = false
 	inventory_container.show()

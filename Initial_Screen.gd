@@ -10,6 +10,10 @@ onready var anim : AnimationPlayer = $AnimationPlayer
 func _ready():
 	MusicController.play_music()
 	anim.play("FI")
+	
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),linear2db(GlobalVariables.current_music_slider_value))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),linear2db(GlobalVariables.current_main_audio_slider_value))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),linear2db(GlobalVariables.current_sfx_slider_value))
 	pass # Replace with function body.
 
 

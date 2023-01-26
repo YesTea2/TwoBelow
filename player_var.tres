@@ -14,7 +14,4 @@ foot_step_side = ExtResource( 6 )
 foot_step_idle = ExtResource( 3 )
 snow_footstep_side = ExtResource( 2 )
 snow_footstep = ExtResource( 5 )
-time_foot_outdoor = 0.5
-time_foot_indoor = 1.0
 speed = 75.0
-is_inside = false
